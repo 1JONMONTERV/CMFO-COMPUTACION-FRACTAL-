@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Contacto</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+
+<body>
+
+<header><h1>Contacto</h1></header>
+
+<section>
+<p><b>Autor:</b> Jonnathan Montero Víquez</p>
+<p><b>Ciudad:</b> San José, Costa Rica</p>
+<p><b>Email:</b> jmvlavacar@hotmail.com</p>
+
+<p>
+Para licencias comerciales, colaboraciones o integración corporativa,
+comuníquese usando el correo anterior.
+</p>
+</section>
+
+<footer>© 2025 Jonnathan Montero Víquez</footer>
+
+</body>
+</html>

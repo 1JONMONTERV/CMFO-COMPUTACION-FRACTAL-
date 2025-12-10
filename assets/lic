@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Licencia</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+
+<body>
+
+<header><h1>Licencia CMFO-UNIVERSE v1.1 — Commercial Restricted</h1></header>
+
+<section>
+<p>
+Este software es propiedad de <b>Jonnathan Montero Víquez</b>.
+Su uso comercial requiere licencia explícita.
+<ul>
+    <li>Uso personal y académico: permitido.</li>
+    <li>Investigación no comercial: permitido.</li>
+    <li>Uso comercial: requiere acuerdo de licencia.</li>
+</ul>
+</p>
+</section>
+
+<footer>© 2025 Jonnathan Montero Víquez</footer>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>CMFO-UNIVERSE · Visión general</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+
+<body>
+
+<header><h1>Visión general del CMFO-UNIVERSE</h1></header>
+
+<nav>
+    <a href="../index.html">Inicio</a>
+    <a href="overview.html">Visión general</a>
+    <a href="install.html">Instalación</a>
+    <a href="api_core.html">API Core</a>
+    <a href="api_cuda.html">API CUDA</a>
+    <a href="license.html">Licencia</a>
+    <a href="contact.html">Contacto</a>
+</nav>
+
+<section>
+<h2>Qué es CMFO-UNIVERSE</h2>
+
+<p>
+CMFO-UNIVERSE es el núcleo computacional del marco fractal CMFO.
+Incluye álgebra T7, productos tensoriales φ-fractales, kernels CUDA y un entorno modular.
+</p>
+
+<h3>Componentes incluidos</h3>
+<ul>
+<li><b>Core C:</b> operaciones φ, tau, norm7, dot7</li>
+<li><b>Algebra T7:</b> matrices 7×7 optimizadas</li>
+<li><b>Tensor7:</b> producto fractal</li>
+<li><b>CUDA Engine:</b> kernels acelerados</li>
+<li><b>Pruebas unitarias:</b> test_core, test_mat7, test_cuda</li>
+</ul>
+
+</section>
+
+<footer>© 2025 Jonnathan Montero Víquez</footer>
+
+</body>
+</html>

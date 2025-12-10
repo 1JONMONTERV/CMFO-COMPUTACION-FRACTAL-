@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Instalación · CMFO-UNIVERSE</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+
+<body>
+<header><h1>Instalación</h1></header>
+
+<nav>
+    <a href="../index.html">Inicio</a>
+    <a href="install.html">Instalación</a>
+</nav>
+
+<section>
+
+<h2>Clonar el repositorio</h2>
+<pre>
+git clone https://github.com/1JONMONTERV/cmfo-universe.git
+</pre>
+
+<h2>Construcción con CMake</h2>
+<pre>
+mkdir build
+cd build
+cmake ..
+cmake --build . --config Release
+</pre>
+
+<h2>Ejecutar pruebas</h2>
+<pre>
+./Release/test_core.exe
+./Release/test_mat7.exe
+./Release/test_cuda.exe
+</pre>
+
+</section>
+
+<footer>© 2025 Jonnathan Montero Víquez</footer>
+
+</body>
+</html>

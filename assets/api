@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>API CUDA CMFO</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+
+<body>
+
+<header><h1>Kernels CUDA del CMFO-UNIVERSE</h1></header>
+
+<section>
+
+<h3>Kernels disponibles</h3>
+
+<pre>
+__global__ void cmfo_tensor7_kernel(double* out, 
+                                    const double* a, 
+                                    const double* b);
+
+__global__ void cmfo_dot7_kernel(double* result, 
+                                 const double* a, 
+                                 const double* b);
+</pre>
+
+<p>
+Estos kernels son optimizados para arquitecturas RTX (SM86).
+</p>
+
+</section>
+
+<footer>© 2025 Jonnathan Montero Víquez</footer>
+
+</body>
+</html>

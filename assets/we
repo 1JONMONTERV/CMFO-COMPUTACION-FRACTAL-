@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>API Core CMFO</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+
+<body>
+
+<header><h1>API Core CMFO (C)</h1></header>
+
+<section>
+<h3>Funciones principales:</h3>
+
+<pre>
+double cmfo_phi();
+double cmfo_tau();
+void cmfo_add7(double out[7], const double a[7], const double b[7]);
+void cmfo_scale7(double out[7], const double a[7], double s);
+double cmfo_dot7(const double a[7], const double b[7]);
+double cmfo_norm7(const double a[7]);
+</pre>
+
+</section>
+
+<footer>© 2025 Jonnathan Montero Víquez</footer>
+
+</body>
+</html>

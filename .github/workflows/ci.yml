@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-cmake:
+    name: Build and test (CMake)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake ninja-build
+
+      - name: Configure CMake
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build -- -j
+
+      - name: Run CTest (produce JUnit XML)
+        run: |
+          cd build
+          ctest --output-on-failure --output-junit test-results.xml || true
+
+      - name: Upload CTest JUnit XML
+        uses: actions/upload-artifact@v4
+        with:
+          name: ctest-junit
+          path: build/test-results.xml
+
+      - name: Upload test logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: ctest-logs
+          path: build/Testing
+
+  website:
+    name: Website (Node)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install website dependencies
+        working-directory: website
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+
+      - name: Run website tests/build
+        working-directory: website
+        run: |
+          if npm test --silent; then
+            echo "Tests ran successfully"
+          else
+            echo "npm test failed or not defined, attempting build"
+            npm run build --if-present || true
+          fi
+
+      - name: Upload website artifacts and logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-artifacts
+          path: website

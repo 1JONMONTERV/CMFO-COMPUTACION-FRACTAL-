@@ -94,6 +94,13 @@ CMFO demuestra que la lógica booleana es un caso degenerado ($\phi \to 1$) de l
 - **Teoría**: [Docs/THEORY_PHI_LOGIC.md](Docs/THEORY_PHI_LOGIC.md)
 - **Demo**: Ejecutar `python python/demo_phi_logic.py` para ver la convergencia.
 
+### Aceleración CUDA (GPU)
+
+El núcleo CUDA (`cuda/theta_cmfo_kernel.cu`) implementa actualmente la **Fase 1: Evolución Independiente**.
+Cada modo T7 evoluciona con su propia frecuencia fractal $\omega_i \propto \phi \cdot i$.
+
+- **Teoría**: [Docs/THEORY_CUDA.md](Docs/THEORY_CUDA.md)
+
 ---
 
 ## Ejemplo de Uso

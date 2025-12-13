@@ -1,26 +1,40 @@
+﻿/*
+ * CMFO-UNIVERSE Core Implementación
+ */
+
 #include "cmfo_core.h"
+#include <math.h>
 
-// Reference Implementation of CMFO Core Logic
+// =======================
+// Constantes fractales
+// =======================
+const double CMFO_PHI = 1.6180339887498948482;
+const double CMFO_TAU = 0.6180339887498948482;
 
-cmfo_status_t cmfo_tensor7_reduce(const float* input, size_t dim, float* output) {
-    if (!input || !output) {
-        return CMFO_ERR_NULL_PTR;
-    }
-    
-    // Initialize output to zero
-    for (int i = 0; i < CMFO_DIM; i++) {
-        output[i] = 0.0f;
-    }
-    
-    // Accumulate (Fold)
-    for (size_t j = 0; j < dim; j++) {
-        output[j % CMFO_DIM] += input[j];
-    }
-    
-    return CMFO_OK;
+double cmfo_phi(void) { return CMFO_PHI; }
+double cmfo_tau(void) { return CMFO_TAU; }
+
+// =======================
+// Funciones vectoriales T7
+// =======================
+double cmfo_norm7(const double a[7]) {
+    double s = 0.0;
+    for (int i = 0; i < 7; i++) s += a[i] * a[i];
+    return sqrt(s);
 }
 
-float cmfo_tensor7_op_scalar(float a, float b) {
-    // Exact Formula: (a * b + PHI) / (1 + PHI)
-    return (a * b + CMFO_PHI) / (1.0f + CMFO_PHI);
+double cmfo_dot7(const double a[7], const double b[7]) {
+    double s = 0.0;
+    for (int i = 0; i < 7; i++) s += a[i] * b[i];
+    return s;
 }
+
+void cmfo_add7(double out[7], const double a[7], const double b[7]) {
+    for (int i = 0; i < 7; i++) out[i] = a[i] + b[i];
+}
+
+void cmfo_scale7(double out[7], const double a[7], double k) {
+    for (int i = 0; i < 7; i++) out[i] = a[i] * k;
+}
+
+

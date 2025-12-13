@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequently Asked Questions | CMFO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container" style="padding-top: 100px;">
+        <h1 style="text-align: center; margin-bottom: 60px;">FAQs</h1>
+        
+        <div class="grid" style="grid-template-columns: 1fr; max-width: 800px; margin: 0 auto;">
+            
+            <div class="card">
+                <h3>What is CMFO exactly?</h3>
+                <p>CMFO (Continuous Modal Fractal Oscillation) is a deterministic computational engine. Unlike Neural Networks which guess the next token based on probability, CMFO calculates the geometric location of information in a 7-dimensional manifold. It is "Math, not Magic".</p>
+            </div>
+
+            <div class="card">
+                <h3>Why is it "Scientific Grade"?</h3>
+                <p>Because it is reproducible. Running the same input on a Raspberry Pi, a GPU cluster, or a Supercomputer yields a <strong>bit-exact</strong> identical result. This is impossible with current LLMs due to floating-point non-determinism in CUDA kernels.</p>
+            </div>
+
+            <div class="card">
+                <h3>Is it compatible with PyTorch?</h3>
+                <p>Yes. The `cmfo.layers.CMFOLinear` is a drop-in replacement for `torch.nn.Linear`. You can use it within your existing Transformer architectures to inject deterministic memory blocks.</p>
+            </div>
+
+            <div class="card">
+                <h3>How do I cite this?</h3>
+                <div style="background: rgba(0,0,0,0.5); padding: 20px; border-radius: 8px; font-family: monospace;">
+                    @software{cmfo2025,<br>
+                    &nbsp;&nbsp;author = {Jonnathan Montero},<br>
+                    &nbsp;&nbsp;title = {CMFO: continuous Modal Fractal Oscillation Engine},<br>
+                    &nbsp;&nbsp;year = {2025},<br>
+                    &nbsp;&nbsp;url = {https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-}<br>
+                    }
+                </div>
+            </div>
+
+        </div>
+
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="index.html" class="btn btn-secondary">← Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

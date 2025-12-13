@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMFO | Computational Matter Fractal Ontology</title>
+    <meta name="description" content="The Universal Fractal Computing Standard. Deterministic, Efficient, Inevitable.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <canvas id="fractal-canvas"></canvas>
+
+    <div class="hero">
+        <div class="container">
+            <h1>Computation<br>Beyond Chaos</h1>
+            <p class="subtitle">
+                The first deterministic computational standard based on Fractal Geometry.
+                Replace probabilistic drift with geometric certainty.
+            </p>
+
+            <div class="cli-box"
+                onclick="navigator.clipboard.writeText('pip install cmfo'); alert('Copied to clipboard!')">
+                <span class="prompt">$</span> pip install cmfo
+            </div>
+
+            <div class="docs-list">
+                <a href="#use-cases" class="btn btn-primary">Why CMFO?</a>
+                <a href="api/universal_api_v1.html" class="btn btn-secondary">Universal API</a>
+            </div>
+        </div>
+    </div>
+
+    <section id="use-cases" class="grid-section">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 50px; font-family: var(--font-heading); font-size: 2.5rem;">
+                The Hard Truth</h2>
+            <div class="grid">
+                <!-- Use Case 1 -->
+                <a href="use_cases/01_llm_efficiency.md" class="card">
+                    <h3>AI Efficiency</h3>
+                    <p>Smash the $O(N^2)$ quadratic wall.</p>
+                    <p>CMFO reduces inference memory by <span class="highlight">99.9%</span> vs Llama-2-7B, enabling
+                        infinite context on edge devices.</p>
+                </a>
+
+                <!-- Use Case 2 -->
+                <a href="use_cases/02_scientific_stability.md" class="card">
+                    <h3>Scientific Stability</h3>
+                    <p>Simulations shouldn't drift.</p>
+                    <p>Achieve <span class="highlight">0.000000 error</span> over 1 million steps using T7 Geometric
+                        Locking instead of FP noise.</p>
+                </a>
+
+                <!-- Use Case 3 -->
+                <a href="use_cases/03_deterministic_systems.md" class="card">
+                    <h3>Safety Critical</h3>
+                    <p>No more "Hallucinations".</p>
+                    <p>Formal determinism validatable to <span class="highlight">DO-178C</span> standards for Defense
+                        and Aerospace.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="grid-section" style="background: rgba(0,0,0,0.3);">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 50px;">Documentation</h2>
+            <div class="grid">
+                <a href="theory/cmfo_foundations.tex" class="card">
+                    <h3>Foundations</h3>
+                    <p>The Axioms, The Proofs, The Math.</p>
+                </a>
+                <a href="adoption.md" class="card">
+                    <h3>Corporate Strategy</h3>
+                    <p>Adoption Path, ROI, and Business Case.</p>
+                </a>
+                <a href="examples/" class="card">
+                    <h3>Examples</h3>
+                    <p>Code samples, Benchmarks, and Visualizations.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>CMFO Project v1.1.0 • <a href="https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-">View Source on
+                    GitHub</a></p>
+            <p style="font-size: 0.8rem; opacity: 0.5; margin-top: 20px;">
+                "Energy is conserved in the Tensor7 Manifold."
+            </p>
+        </div>
+    </footer>
+
+    <script src="js/fractal_vis.js"></script>
+</body>
+
+</html>

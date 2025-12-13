@@ -32,9 +32,14 @@ jobs:
           pip install -e .
           pip install pytest pytest-cov flake8 mypy
 
+      - name: Verify installation
+        run: |
+          python -c "import cmfo; print('cmfo imported successfully')"
+          pip list | grep cmfo
+
       - name: Run tests with coverage
         run: |
-          pytest -q --maxfail=1 --disable-warnings
+          pytest tests/ -v
 
       - name: Lint with flake8
         run: |

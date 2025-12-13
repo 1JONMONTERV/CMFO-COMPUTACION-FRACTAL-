@@ -70,6 +70,15 @@ Para validar la conservación de energía y las propiedades topológicas:
     ```
     Consulte [Docs/THEORY_SOLITON.md](Docs/THEORY_SOLITON.md) para detalles teóricos.
 
+### Verificación de Estabilidad Matricial T7
+
+Para validar que la inversión de matrices 7x7 es numéricamente estable:
+
+```bash
+# Ejecutar test de estrés en C
+./test_mat7_stab
+```
+
 ### Lógica Phi (Generalización Booleana)
 
 CMFO demuestra que la lógica booleana es un caso degenerado ($\phi \to 1$) de la lógica fractal:

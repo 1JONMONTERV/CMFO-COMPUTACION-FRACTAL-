@@ -75,3 +75,10 @@ if(EXISTS "${CMAKE_SOURCE_DIR}/tests/test_soliton_collision.c")
     target_link_libraries(test_soliton PRIVATE cmfo_core m) # Link math lib
     add_test(NAME SolitonCollisionTest COMMAND test_soliton)
 endif()
+
+# Test Matrix Stability (Nuevo Hito Extra)
+if(EXISTS "${CMAKE_SOURCE_DIR}/tests/test_mat7_stability.c")
+    add_executable(test_mat7_stab tests/test_mat7_stability.c)
+    target_link_libraries(test_mat7_stab PRIVATE cmfo_core m)
+    add_test(NAME Mat7StabilityTest COMMAND test_mat7_stab)
+endif()

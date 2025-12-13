@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this software in your research, please cite it as below."
+authors:
+- family-names: "Montero Viques"
+  given-names: "Jonathan"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+title: "CMFO: Continuous Modal Fractal Oscillation Engine"
+version: 1.1.0
+doi: 10.5281/zenodo.123456
+date-released: 2025-12-13
+url: "https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-"
+preferred-citation:
+  type: software
+  authors:
+  - family-names: "Montero Viques"
+    given-names: "Jonathan"
+  title: "CMFO: The Axiomatic Fractal Compute Engine"
+  year: 2025
+  publisher: "GitHub"
+  version: 1.1.0

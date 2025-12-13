@@ -2,7 +2,7 @@ import json
 import numpy as np
 import os
 # Adapted import to match package name
-from cmfo_compute.core.api import tensor7
+from cmfo.core.api import tensor7
 
 def test_tensor7_equivalence():
     # Construct absolute path to data file to avoid CWD issues

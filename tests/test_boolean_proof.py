@@ -1,5 +1,5 @@
 import pytest
-import cmfo_compute as cmfo
+import cmfo
 import numpy as np
 
 # Mapeo: 0 (Falso) -> -1, 1 (Verdadero) -> 1

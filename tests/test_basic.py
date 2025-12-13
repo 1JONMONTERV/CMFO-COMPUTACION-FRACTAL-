@@ -1,4 +1,4 @@
-import cmfo_compute as cmfo
+import cmfo
 
 
 def test_tensor_creation():

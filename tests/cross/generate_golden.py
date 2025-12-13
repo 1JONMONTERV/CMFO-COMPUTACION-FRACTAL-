@@ -1,6 +1,6 @@
 import json
 import numpy as np
-import cmfo_compute as cmfo
+import cmfo
 
 def generate_golden_data():
     data = {

@@ -64,7 +64,12 @@ Para validar la conservación de energía y las propiedades topológicas:
     ```bash
     ./test_soliton
     ```
-2.  Ejecutar script de verificación Python:
+2.  **Visualizar Resultados (Nuevo)**:
+    Generar un GIF animado de la colisión:
+    ```bash
+    python python/visualize_soliton.py
+    ```
+3.  Ejecutar script de verificación numérica:
     ```bash
     python python/verify_soliton.py
     ```
@@ -100,6 +105,11 @@ El núcleo CUDA (`cuda/theta_cmfo_kernel.cu`) implementa actualmente la **Fase 1
 Cada modo T7 evoluciona con su propia frecuencia fractal $\omega_i \propto \phi \cdot i$.
 
 - **Teoría**: [Docs/THEORY_CUDA.md](Docs/THEORY_CUDA.md)
+
+### Python Bindings (Nuevo)
+El SDK ahora incluye visualización y wrappers directos:
+- `python/visualize_soliton.py`: Generador de GIFs.
+- `python/cmfo_wrapper.py`: Interfaz directa con C.
 
 ---
 

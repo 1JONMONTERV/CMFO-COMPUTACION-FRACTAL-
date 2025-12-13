@@ -33,16 +33,25 @@ theta += omega * dt;
 if (theta > 2 * M_PI) theta -= 2 * M_PI;
 ```
 
-### 2.3 Limitations & Roadmap
+## 3. Phase 2: Coupled Dynamics (N-Body)
 
-This generic evolution serves as a **throughput test** for the memory coherence of the T7 structure on the GPU.
+The kernel `cmfo_dynamics_gpu_v2` introduces rudimentary cross-mode coupling, essential for fractal emergence.
 
-**Future Phase 2 (Planned):**
-- Implement **Cross-Coupling**: The evolution of $\theta_i$ should depend on $\theta_j$ (Interaction Tensor).
-- $$ \dot{\theta}_i = \omega_i + \sum_{j,k} \Gamma_{ijk} \sin(\theta_j - \theta_k) $$
-- This requires shared memory optimization to load the full state vector for all threads in a block.
+### 3.1 Mathematical Model (Kuramoto-like)
 
-## 3. Performance Considerations
+$$
+\frac{d\theta_i}{dt} = \omega_i + K \sum_{j=1}^7 \sin(\theta_j - \theta_i)
+$$
 
-- **Coalesced Access**: The array `d_theta_in` is accessed linearly `tid`, ensuring optimal memory bandwidth.
+Where $K=0.1$ is the coupling constant. This simulates the interaction between different layers of the T7 manifold.
+
+### 3.2 Implementation Strategy
+
+- **Shared Memory**: The state vector $\Theta = [\theta_0, ..., \theta_6]$ is loaded into shared memory (`s_theta`) at each step.
+- **Synchronization**: `__syncthreads()` ensures all threads see the consistent state of the system before computing interactions.
+- **Complexity**: $O(N^2)$ per block (since $N=7$, this is negligible: 49 ops).
+
+## 4. Performance Considerations
+
+- **Coalesced Access**: The array `d_theta_in` is accessed linearly `tid`.
 - **Precision**: Uses `double` precision (FP64), which has a performance cost on consumer GPUs but is required for T7 numerical stability.

@@ -34,15 +34,15 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          pytest -q --maxfail=1 --disable-warnings --cov=cmfo_compute --cov-report=term-missing
+          pytest -q --maxfail=1 --disable-warnings --cov=cmfo --cov-report=term-missing
 
       - name: Lint with flake8
         run: |
-          flake8 cmfo_compute tests
+          flake8 cmfo tests
 
       - name: Type check with mypy
         run: |
-          mypy cmfo_compute
+          mypy cmfo
 
   build-pypi:
     name: build-and-publish-pypi

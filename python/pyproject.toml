@@ -1,25 +1,18 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "cmfo-universe"
-version = "1.0.2"
-description = "CMFO-UNIVERSE: Fractal phi-logic, Tensor7, Mat7, CUDA kernels"
-readme = "README.md"
-requires-python = ">=3.10"
-
+version = "1.0.0"
+description = "Deterministic Fractal Computing Engine"
 authors = [
-  { name = "Jonnathan Montero Viquez", email = "jmvlavacar@hotmail.com" }
+    {name = "Jonnathan Montero Víquez", email = "jmvlavacar@hotmail.com"},
 ]
-
-license = { text = "CMFO-UNIVERSE LICENSE v1.1 - Commercial Restricted" }
-
-urls = {
-  Homepage = "https://1jonmonterv.github.io/cmfo-universe/",
-  Repository = "https://github.com/1JONMONTERV/cmfo-universe/",
-  Documentation = "https://1jonmonterv.github.io/cmfo-universe/"
-}
-
-[tool.setuptools]
-packages = ["cmfo_universe"]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "pandas",
+]

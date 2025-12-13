@@ -1,8 +1,16 @@
 {
-  "name": "cmfo-node-test",
-  "version": "0.1.0",
-  "description": "Minimal node test for cmfo",
+  "name": "cmfo-universe-node",
+  "version": "1.0.0",
+  "description": "Node.js bindings for CMFO Universe",
+  "main": "index.js",
   "scripts": {
-    "test": "node test.js"
-  }
+    "test": "node index.js"
+  },
+  "dependencies": {
+    "ffi-napi": "^4.0.3",
+    "ref-napi": "^3.0.3",
+    "ref-array-napi": "^1.2.2"
+  },
+  "author": "Jonnathan Montero Víquez",
+  "license": "Commercial Restricted"
 }

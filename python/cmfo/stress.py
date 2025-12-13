@@ -2,7 +2,7 @@ import time
 import random
 import math
 import sys
-from cmfo_wrapper import CMFOCore
+from .wrapper import CMFOCore
 
 def main():
     print("=== CMFO MAXIMUM LEVEL STRESS TEST & BENCHMARK ===")

@@ -41,3 +41,11 @@ if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test_tensor7_props.c")
     target_link_libraries(test_tensor_props PRIVATE cmfo_core m)
     add_test(NAME TensorPropsTest COMMAND test_tensor_props)
 endif()
+
+# C++ Demo
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/demo_cpp.cpp")
+    add_executable(demo_cpp demo_cpp.cpp)
+    target_link_libraries(demo_cpp PRIVATE cmfo_core m)
+    set_target_properties(demo_cpp PROPERTIES CXX_STANDARD 17)
+    add_test(NAME CppInteropDemo COMMAND demo_cpp)
+endif()

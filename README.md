@@ -84,6 +84,14 @@ Para validar que la inversión de matrices 7x7 es numéricamente estable:
 ./test_mat7_stab
 ```
 
+### Interoperabilidad C++ (Nuevo)
+Ejemplo de API moderna (`tests/demo_cpp.cpp`):
+```cpp
+cmfo::Vector7 a = {1,1,1,1,1,1,1};
+cmfo::Vector7 b = {2,2,2,2,2,2,2};
+cmfo::Vector7 c = a ^ b; // Operador sobrecargado llamando al núcleo C
+```
+
 ### Verificación de Tensores T7
 
 Para validar propiedades algebraicas (Conmutatividad, Distributividad, Antisimetría):
@@ -110,6 +118,24 @@ Cada modo T7 evoluciona con su propia frecuencia fractal $\omega_i \propto \phi 
 El SDK ahora incluye visualización y wrappers directos:
 - `python/visualize_soliton.py`: Generador de GIFs.
 - `python/cmfo_wrapper.py`: Interfaz directa con C.
+
+### Tests de Estrés (Máximo Nivel)
+Para validar la robustez del sistema bajo carga extrema:
+```bash
+python python/stress_test_benchmark.py
+```
+Esto ejecutará:
+1.  **Flood Test**: 100k operaciones tensoriales.
+2.  **Stability Test**: Inversión de 1k matrices aleatorias.
+3.  **Benchmark**: Medición de rendimiento (ops/sec).
+
+### Interoperabilidad Node.js (Nuevo)
+Ejemplo de uso desde JavaScript (requiere `npm install`):
+```bash
+cd node
+node index.js
+```
+Esto carga `cmfo_core.dll` usando FFI y ejecuta operaciones tensoriales nativas.
 
 ---
 

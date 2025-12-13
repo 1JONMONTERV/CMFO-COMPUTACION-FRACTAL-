@@ -34,7 +34,7 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          pytest -q --maxfail=1 --disable-warnings --cov=cmfo --cov-report=term-missing
+          pytest -q --maxfail=1 --disable-warnings
 
       - name: Lint with flake8
         run: |

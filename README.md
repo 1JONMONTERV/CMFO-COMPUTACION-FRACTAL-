@@ -195,6 +195,7 @@ Para validar propiedades algebraicas (Conmutatividad, Distributividad, Antisimet
 CMFO demuestra que la lógica booleana es un caso degenerado ($\phi \to 1$) de la lógica fractal:
 
 - **Teoría**: [Docs/THEORY_PHI_LOGIC.md](Docs/THEORY_PHI_LOGIC.md)
+- **Comparación Teórica**: [Docs/THEORY_COMPARISON.md](Docs/THEORY_COMPARISON.md) - Análisis riguroso de CMFO vs lógica booleana
 - **Demo**: Ejecutar `python python/demo_phi_logic.py` para ver la convergencia.
 
 ### Aceleración CUDA (GPU)

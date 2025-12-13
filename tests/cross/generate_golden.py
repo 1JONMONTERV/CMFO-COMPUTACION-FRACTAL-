@@ -1,13 +1,13 @@
 import json
-import numpy as np
 import cmfo
+
 
 def generate_golden_data():
     data = {
         "gamma_step": [],
         "phi_logic": []
     }
-    
+
     # Test cases for Gamma Step (sin(x))
     inputs = [0.0, 0.5, 1.0, 3.14159, -1.0]
     for x in inputs:
@@ -35,6 +35,7 @@ def generate_golden_data():
     with open("golden_vectors.json", "w") as f:
         json.dump(data, f, indent=4)
         print("Generated golden_vectors.json")
+
 
 if __name__ == "__main__":
     generate_golden_data()

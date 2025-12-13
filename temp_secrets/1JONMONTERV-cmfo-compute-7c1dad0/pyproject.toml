@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cmfo-compute"
+version = "1.0.2"
+description = "CMFO Compute: Librería base de cálculo fractal T7 para CMFO"
+authors = [
+    { name = "Jonnathan Montero", email = "jesuslocopor@gmail.com" }
+]
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+
+dependencies = [
+    "numpy>=1.20"
+]
+
+[project.urls]
+Homepage = "https://github.com/1JONMONTERV/cmfo-compute"
+Repository = "https://github.com/1JONMONTERV/cmfo-compute"
+
+[tool.setuptools.packages.find]
+include = ["cmfo_compute*"]
+

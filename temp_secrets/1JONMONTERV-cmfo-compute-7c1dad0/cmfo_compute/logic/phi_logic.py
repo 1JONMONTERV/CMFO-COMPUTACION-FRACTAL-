@@ -9,14 +9,13 @@ import numpy as np
 #   jmvlavacar@hotmail.com
 # =====================================================================
 
-
 def phi_sign(x):
     x = float(np.array(x).mean())
     return 1.0 if x >= 0 else -1.0
 
 
 def phi_and(a, b):
-    return min(phi_sign(a), phi_sign(b))
+    return phi_sign(a) * phi_sign(b)
 
 
 def phi_or(a, b):

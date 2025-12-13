@@ -1,5 +1,4 @@
 import numpy as np
-from cmfo.core.api import tensor7
 
 
 class CMFOLinear:
@@ -17,8 +16,9 @@ class CMFOLinear:
     def __init__(self, in_features: int, out_features: int, bias: bool = True):
         self.in_features = in_features
         self.out_features = out_features
-        # CMFO "Weights" are structurally defined constants (The Attractor Shape)
-        # We simulate this interface so existing pipelines don't break.
+        # CMFO "Weights" are structurally defined constants
+        # (The Attractor Shape). We simulate this interface so
+        # existing pipelines don't break.
         self.dummy_weights = np.zeros((out_features, in_features))
 
     def __call__(self, x: np.ndarray) -> np.ndarray:

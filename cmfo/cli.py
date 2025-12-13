@@ -1,6 +1,5 @@
 import argparse
 import sys
-import numpy as np
 from .core.api import tensor7
 from .bridge import text_to_tensor, encode_sequence
 from .vis import plot_tensor_ascii, plot_attractor_trajectory

@@ -1,6 +1,5 @@
 import zlib
 import numpy as np
-import struct
 from .bridge import text_to_tensor
 
 
@@ -10,10 +9,11 @@ def compress_text(text: str) -> bytes:
 
     1. CMFO Layer: Converts text to semantic tensor (Signature).
        This acts as a 'checksum' or 'semantic hash' of the content.
-    2. ENTROPY Layer: Uses DEFLATE (zlib) for lossless storage of the raw data.
+    2. ENTROPY Layer: Uses DEFLATE (zlib) for lossless storage.
 
-    *Future Vision:* In v2.0, the semantic tensor will allow lossy reconstruction
-    without storing the raw text, achieving >100x compression for generic meaning.
+    *Future Vision:* In v2.0, the semantic tensor will allow
+    lossy reconstruction without storing the raw text, achieving
+    >100x compression for generic meaning.
 
     Current v1.0 implementation ensures lossless round-trip.
     """

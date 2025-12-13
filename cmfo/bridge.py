@@ -14,7 +14,8 @@ def text_to_tensor(text: str) -> np.ndarray:
         text (str): Input string.
 
     Returns:
-        np.ndarray: A 7-element vector representing the text's semantic geometry.
+        np.ndarray: A 7-element vector representing the text's
+                    semantic geometry.
     """
     # Initialize the state vector (Concept of "Silence")
     state: np.ndarray = np.zeros(7, dtype=float)

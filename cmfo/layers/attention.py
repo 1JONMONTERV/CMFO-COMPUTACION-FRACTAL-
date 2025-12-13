@@ -1,5 +1,4 @@
 import numpy as np
-from cmfo.core.api import tensor7
 
 
 class CMFOAttention:
@@ -40,8 +39,10 @@ class CMFOAttention:
 
                 # 1. Reduced Input (Focus)
                 # Map massive embedding to 7D manifold
-                input_reduced = np.sum(
-                    input_vec.reshape(-1, 7)[:7], axis=0) if dim >= 7 else np.zeros(7)
+                input_reduced = (
+                    np.sum(input_vec.reshape(-1, 7)[:7], axis=0)
+                    if dim >= 7 else np.zeros(7)
+                )
 
                 # 2. Absorb into State (The "Attention" Mechanism)
                 # T7 Operator replaces QK^T

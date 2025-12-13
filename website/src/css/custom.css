@@ -1,30 +1,112 @@
 /**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
+ * CMFO-UNIVERSE Custom CSS
+ * Theme: Fractal Gold & Dark Physics
  */
 
-/* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  /* CMFO Gold Palette */
+  --ifm-color-primary: #d4af37;
+  --ifm-color-primary-dark: #aa8c2c;
+  --ifm-color-primary-darker: #967b26;
+  --ifm-color-primary-darkest: #6d591c;
+  --ifm-color-primary-light: #dec060;
+  --ifm-color-primary-lighter: #e3c975;
+  --ifm-color-primary-lightest: #efe3b3;
+
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --docusaurus-highlighted-code-line-bg: rgba(212, 175, 55, 0.1);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-primary: #ffd700;
+  --ifm-color-primary-dark: #e6c200;
+  --ifm-color-primary-darker: #ccac00;
+  --ifm-color-primary-darkest: #a68b00;
+  --ifm-color-primary-light: #ffde33;
+  --ifm-color-primary-lighter: #ffe466;
+  --ifm-color-primary-lightest: #ffeb99;
+  --docusaurus-highlighted-code-line-bg: rgba(255, 215, 0, 0.1);
+}
+
+/* Landing Page Styles */
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  color: #fff;
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 24px;
+  background: -webkit-linear-gradient(#fbf5b7, #bf953f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 32px;
+  color: #ccc;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.mainSection {
+  margin-top: 2rem;
+}
+
+.section, .sectionAlt {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.sectionAlt {
+  background-color: var(--ifm-color-emphasis-100);
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+  text-align: left;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.featureCol {
+  padding: 2rem;
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.featureCol:hover {
+  transform: translateY(-5px);
+  border-color: var(--ifm-color-primary);
+}
+
+.featureCol h3 {
+  color: var(--ifm-color-primary);
+  margin-bottom: 1rem;
+}
+
+.ctaSection {
+  padding: 6rem 2rem;
+  text-align: center;
+  background: #000;
+  color: white;
+  border-top: 2px solid var(--ifm-color-primary-dark);
 }

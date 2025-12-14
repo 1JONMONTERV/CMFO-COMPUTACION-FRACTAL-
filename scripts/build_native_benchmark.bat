@@ -11,3 +11,4 @@ echo.
 echo Running Benchmarks...
 python ../../benchmarks/benchmark_native.py
 python ../../benchmarks/benchmark_simulation.py
+python ../../benchmarks/benchmark_superposition.py

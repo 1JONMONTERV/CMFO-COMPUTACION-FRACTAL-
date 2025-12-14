@@ -82,5 +82,12 @@ class NativeLib:
             ctypes.c_int # steps
         ]
 
+        lib.Matrix7x7_BatchEvolve.argtypes = [
+            ctypes.c_void_p,
+            ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double), # Batch In/Out
+            ctypes.c_int, # batch_size
+            ctypes.c_int  # steps
+        ]
+
         NativeLib._instance = lib
         return lib

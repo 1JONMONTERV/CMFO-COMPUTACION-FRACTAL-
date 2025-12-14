@@ -83,3 +83,31 @@ class T7Matrix:
         self.lib.Matrix7x7_Evolve(self.ptr, p_real, p_imag, ctypes.c_int(steps))
         
         return v_real + 1j * v_imag
+
+    def evolve_batch(self, batch_states, steps=1):
+        """
+        Simulate Superposition of N Fractal Nodes.
+        Input: (N, 7) array of complex numbers.
+        Output: (N, 7) array of evolved states.
+        """
+        batch = np.array(batch_states, dtype=complex)
+        if batch.ndim != 2 or batch.shape[1] != 7:
+            raise ValueError("Batch must be (N, 7)")
+            
+        N = batch.shape[0]
+        
+        # Contiguous buffers representing the flat batch
+        v_real = np.ascontiguousarray(batch.real.flatten(), dtype=np.float64)
+        v_imag = np.ascontiguousarray(batch.imag.flatten(), dtype=np.float64)
+        
+        p_real = v_real.ctypes.data_as(ctypes.POINTER(ctypes.c_double))
+        p_imag = v_imag.ctypes.data_as(ctypes.POINTER(ctypes.c_double))
+        
+        # Call C++ Engine
+        self.lib.Matrix7x7_BatchEvolve(self.ptr, p_real, p_imag, ctypes.c_int(N), ctypes.c_int(steps))
+        
+        # Reconstruct
+        res_real = v_real.reshape((N, 7))
+        res_imag = v_imag.reshape((N, 7))
+        
+        return res_real + 1j * res_imag

@@ -205,6 +205,56 @@ CMFO_API void Matrix7x7_Evolve(void *mat_ptr, double *vec_real,
   }
 }
 
+CMFO_API void Matrix7x7_BatchEvolve(void *mat_ptr, double *batch_real,
+                                    double *batch_imag, int batch_size,
+                                    int steps) {
+  if (!mat_ptr)
+    return;
+  auto *mat = static_cast<Matrix7x7 *>(mat_ptr);
+  auto *mat_data = mat->raw_data();
+
+  // PARALLEL FRACTAL SUPERPOSITION
+  // Process N independent states effectively in parallel
+  // This simulates "Superposition of Fractal Timelines"
+  // Ideally we would use #pragma omp parallel for here if /openmp is enabled
+
+  for (int idx = 0; idx < batch_size; idx++) {
+    // Each node (state) has 7 components.
+    // batch arrays are flat: [r0_n0, ... r6_n0, r0_n1, ... ]
+    int offset = idx * 7;
+
+    // Load State from Batch
+    std::complex<double> state[7];
+    for (int i = 0; i < 7; i++) {
+      state[i] =
+          std::complex<double>(batch_real[offset + i], batch_imag[offset + i]);
+    }
+
+    // Evolve Timeline
+    std::complex<double> next_state[7];
+    for (int s = 0; s < steps; s++) {
+      // MatMul
+      for (int row = 0; row < 7; row++) {
+        std::complex<double> acc(0, 0);
+        for (int col = 0; col < 7; col++) {
+          acc += mat_data[row * 7 + col] * state[col];
+        }
+        next_state[row] = acc;
+      }
+      // Gamma Activation
+      for (int i = 0; i < 7; i++) {
+        state[i] = std::sin(next_state[i]);
+      }
+    }
+
+    // Save Back
+    for (int i = 0; i < 7; i++) {
+      batch_real[offset + i] = state[i].real();
+      batch_imag[offset + i] = state[i].imag();
+    }
+  }
+}
+
 CMFO_API void Matrix7x7_Set(void *ptr, double *buffer_real,
                             double *buffer_imag) {
   if (!ptr)

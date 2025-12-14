@@ -8,5 +8,6 @@ cd bindings/python
 python setup.py build_ext --inplace
 
 echo.
-echo Running Benchmark...
+echo Running Benchmarks...
 python ../../benchmarks/benchmark_native.py
+python ../../benchmarks/benchmark_simulation.py

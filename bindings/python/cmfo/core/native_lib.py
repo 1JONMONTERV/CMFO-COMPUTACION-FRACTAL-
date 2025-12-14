@@ -76,5 +76,11 @@ class NativeLib:
             ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double)  # Output Real/Imag
         ]
 
+        lib.Matrix7x7_Evolve.argtypes = [
+            ctypes.c_void_p,
+            ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double), # In/Out Vec Real/Imag
+            ctypes.c_int # steps
+        ]
+
         NativeLib._instance = lib
         return lib

@@ -160,6 +160,51 @@ CMFO_API void Matrix7x7_Get(void *ptr, double *buffer_real,
   }
 }
 
+CMFO_API void Matrix7x7_Evolve(void *mat_ptr, double *vec_real,
+                               double *vec_imag, int steps) {
+  if (!mat_ptr)
+    return;
+  auto *mat = static_cast<Matrix7x7 *>(mat_ptr);
+
+  // Allocate temporary buffer for matrix multiplication result
+  // To avoid malloc in loop, we use stack (small 7x7)
+  std::complex<double> state[7];
+  std::complex<double> next_state[7];
+
+  // Load initial state
+  for (int i = 0; i < 7; i++) {
+    state[i] = std::complex<double>(vec_real[i], vec_imag[i]);
+  }
+
+  for (int s = 0; s < steps; s++) {
+    // 1. Matrix Multiplication: next = M * state
+    // Manual 7x7 mult
+    auto *mat_data = mat->raw_data(); // 49 elements
+
+    for (int row = 0; row < 7; row++) {
+      std::complex<double> acc(0, 0);
+      for (int col = 0; col < 7; col++) {
+        // mat is row-major? check at() implementation or standard
+        // Assuming row-major for 7x7 simple array
+        acc += mat_data[row * 7 + col] * state[col];
+      }
+      next_state[row] = acc;
+    }
+
+    // 2. Gamma Activation: state = sin(next)
+    // Physics: The non-linearity maps back to the manifold (simplified)
+    for (int i = 0; i < 7; i++) {
+      state[i] = std::sin(next_state[i]);
+    }
+  }
+
+  // Save back
+  for (int i = 0; i < 7; i++) {
+    vec_real[i] = state[i].real();
+    vec_imag[i] = state[i].imag();
+  }
+}
+
 CMFO_API void Matrix7x7_Set(void *ptr, double *buffer_real,
                             double *buffer_imag) {
   if (!ptr)

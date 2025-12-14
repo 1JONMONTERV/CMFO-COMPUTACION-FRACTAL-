@@ -59,3 +59,27 @@ class T7Matrix:
         self.lib.Matrix7x7_Apply(self.ptr, p_in_r, p_in_i, p_out_r, p_out_i)
         
         return out_real + 1j * out_imag
+
+    def evolve_state(self, initial_state, steps=1):
+        """
+        High-Performance C++ Simulation Loop.
+        Performs v = sin(Matrix @ v) for 'steps'.
+        Modifies state in-place? No, returns new final state.
+        """
+        v = np.array(initial_state, dtype=complex)
+        if v.size != 7:
+            raise ValueError("State must be 7D")
+            
+        # We need mutable buffers for the C function to write back into
+        # But wait, C function arg is 'vec_real', 'vec_imag'. 
+        # Is it in/out? Yes, logic says load, loop, save back.
+        
+        v_real = np.ascontiguousarray(v.real, dtype=np.float64)
+        v_imag = np.ascontiguousarray(v.imag, dtype=np.float64)
+        
+        p_real = v_real.ctypes.data_as(ctypes.POINTER(ctypes.c_double))
+        p_imag = v_imag.ctypes.data_as(ctypes.POINTER(ctypes.c_double))
+        
+        self.lib.Matrix7x7_Evolve(self.ptr, p_real, p_imag, ctypes.c_int(steps))
+        
+        return v_real + 1j * v_imag

@@ -82,7 +82,10 @@ def run_simulation():
         print(f"Precision Error: {error:.2e}")
         
         # Speedup Calculation
-        ratio = bf_time / geo_time if bf_time > 0 else 1.0
+        # Protect against division by zero if geo_time is too small
+        if geo_time < 1e-9:
+            geo_time = 1e-9
+        ratio = bf_time / geo_time if bf_time > 0 and geo_time > 0 else 1.0
         if not bf_result:
             print(f"\nSpeedup: INFINITE (Brute force failed, CMFO succeeded)")
         else:

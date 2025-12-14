@@ -3,17 +3,17 @@
 // Documentación científica, computación fractal y GPU kernels
 
 module.exports = {
-  title: 'CMFO–UNIVERSE v∞',
-  tagline: 'Computación, Física y Lenguaje Unificados en un Autómata Fractal 7D',
+  title: 'CMFO-COMPUTACION-FRACTAL',
+  tagline: 'Computación, Física y Lenguaje Unificados',
 
   // Dominio del sitio (GitHub Pages)
   url: 'https://1jonmonterv.github.io',
-  baseUrl: '/cmfo-universe/',
+  baseUrl: '/CMFO-COMPUTACION-FRACTAL-/',
   trailingSlash: false,
 
   // Configuración GitHub Pages
-  organizationName: '1jonmonterv',     // Tu usuario de GitHub
-  projectName: 'cmfo-universe',        // Nombre exacto del repo
+  organizationName: '1JONMONTERV',     // Tu usuario de GitHub
+  projectName: 'CMFO-COMPUTACION-FRACTAL-',        // Nombre exacto del repo
   deploymentBranch: 'gh-pages',        // Rama donde se publicará
 
   // Tratamiento de errores
@@ -57,7 +57,7 @@ module.exports = {
       items: [
         { to: '/docs/intro', label: 'Documentación', position: 'left' },
         {
-          href: 'https://github.com/1jonmonterv/cmfo-universe',
+          href: 'https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-',
           label: 'GitHub',
           position: 'right',
         },
@@ -66,7 +66,7 @@ module.exports = {
 
     footer: {
       style: 'dark',
-      copyright: `CMFO–UNIVERSE v∞ © ${new Date().getFullYear()} • Sistema Fractal Unificado`,
+      copyright: `CMFO FRACTAL COMPUTATION © ${new Date().getFullYear()} • 1JONMONTERV`,
     },
   },
 };

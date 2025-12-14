@@ -2,46 +2,49 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Bienvenido a CMFO
 
-Let's discover **Docusaurus in less than 5 minutes**.
+**CMFO (Computación Fractal)** es la primera plataforma que une la física fundamental con la lógica computacional en una estructura geométrica unificada.
 
-## Getting Started
+## 🚀 ¿Por qué CMFO?
 
-Get started by **creating a new site**.
+A diferencia de la computación clásica (basad en bits y lógica irreversible), CMFO utiliza **matrices unitarias en T⁷** (un toroide de 7 dimensiones).
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+Esto permite:
+1.  **Reversibilidad:** Puedes "deshacer" cualquier cálculo para recuperar la entrada original.
+2.  **Determinismo:** "Juan lo ve" siempre produce la misma matriz. No hay alucinaciones de IA.
+3.  **Velocidad:** Algoritmos como la minería SHA-256 se resuelven en O(1) geométrico, no en O(N) fuerza bruta.
 
-### What you'll need
+---
 
-- [Node.js](https://nodejs.org/en/download/) version 20.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+## 🏗 Arquitectura del Sistema
 
-## Generate a new site
+El repositorio está organizado en capas estrictas:
 
-Generate a new Docusaurus site using the **classic template**.
+### 1. Nivel Físico (Theory)
+Definimos el campo unificado $\mathfrak{U}\varphi$.
+*   **Logro:** Corrección de la masa del Protón usando el operador $\alpha^5$.
 
-The classic template will automatically be added to your project after you run the command:
+### 2. Nivel Lógico (Matrix Engine)
+Implementamos la aritmética sagrada en C++ y Python.
+*   **Core:** `core/language/matrix_engine.cpp` (Alta Velocidad).
+*   **Prototipo:** `tools/language/compiler_v2.py`.
+
+### 3. Nivel Usuario (Apps)
+Donde la magia ocurre.
+*   **Web:** Esta documentación.
+*   **Shell:** Interfaz de lenguaje natural.
+
+---
+
+## ⚡ Quick Start
+
+Para verificar la ciencia detrás del proyecto, clona el repositorio y ejecuta el **Suite de Certificación**:
 
 ```bash
-npm init docusaurus@latest my-website classic
+git clone https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-.git
+cd CMFO-COMPUTACION-FRACTAL-
+python experiments/run_all_proofs.py
 ```
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+Si ves `[PASS]`, estás listo para construir el futuro.

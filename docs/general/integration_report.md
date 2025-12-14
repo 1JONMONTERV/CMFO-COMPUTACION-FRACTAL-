@@ -28,8 +28,7 @@ The `cmfo-compute` logic (Tensor wrappers) was audited. It is largely superseded
 ## 2. New Repository Structure
 ```
 CMFO_GPU_FINAL/
-├── apps/
-│   └── web/              <-- [NEW] The Website
+├── web/                  <-- [NEW] The Website
 ├── core/
 │   ├── language/         <-- [NEW] C++ Matrix Engine
 │   ├── native/

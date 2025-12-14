@@ -11,7 +11,7 @@ However, you need to give it the "Secret Key".
     *   Go to your Repo (`CMFO-COMPUTACION-FRACTAL-`).
     *   Settings -> Secrets and variables -> Actions.
     *   Click **New repository secret**.
-    *   Name: `PYPI_TOKEN`
+    *   Name: `PYPI_API_TOKEN`
     *   Value: (Paste the token starting with `pypi-...`).
 3.  **Trigger Release:**
     ```bash

@@ -64,10 +64,10 @@ The platform is structured in 4 strictly coupled layers:
 
 | Layer | Component | Implementation | Function |
 | :--- | :--- | :--- | :--- |
-| **L4: User** | **Descriptive Shell** | `apps/web` | Natural Language Automation |
+| **L4: User** | **Descriptive Shell** | `web` | Natural Language Automation |
 | **L3: Logic** | **Matrix Compiler** | `tools/language` | Text $\to$ Matrix Translation |
 | **L2: Engine**| **C++/CUDA Core** | `core/native` | High-Perf $T^7$ Operations |
-| **L1: Theory**| **Unified Field** | `docs/theory` | $\mathfrak{U}\varphi$ Mathematical Axioms |
+| **L1: Theory**| **Unified Field** | [`docs/theory`](docs/theory/mathematical_foundation.md) | $\mathfrak{U}\varphi$ Mathematical Axioms |
 
 ---
 

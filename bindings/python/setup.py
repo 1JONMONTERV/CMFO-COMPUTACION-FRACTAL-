@@ -13,7 +13,7 @@ except FileNotFoundError:
 
 setup(
     name="cmfo",
-    version="1.1.2",
+    version="0.1.0",
     author="Jonathan Montero Viques",
     author_email="jesuslocopor@gmail.com",
     description="Fractal Universal Computation Engine",

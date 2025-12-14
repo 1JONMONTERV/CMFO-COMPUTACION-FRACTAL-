@@ -17,7 +17,7 @@ We integrated the optimized C implementation of 7x7 matrices:
 *   `cmfo_soliton.c`: Physics engine.
 *   `cmfo_core.h`: Header definitions.
 
-### C. Userspace Application (`apps/web`)
+### C. Userspace Application (`web`)
 We imported the full documentation/marketing website:
 *   Located in `apps/web/`.
 *   Includes React/Docusaurus source code.

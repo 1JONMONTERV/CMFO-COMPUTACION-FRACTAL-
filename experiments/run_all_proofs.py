@@ -44,6 +44,7 @@ def main():
         print("ALL SYSTEMS GREEN. The Theory and Code are consistent.")
     else:
         print("WARNING: Some verifications failed. Check output above.")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()

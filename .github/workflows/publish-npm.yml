@@ -38,6 +38,16 @@ jobs:
         else
           echo "⚠️ Native build script not found - package may require manual build"
         fi
+        
+    - name: Verify Native Library Existence
+      working-directory: bindings/node
+      run: |
+        if [ ! -f "lib/cmfo_core.so" ] && [ ! -f "lib/cmfo_core.dll" ] && [ ! -f "lib/cmfo_core.dylib" ]; then
+          echo "❌ Native library not found in bindings/node/lib/"
+          ls -R lib/
+          exit 1
+        fi
+        echo "✅ Native library found"
     
     - name: Verify package contents
       working-directory: bindings/node

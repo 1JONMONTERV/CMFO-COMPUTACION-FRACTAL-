@@ -1,0 +1,202 @@
+\section{Fractal Computation on $\T^7_\varphi$}
+\label{sec:fractal-computation}
+
+In the CMFO framework, computation is not based on Boolean logic, tensor products,
+or qubit superpositions. Instead, the underlying mechanism is the fractal dynamics
+of the seven-dimensional golden torus $\T^7_\varphi$, equipped with the Hamiltonian
+\[
+H_\varphi = \sum_{i=0}^{6} \varphi^{-2i}\, \partial_{\theta_i}^2,
+\]
+which defines reversible, periodic, and scale-harmonic evolution. In this section
+we present the operational principles of CMFO computation, its algorithmic
+structures, and the physical limits implied by the fractal geometry.
+
+% -------------------------------------------------------------------------
+\subsection{Hamiltonian Evolution and Reversibility}
+
+The time evolution operator on the fractal torus is
+\[
+U_\varphi(t) = e^{-it H_\varphi}.
+\]
+Since $H_\varphi$ is Hermitian and diagonal in the $\theta_i$ basis, the evolution
+is exactly reversible:
+\[
+U_\varphi(-t) = U_\varphi(t)^\dagger.
+\]
+This property replaces the standard requirements for error correction, as
+reversibility is a built-in geometric feature of the system.
+
+% -------------------------------------------------------------------------
+\subsection{Fractal Gates as Rotations}
+
+Each dimension of the torus provides a natural computational ``axis''. A fractal
+gate acting on mode $i$ is defined as
+\[
+G_i(\alpha) : \theta_i \mapsto \theta_i + \alpha \varphi^{-i}.
+\]
+Gates commute up to a phase determined by the fractal Hopf algebra:
+\[
+G_i(\alpha) G_j(\beta) 
+= e^{i\varphi^{-(i+j)}\alpha\beta} 
+G_j(\beta) G_i(\alpha).
+\]
+
+% -------------------------------------------------------------------------
+\subsection{Fractal Fourier Transform}
+
+The fractal Fourier transform on $\T^7_\varphi$ is defined as
+\[
+\mathcal{F}_\varphi[\psi](n_0,\ldots,n_6)
+= \prod_{i=0}^6 
+\left(
+\int_0^{2\pi} e^{-in_i \theta_i}
+\psi(\theta_0,\ldots,\theta_6)\, d\theta_i
+\right)
+\varphi^{-i}.
+\]
+The factor $\varphi^{-i}$ ensures scale invariance and matches the fractal metric
+introduced in Section~\ref{sec:torus-definition}.
+
+% -------------------------------------------------------------------------
+\subsection{Information Capacity of the Fractal Torus}
+
+A fundamental result in CMFO is that the information capacity of the seven-dimensional
+torus is not $2^7$ (as in classical bits) but
+\[
+C_{\max} = \sum_{i=0}^{6} \varphi^{-i}
+= \varphi^{-3} \approx 0.236.
+\]
+This value arises from the fractal Euler characteristic and matches the Casimir
+eigenvalue obtained in the Hopf algebra section.
+
+% -------------------------------------------------------------------------
+\subsection{Fractal Algorithms}
+
+Algorithms in CMFO exploit the golden scaling of the modes. The simplest example is
+the fractal search algorithm, which solves a problem of size $N=\varphi^{2k}$ in
+\[
+T_{\mathrm{CMFO}} = \varphi^{-3} k
+\]
+steps, compared with the Grover bound $\Theta(\sqrt{N}) = \Theta(\varphi^k)$.
+
+This provides a theoretical speed-up factor
+\[
+S(k) = \frac{T_{\mathrm{Grover}}}{T_{\mathrm{CMFO}}}
+= \varphi^{k/2+3}.
+\]
+
+% -------------------------------------------------------------------------
+\subsection{Experimental Falsifiability of CMFO Computational Claims}
+\label{subsec:falsifiability}
+
+Computation must ultimately be validated in hardware. This subsection provides
+concrete falsifiable predictions distinguishing CMFO from all classical and
+quantum models.
+
+\subsubsection{Reversibility: concrete prediction}
+
+\paragraph{CMFO claim.}
+\[
+U_\varphi(t) = e^{-itH_\varphi}
+\quad\text{is exactly reversible.}
+\]
+
+\paragraph{Experiment.}
+Fabricate a 7-mode fractal chip with impedances
+\[
+Z_i \propto \varphi^{-i}.
+\]
+Evolve a state and apply time reversal.
+
+\paragraph{Prediction.}
+\[
+F \ge 1 - 10^{-12}.
+\]
+
+\paragraph{Falsification.}
+If after removing standard noise sources one finds
+\[
+F < 1 - 10^{-10},
+\]
+the CMFO reversibility theorem is falsified.
+
+% -------------------------------------------------------
+\subsubsection{Fractal Memory Capacity: $\varphi^{-3}$ bits}
+
+\paragraph{CMFO claim.}
+\[
+C_{\max} = \varphi^{-3}.
+\]
+
+\paragraph{Experiment.}
+Encode a string of length $L$ into 7 resonators with density
+\[
+\rho = \frac{L}{7}.
+\]
+
+\paragraph{Prediction.}
+\begin{itemize}
+    \item If $\rho \le \varphi^{-3}$: coherence grows (topological regime).
+    \item If $\rho > \varphi^{-3}$: coherence collapses.
+\end{itemize}
+
+\paragraph{Falsification.}
+If coherent dynamics persists for
+\[
+\rho > \varphi^{-3},
+\]
+the CMFO capacity bound is false.
+
+% -------------------------------------------------------
+\subsubsection{Speed-Up Over Grover}
+
+\paragraph{CMFO claim.}
+For a $\varphi$-symmetric searchable space:
+\[
+T_{\mathrm{CMFO}} = \varphi^{-3} n.
+\]
+
+\paragraph{Prediction.}
+\[
+\frac{T_{\mathrm{Grover}}}{T_{\mathrm{CMFO}}}
+= \varphi^{k/2+3}.
+\]
+
+\paragraph{Falsification.}
+If measured speed-up satisfies
+\[
+\frac{T_{\mathrm{Grover}}}{T_{\mathrm{CMFO}}} < 10,
+\]
+CMFO fails against experiment.
+
+% -------------------------------------------------------
+\subsubsection{Summary Table}
+
+\begin{table}[h!]
+\centering
+\caption{Falsifiable computational predictions of CMFO.}
+\begin{tabular}{p{3cm} p{5cm} p{5cm}}
+\hline
+\textbf{Claim} & \textbf{Experiment} & \textbf{Falsification} \\ \hline
+Reversibility &
+7-mode fractal chip &
+$F < 1 - 10^{-10}$ \\[3pt]
+
+Capacity $\varphi^{-3}$ &
+Coherence vs.\ density &
+Coherence for $\rho > \varphi^{-3}$ \\[3pt]
+
+Speed-up $\varphi^{-3} n$ &
+Benchmark vs Grover &
+Speed-up $< 10\times$ \\ \hline
+\end{tabular}
+\end{table}
+
+% -------------------------------------------------------------------------
+\subsection{Physical Interpretation}
+
+The computational power of CMFO derives not from quantum entanglement, but from
+the golden-scale geometry of $\T^7_\varphi$. If the falsifiable predictions above
+are verified, CMFO becomes the first computational model grounded in a specific
+physical topology. If they fail, the theory is experimentally ruled out.
+

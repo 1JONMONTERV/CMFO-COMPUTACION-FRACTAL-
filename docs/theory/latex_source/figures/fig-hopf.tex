@@ -1,0 +1,9 @@
+\begin{tikzpicture}[>=stealth, node distance=2.2cm]
+
+\node[draw,rounded corners] (e) {$e_i$};
+\node[draw,rounded corners,right of=e] (cop) {$e_i\otimes 1 + 1\otimes e_i + \sum \varphi^{-(j+k)}e_j\otimes e_k$};
+
+\draw[->,thick] (e) -- node[above] {$\Delta$} (cop);
+
+\node at (3,-1.5) {\small Fractal Hopf Coproduct};
+\end{tikzpicture}

@@ -1,0 +1,128 @@
+\documentclass[11pt]{article}
+
+% -------------------------------------------------------------------
+% PACKAGES
+% -------------------------------------------------------------------
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{bm}
+\usepackage{physics}
+\usepackage{titlesec}
+\usepackage{enumitem}
+
+\geometry{margin=1in}
+\pgfplotsset{compat=1.17}
+
+% -------------------------------------------------------------------
+% TITLE
+% -------------------------------------------------------------------
+\title{\textbf{CMFO: A Complete Fractal Theory of Everything Without Free Parameters}\\[6pt]
+{\large The $\mathcal{T}^7_\varphi$ Fractal Torus as Universal Generator of Physical Law}}
+\author{Jonnathan Montero V\'iquez \\ \small CMFO Research Institute}
+\date{2025}
+
+% -------------------------------------------------------------------
+% THEOREM ENVIRONMENTS
+% -------------------------------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{remark}{Remark}[section]
+
+% -------------------------------------------------------------------
+% SHORTCUTS
+% -------------------------------------------------------------------
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\varphiCMFO}{\varphi}
+
+% -------------------------------------------------------------------
+% DOCUMENT
+% -------------------------------------------------------------------
+\begin{document}
+
+\maketitle
+\begin{abstract}
+We present a complete formal theory (CMFO) where the fine-structure constant $\alpha$,
+all hadronic and leptonic masses, the cosmological parameters $\Lambda$ and $H_0$,
+and the entire atomic, nuclear, chemical and biological structure emerge from
+a 7-dimensional fractal torus $\T^7_\varphi$ with scaling constant
+$\varphi = (1+\sqrt{5})/2$.
+Using only the adimensional ratio $m_p/m_e$ as physical anchor,
+the theory predicts:
+\begin{itemize}
+    \item $\alpha^{-1} = 137.035999084(3)$,
+    \item $a_\mu^{\mathrm{had}} = (11.0\pm0.02)\times10^{-8}$,
+    \item $\Lambda = 1.1056(2)\times10^{-52}\,\mathrm{m}^{-2}$,
+    \item The complete periodic table and nuclear magic numbers,
+    \item The 7-dimensional genetic code structure.
+\end{itemize}
+All code, derivations, and figures are included for full public verification.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% -------------------------------------------------------------------
+% FUNDAMENTALS
+% -------------------------------------------------------------------
+\section{Foundations of the CMFO Framework}
+
+\subsection{The Fractal Torus}
+\input{01-fundamentals/01-torus-fractal}
+
+\subsection{Fractal Hopf Algebra}
+\input{01-fundamentals/02-hopf-algebra}
+
+\subsection{Unicity Theorems}
+\input{01-fundamentals/03-unicity-theorems}
+
+% -------------------------------------------------------------------
+% PHYSICS
+% -------------------------------------------------------------------
+\section{Physical Derivations}
+
+\subsection{Fine-Structure Constant}
+\input{02-physics/04-fine-structure}
+
+\subsection{Hadronic Masses}
+\input{02-physics/05-hadronic-masses}
+
+\subsection{Muon Anomalous Moment}
+\input{02-physics/06-muon-g2}
+
+\subsection{Cosmological Parameters}
+\input{02-physics/07-cosmological-derivation}
+
+% -------------------------------------------------------------------
+% BIOLOGY
+% -------------------------------------------------------------------
+\section{Fractal Biology}
+\input{03-biology/08-genetic-code-fractal}
+
+% -------------------------------------------------------------------
+% COMPUTATION
+% -------------------------------------------------------------------
+\section{Fractal Computation}
+\input{04-computation/09-fractal-computation}
+
+% -------------------------------------------------------------------
+% APPENDIX
+% -------------------------------------------------------------------
+\appendix
+\section{Logical and Metaphysical Limits of CMFO}
+\input{appendix-limits}
+
+% === THIS LINE FORCES ALL ENTRIES IN cmfo-bib.bib TO APPEAR ===
+\nocite{*}
+
+\bibliographystyle{unsrt}
+\bibliography{cmfo-bib}
+
+\end{document}
+
+

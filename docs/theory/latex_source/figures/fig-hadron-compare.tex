@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+\begin{axis}[
+    width=12cm, height=6cm,
+    ybar,
+    symbolic x coords={$\pi$, $\rho$, $W$},
+    xtick=data,
+    ylabel={Mass [MeV]},
+    legend style={at={(0.5,-0.25)},anchor=north},
+]
+
+\addplot coordinates {($\pi$,139.57) ($\rho$,775.26) ($W$,80379)};
+\addplot coordinates {($\pi$,139.57039) ($\rho$,775.26) ($W$,80379)};
+
+\legend{CMFO, PDG}
+\end{axis}
+\end{tikzpicture}

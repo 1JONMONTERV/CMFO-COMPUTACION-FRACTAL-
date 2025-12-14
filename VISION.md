@@ -64,3 +64,26 @@ Achieving the status of a global standard requires rigorous verification. Our ro
 3.  **Distributed Consensus:** Using fractal geometry for blockchain-like consensus without energy waste.
 
 *This vision drives our daily engineering, but we distinguish clearly between these goals and the code running today.*
+
+---
+
+## 🔬 Blue Sky Research (Theoretical Hypotheses)
+
+The CMFO Project also encompasses a wider theoretical framework currently under investigation. These topics represent the **"Omega Phase"** of our research and are distinct from the computational engine.
+
+### 🌌 Particle Physics & Cosmology
+**Hypothesis:** Fundamental masses and constants derive from geometric invariants of the $T^7_\varphi$ manifold.
+*   **Proton Mass:** Derivation from toroidal curvature ($m_p = \hbar / R c$).
+*   **Cosmic Expansion:** modelled as fractal self-similarity rather than Dark Energy.
+*   **Unified Field:** Aims to derive Strong/Weak/EM forces from geometric phase transitions.
+
+### 🧬 Biological Fractals
+**Hypothesis:** Biological stability (DNA, immune response) relies on fractal resonance conservation.
+*   **DNA Topology:** Modeling DNA as a network of 256 coupled tori.
+*   **Immunology:** "Structural restoration" protocols for cellular phase coherence (Concept Stage).
+
+### 🔐 Cryptography & Mining
+**Hypothesis:** Reversible fractal operators ($\Gamma_\varphi$) allow for deterministic verification of work.
+*   **SHA-256d Mapping:** Modeling the Bitcoin mining process as a geometric gradient descent.
+*   **Energy Efficiency:** Replacing brute-force guessing with geometric solving.
+

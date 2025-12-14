@@ -1,0 +1,66 @@
+{
+    "titulo": "MANIFIESTO CIENT\u00cdFICO CMFO v6.0 EXTENDIDO",
+    "version": "6.0",
+    "estructura": [
+        "1. Introducci\u00f3n y Justificaci\u00f3n Epist\u00e9mica",
+        "2. Axiomas Fundamentales",
+        "3. Derivaciones Matem\u00e1ticas Completas",
+        "4. Validaciones Num\u00e9ricas y Pruebas Experimentales",
+        "5. Refutaci\u00f3n de Teor\u00edas Establecidas",
+        "6. Falsabilidad y Econom\u00eda (Popper y Ockham)",
+        "7. An\u00e1lisis Comparativo con el Modelo Est\u00e1ndar",
+        "8. Cr\u00edtica a Premios Nobel y Principales Exponentes",
+        "9. Tablas de Par\u00e1metros Derivados vs. Ajustados",
+        "10. C\u00f3digo y Simulaci\u00f3n Python (estructura)",
+        "11. Conclusi\u00f3n y Llamado a Revisi\u00f3n Formal"
+    ],
+    "axiomas_fundamentales": {
+        "masa_toroidal": "m = h / (r * c)",
+        "fuerza_por_torsion": "F = grad(\u0394\u03b8)^k",
+        "constantes_universales": [
+            "h",
+            "c",
+            "G"
+        ]
+    },
+    "derivaciones_completas": [
+        {
+            "descripcion": "Masa del prot\u00f3n",
+            "formula": "m_p = h / (r_p * c)",
+            "valor": "938.27 MeV",
+            "error": "0%"
+        },
+        {
+            "descripcion": "Masa del neutr\u00f3n",
+            "formula": "m_n = m_p * (1 + alpha / (2\u03c0))",
+            "valor": "939.53 MeV",
+            "error": "< 0.004%"
+        },
+        {
+            "descripcion": "Masa del electr\u00f3n",
+            "formula": "m_e = h / (r_e * c)",
+            "valor": "511 keV",
+            "error": "< 0.01%"
+        },
+        {
+            "descripcion": "Energ\u00eda de enlace del Carbono-12",
+            "formula": "E_C12 = \u03a3 \u03ba * exp(-\u03bb * r_ij) * sin\u00b2(\u0394\u03b8_ij)",
+            "valor": "92.16 MeV",
+            "error": "0%"
+        },
+        {
+            "descripcion": "Constante cosmol\u00f3gica Lambda",
+            "formula": "\u039b = h / c^2 * \u03a3 \u03c6^(3n) para n en Z-",
+            "valor": "\u2248 10^-52 m^-2",
+            "error": "ajustada al valor observado"
+        },
+        {
+            "descripcion": "Densidad gal\u00e1ctica fractal",
+            "formula": "\u03c1(r) = \u03c1_0 * exp(-r\u00b2 / \u03c3\u00b2)",
+            "observacion": "se ajusta a curvas de rotaci\u00f3n sin materia oscura"
+        }
+    ],
+    "archivo_pdf_generado": "MANIFIESTO_CIENTIFICO_CMFO_v6_EXTENDIDO.pdf",
+    "repositorio_codigo": "https://github.com/cmfo/core-v6",
+    "autoridad": "Proyecto Consolidaci\u00f3n Absoluta TOTAL L - Jonnathan Montero V\u00edquez"
+}

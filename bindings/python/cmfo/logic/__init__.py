@@ -1,21 +1,10 @@
 """
-Lógica fractal φ-modal para CMFO Compute
+CMFO Logic Module
+=================
+
+Fractal logic operations.
 """
 
-from .phi_logic import (
-    phi_sign,
-    phi_and,
-    phi_or,
-    phi_not,
-    phi_xor,
-    phi_nand,
-)
+from .fractal_logic import TRUE, FALSE, NEUTRAL, f_not, f_and, f_or, f_xor
 
-__all__ = [
-    "phi_sign",
-    "phi_and",
-    "phi_or",
-    "phi_not",
-    "phi_xor",
-    "phi_nand",
-]
+__all__ = ['TRUE', 'FALSE', 'NEUTRAL', 'f_not', 'f_and', 'f_or', 'f_xor']

@@ -33,8 +33,8 @@ try:
     ext_modules = [
         Extension(
             "cmfo_core_native",
-            sources=["../../core/language/matrix_engine.cpp"],
-            include_dirs=["../../core/language"],
+            sources=["native_src/matrix_engine.cpp"],
+            include_dirs=["native_src"],
             language="c++",
             extra_compile_args=["/O2", "/fp:fast", "/openmp", "/std:c++17"] if os.name == 'nt' else ["-O3", "-ffast-math", "-fopenmp", "-std=c++17"],
             extra_link_args=["/OPENMP"] if os.name == 'nt' else ["-fopenmp"],

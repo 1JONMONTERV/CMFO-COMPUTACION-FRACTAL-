@@ -2,6 +2,7 @@
 #include <Python.h>
 #include <iomanip>
 
+
 Matrix7x7::Matrix7x7() { data.fill(Complex(0, 0)); }
 
 Matrix7x7 Matrix7x7::Identity() {

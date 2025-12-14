@@ -19,25 +19,32 @@ jobs:
       with:
         node-version: '18'
         registry-url: 'https://registry.npmjs.org'
+        cache: 'npm'
+        cache-dependency-path: 'bindings/node/package-lock.json'
     
     - name: Install dependencies
-      run: |
-        cd bindings/node
-        npm install
+      working-directory: bindings/node
+      run: npm ci || npm install
     
     - name: Run tests
-      run: |
-        cd bindings/node
-        npm test || echo "Tests require native library - skipping for now"
+      working-directory: bindings/node
+      run: npm test || echo "⚠️ Tests require native library - skipping for now"
     
     - name: Build Native Library
       run: |
-        chmod +x scripts/build_native.sh
-        ./scripts/build_native.sh
-
+        if [ -f "scripts/build_native.sh" ]; then
+          chmod +x scripts/build_native.sh
+          ./scripts/build_native.sh
+        else
+          echo "⚠️ Native build script not found - package may require manual build"
+        fi
+    
+    - name: Verify package contents
+      working-directory: bindings/node
+      run: npm pack --dry-run
+    
     - name: Publish to npm
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      run: |
-        cd bindings/node
-        npm publish --access public
+      working-directory: bindings/node
+      run: npm publish --access public

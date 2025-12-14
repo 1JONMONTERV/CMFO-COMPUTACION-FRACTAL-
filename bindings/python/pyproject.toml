@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cmfo"
-version = "1.1.2"
+version = "0.1.4"
 description = "Fractal Universal Computation Engine"
 authors = [
     { name = "Jonathan Montero Viques", email = "jesuslocopor@gmail.com" }

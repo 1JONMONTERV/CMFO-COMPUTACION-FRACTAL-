@@ -71,6 +71,20 @@ export default function Home() {
       </header>
 
       <main className={styles.mainSection}>
+        {/* NEW: Project Showcase Row */}
+        <section className={styles.sectionAlt}>
+          <div className="container" style={{ textAlign: 'center', padding: '40px 0' }}>
+            <h2 className={styles.sectionTitle}>Explora los Proyectos Oficiales</h2>
+            <div className={styles.buttons} style={{ justifyContent: 'center', gap: '20px', marginTop: '20px' }}>
+              <Link className="button button--primary button--lg" to="/docs/showcase/mining">⛏️ Minería O(1)</Link>
+              <Link className="button button--info button--lg" to="/docs/showcase/superposition">🌌 Superposición</Link>
+              <Link className="button button--secondary button--lg" to="/docs/showcase/memory">🧠 Memoria</Link>
+            </div>
+            <div style={{ marginTop: '20px' }}>
+              <Link className="button button--outline button--success button--lg" to="/docs/downloads">📥 Descargar Todo</Link>
+            </div>
+          </div>
+        </section>
         {/* Features: The Verified Claims */}
         <section className={styles.section}>
           <div className="container">

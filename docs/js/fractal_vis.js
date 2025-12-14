@@ -64,7 +64,11 @@ class Particle {
         // Color based on velocity
         const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
         const alpha = Math.min(1, speed * 0.5);
-        ctx.fillStyle = `rgba(0, 240, 255, ${alpha})`;
+        // Mix Gold and Cyan based on state
+        const r = this.state > 0.5 ? 212 : 0;
+        const g = this.state > 0.5 ? 175 : 240;
+        const b = this.state > 0.5 ? 55 : 255;
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
         ctx.fill();
 
         // Connect to neighbors
@@ -74,7 +78,7 @@ class Particle {
                 ctx.beginPath();
                 ctx.moveTo(this.x, this.y);
                 ctx.lineTo(p.x, p.y);
-                ctx.strokeStyle = `rgba(0, 240, 255, ${0.1 * (1 - d / 100)})`;
+                ctx.strokeStyle = `rgba(212, 175, 55, ${0.15 * (1 - d / 100)})`;
                 ctx.stroke();
             }
         });

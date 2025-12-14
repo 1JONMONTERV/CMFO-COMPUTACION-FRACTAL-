@@ -12,6 +12,9 @@ jobs:
     permissions:
       id-token: write
       contents: read
+    environment:
+      name: pypi
+      url: https://pypi.org/p/cmfo
 
     steps:
       - name: Debug Secret Availability

@@ -17,20 +17,6 @@ jobs:
       url: https://pypi.org/p/cmfo
 
     steps:
-      - name: Debug Secret Availability
-        shell: bash
-        env:
-          HAS_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN != '' }}
-          HAS_API_TOKEN: ${{ secrets.PYPI_API_TOKEN != '' }}
-          HAS_PYP: ${{ secrets.PYP != '' }}
-          HAS_CMFO_TOKEN: ${{ secrets.CMFO_TOKEN != '' }}
-        run: |
-          echo "Debug Secrets:"
-          echo "PYPI_TOKEN present: $HAS_PYPI_TOKEN"
-          echo "PYPI_API_TOKEN present: $HAS_API_TOKEN"
-          echo "PYP present: $HAS_PYP"
-          echo "CMFO_TOKEN present: $HAS_CMFO_TOKEN"
-
       - name: Checkout
         uses: actions/checkout@v4
       

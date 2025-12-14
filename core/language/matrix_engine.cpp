@@ -1,4 +1,5 @@
 #include "matrix_engine.hpp"
+#include <Python.h>
 #include <iomanip>
 
 Matrix7x7::Matrix7x7() { data.fill(Complex(0, 0)); }
@@ -101,4 +102,87 @@ void Matrix7x7::print() const {
     }
     std::cout << "]" << std::endl;
   }
+}
+
+extern "C" {
+#ifdef _WIN32
+#define CMFO_API __declspec(dllexport)
+#else
+#define CMFO_API
+#endif
+
+CMFO_API void *Matrix7x7_Create() { return new Matrix7x7(); }
+CMFO_API void Matrix7x7_Destroy(void *ptr) {
+  delete static_cast<Matrix7x7 *>(ptr);
+}
+
+CMFO_API void Matrix7x7_SetIdentity(void *ptr) {
+  if (ptr)
+    *static_cast<Matrix7x7 *>(ptr) = Matrix7x7::Identity();
+}
+
+CMFO_API void Matrix7x7_Multiply(void *a, void *b, void *out) {
+  if (a && b && out) {
+    *static_cast<Matrix7x7 *>(out) =
+        (*static_cast<Matrix7x7 *>(a)) * (*static_cast<Matrix7x7 *>(b));
+  }
+}
+
+CMFO_API void Matrix7x7_Apply(void *mat_ptr, double *input_vec_real,
+                              double *input_vec_imag, double *out_vec_real,
+                              double *out_vec_imag) {
+  if (!mat_ptr)
+    return;
+  auto *mat = static_cast<Matrix7x7 *>(mat_ptr);
+
+  // Manual unrolled 7x7 multiplication for simple pointer arrays
+  for (int i = 0; i < 7; i++) {
+    std::complex<double> sum(0, 0);
+    for (int j = 0; j < 7; j++) {
+      std::complex<double> vec_val(input_vec_real[j], input_vec_imag[j]);
+      sum += mat->at(i, j) * vec_val;
+    }
+    out_vec_real[i] = sum.real();
+    out_vec_imag[i] = sum.imag();
+  }
+}
+
+CMFO_API void Matrix7x7_Get(void *ptr, double *buffer_real,
+                            double *buffer_imag) {
+  if (!ptr)
+    return;
+  auto *mat = static_cast<Matrix7x7 *>(ptr);
+  auto *data = mat->raw_data();
+  for (int i = 0; i < 49; i++) {
+    auto c = data[i];
+    buffer_real[i] = c.real();
+    buffer_imag[i] = c.imag();
+  }
+}
+
+CMFO_API void Matrix7x7_Set(void *ptr, double *buffer_real,
+                            double *buffer_imag) {
+  if (!ptr)
+    return;
+  auto *mat = static_cast<Matrix7x7 *>(ptr);
+  auto *data = mat->raw_data();
+  for (int i = 0; i < 49; i++) {
+    data[i] = std::complex<double>(buffer_real[i], buffer_imag[i]);
+  }
+}
+}
+
+// Python Module Boilerplate
+static PyModuleDef CmfoCoreNativeModule = {PyModuleDef_HEAD_INIT,
+                                           "cmfo_core_native",
+                                           "CMFO Core Native Engine",
+                                           -1,
+                                           NULL,
+                                           NULL,
+                                           NULL,
+                                           NULL,
+                                           NULL};
+
+PyMODINIT_FUNC PyInit_cmfo_core_native(void) {
+  return PyModule_Create(&CmfoCoreNativeModule);
 }

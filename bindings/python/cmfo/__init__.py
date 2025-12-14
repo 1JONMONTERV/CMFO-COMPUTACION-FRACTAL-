@@ -7,11 +7,12 @@
 #   jmvlavacar@hotmail.com
 # =====================================================================
 
-__version__ = "1.1.2"
+__version__ = "0.1.0"
 __author__ = "Jonnathan Montero Viques"
 __credits__ = "CMFO Universe"
 
 from .core.t7_tensor import T7Tensor
+from .core.matrix import T7Matrix
 from .core.gamma_phi import gamma_step
 from .logic.phi_logic import (
     phi_sign,
@@ -41,6 +42,7 @@ def info():
 
 __all__ = [
     "T7Tensor",
+    "T7Matrix",
     "tensor",
     "gamma_step",
     "phi_sign",

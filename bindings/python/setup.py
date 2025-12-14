@@ -1,5 +1,5 @@
 import os
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, Extension
 
 # Robustly find the README in the root directory
 here = os.path.abspath(os.path.dirname(__file__))
@@ -25,6 +25,15 @@ setup(
     python_requires=">=3.9",
     install_requires=[
         "numpy>=1.20",
+    ],
+    ext_modules=[
+        Extension(
+            "cmfo_core_native",
+            sources=["../../core/language/matrix_engine.cpp"],
+            include_dirs=["../../core/language"],
+            language="c++",
+            extra_compile_args=["/std:c++17"] if os.name == 'nt' else ["-std=c++17"]
+        )
     ],
     classifiers=[
         "Programming Language :: Python :: 3",

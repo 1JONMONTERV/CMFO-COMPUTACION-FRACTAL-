@@ -40,9 +40,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install build twine
         
-      - name: Build Package
+      - name: Build Package (Source Dist Only)
         working-directory: ./bindings/python
-        run: python -m build
+        run: python -m build --sdist
         
       - name: Check Package
         working-directory: ./bindings/python

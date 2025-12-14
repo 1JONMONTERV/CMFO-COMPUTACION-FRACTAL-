@@ -7,7 +7,13 @@ G = 6.67430e-11         # m^3 kg^-1 s^-2
 EV_TO_JOULE = 1.602176634e-19
 
 # CMFO Axioms
+# CMFO Axioms
 PHI = (1 + math.sqrt(5)) / 2
+ALPHA = 7.29735256e-3
+
+# Calculated Constants
+M_PLANCK_KG = math.sqrt((H_BAR * C) / G)
+M_PLANCK_MEV = (M_PLANCK_KG * (C**2)) / EV_TO_JOULE / 1e6
 
 def calculate_planck_mass():
     """Returns Planck mass in kg"""

@@ -4,8 +4,8 @@
  */
 
 :root {
-  /* CMFO Gold Palette */
-  --ifm-color-primary: #d4af37;
+  /* CMFO Gold Palette (Maximum Rigor) */
+  --ifm-color-primary: #D4AF37;
   --ifm-color-primary-dark: #aa8c2c;
   --ifm-color-primary-darker: #967b26;
   --ifm-color-primary-darkest: #6d591c;
@@ -13,7 +13,21 @@
   --ifm-color-primary-lighter: #e3c975;
   --ifm-color-primary-lightest: #efe3b3;
 
+  --ifm-background-color: #020202;
+  /* Void Black */
+  --ifm-background-surface-color: #080808;
+  --ifm-heading-color: #ffffff;
+  --ifm-text-color: #d0d0d0;
+
+  --fractal-gold: #D4AF37;
+  --fractal-cyan: #00F0FF;
+  --fractal-border: 1px solid #222;
+
+  --ifm-font-family-base: 'Inter', system-ui, sans-serif;
+  --ifm-font-family-monospace: 'JetBrains Mono', monospace;
+
   --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(212, 175, 55, 0.1);
   --docusaurus-highlighted-code-line-bg: rgba(212, 175, 55, 0.1);
 }
 
@@ -154,18 +168,18 @@
 
 .featureCol {
   padding: 2rem;
-  background: var(--ifm-background-surface-color);
-  border: 2px solid var(--ifm-color-emphasis-200);
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  background: #0a0a0a;
+  border: 1px solid #222;
+  border-radius: 4px;
+  /* Less rounded = More Rigorous */
+  transition: all 0.2s ease;
   text-align: center;
 }
 
 .featureCol:hover {
-  transform: translateY(-8px);
-  border-color: var(--ifm-color-primary);
-  box-shadow: 0 8px 16px rgba(212, 175, 55, 0.2);
+  transform: translateY(-2px);
+  border-color: var(--fractal-gold);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
 }
 
 .featureIcon {
@@ -328,4 +342,48 @@
   gap: 20px;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+/* Performance Chart Styles (Migrated) */
+.chartContainer {
+  background: #080808;
+  border: 1px solid #222;
+  padding: 2rem;
+  margin-top: 1rem;
+}
+
+.barGroup {
+  margin-bottom: 20px;
+}
+
+.barLabel {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.barTrack {
+  background: #151515;
+  height: 30px;
+  width: 100%;
+}
+
+.barFill {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: bold;
+  font-size: 0.8rem;
+  color: #fff;
+}
+
+.barFill.success {
+  background: var(--fractal-cyan);
+  color: #000;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
 }

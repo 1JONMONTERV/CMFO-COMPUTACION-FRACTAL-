@@ -8,7 +8,7 @@
 # =====================================================================
 
 __version__ = "0.1.4"
-__author__ = "Jonnathan Montero Viques"
+__author__ = "Jonathan Montero Viquez"
 __credits__ = "CMFO Universe"
 
 from .core.t7_tensor import T7Tensor

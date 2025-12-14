@@ -25,7 +25,7 @@ pip install cmfo
 ```
 
 ## Contributors
-Lead Architect: Jonnathan Montero
+Lead Architect: Jonathan Montero Viquez
 Audit & Formalization: Antigravity AI
 
 *CMFO: Order out of Chaos.*

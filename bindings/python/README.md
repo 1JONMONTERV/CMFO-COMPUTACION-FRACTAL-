@@ -129,7 +129,7 @@ MIT License with commercial restrictions for enterprise modules.
 
 ## Author
 
-**Jonnathan Montero Viques**  
+**Jonathan Montero Viquez**  
 Email: jmvlavacar@hotmail.com  
 Location: San José, Costa Rica
 
@@ -140,7 +140,7 @@ If you use CMFO in your research, please cite:
 ```bibtex
 @software{cmfo2024,
   title = {CMFO: Fractal Universal Computation Engine},
-  author = {Montero Viques, Jonnathan},
+  author = {Montero Viquez, Jonathan},
   year = {2024},
   url = {https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-}
 }

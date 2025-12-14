@@ -115,6 +115,6 @@ Detailed roadmap and philosophical alignment:
 
 ---
 
-**Author:** Jonnathan Montero  
+**Author:** Jonathan Montero Viquez  
 **Contact:** `jmvlavacar@hotmail.com`  
 **License:** Apache 2.0 (Commercial restrictions apply for Enterprise modules).

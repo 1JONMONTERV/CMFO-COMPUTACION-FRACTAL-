@@ -51,5 +51,5 @@ jobs:
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          password: ${{ secrets.CMFO_TOKEN || secrets.PYPI_API_TOKEN || secrets.PYPI_TOKEN || secrets.PYP || secrets.SECRETO_PYP || secrets.SECRETO || vars.PYPI_TOKEN || vars.PYP }}
+          password: ${{ secrets.CMFO_TOKEN || secrets.PYPI_API_TOKEN || secrets.PYPI_TOKEN || secrets.PYP || secrets.SECRETO_PYP || secrets.SECRETO || secrets.PYPI_PASSWORD || vars.CMFO_TOKEN || vars.PYPI_API_TOKEN || vars.PYPI_TOKEN || vars.PYP }}
           packages-dir: bindings/python/dist/

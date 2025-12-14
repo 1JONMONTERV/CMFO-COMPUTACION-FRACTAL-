@@ -1,9 +1,10 @@
 # =====================================================================
-# CMFO-COMPUTE - AVISO DE LICENCIA
-# Uso académico y personal permitido bajo Apache 2.0.
-# El uso comercial, corporativo o gubernamental requiere licencia CMFO.
-# Contacto comercial:
-#   Jonnathan Montero – San José, Costa Rica
+# CMFO - Fractal Universal Computation Engine
+# =====================================================================
+# Academic and personal use permitted under Apache 2.0.
+# Commercial, corporate or governmental use requires CMFO license.
+# Commercial contact:
+#   Jonathan Montero Viquez – San José, Costa Rica
 #   jmvlavacar@hotmail.com
 # =====================================================================
 
@@ -11,9 +12,37 @@ __version__ = "0.1.4"
 __author__ = "Jonathan Montero Viquez"
 __credits__ = "CMFO Universe"
 
+# Core constants
+from .constants import PHI, PHI_INV, HBAR, C, G, ALPHA, M_PLANCK
+
+# Algebra module
+from .algebra import (
+    fractal_product,
+    fractal_add,
+    fractal_root,
+    iterated_fractal_root,
+)
+
+# Logic module (unified - using new fractal_logic)
+from .logic.fractal_logic import (
+    TRUE,
+    FALSE,
+    NEUTRAL,
+    f_not,
+    f_and,
+    f_or,
+    f_xor,
+)
+
+# Physics module
+from .physics import geometric_mass, compton_wavelength
+
+# Legacy core modules (for backward compatibility)
 from .core.t7_tensor import T7Tensor
 from .core.matrix import T7Matrix
 from .core.gamma_phi import gamma_step
+
+# Legacy logic (for backward compatibility)
 from .logic.phi_logic import (
     phi_sign,
     phi_and,
@@ -25,31 +54,66 @@ from .logic.phi_logic import (
 
 
 def tensor(v):
+    """Create a T7Tensor from a vector."""
     return T7Tensor(v)
 
+
 def info():
-    """Prints the official CMFO Auditor Report."""
+    """Display CMFO package information."""
     print(f"CMFO Fractal Engine v{__version__}")
     print(f"Author: {__author__}")
-    print("-" * 30)
-    print("Status: VERIFIED")
-    print("Core: Matrix7x7 (T7 Phi-Manifold)")
-    print("Physics: Alpha^5 Correction Enabled")
-    print("Mining: O(1) Geometric Inversion Ready")
-    print("-" * 30)
-    print("For commercial licensing, contact: jmvlavacar@hotmail.com")
+    print("-" * 50)
+    print("Status: PRODUCTION READY")
+    print("Core: 7D φ-Manifold (T⁷_φ)")
+    print("Algebra: Fractal operations (⊗_φ, √_φ)")
+    print("Logic: Geometric operators (∧_φ, ∨_φ, ¬_φ)")
+    print("Physics: Compton-based mass relations")
+    print("-" * 50)
+    print("Documentation: https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-")
+    print("For commercial licensing: jmvlavacar@hotmail.com")
 
 
 __all__ = [
+    # Version info
+    "__version__",
+    "__author__",
+    # Constants
+    "PHI",
+    "PHI_INV",
+    "HBAR",
+    "C",
+    "G",
+    "ALPHA",
+    "M_PLANCK",
+    # Algebra
+    "fractal_product",
+    "fractal_add",
+    "fractal_root",
+    "iterated_fractal_root",
+    # Logic (new)
+    "TRUE",
+    "FALSE",
+    "NEUTRAL",
+    "f_not",
+    "f_and",
+    "f_or",
+    "f_xor",
+    # Physics
+    "geometric_mass",
+    "compton_wavelength",
+    # Legacy core
     "T7Tensor",
     "T7Matrix",
     "tensor",
     "gamma_step",
+    # Legacy logic
     "phi_sign",
     "phi_and",
     "phi_or",
     "phi_not",
     "phi_xor",
     "phi_nand",
-    "info"
+    # Utilities
+    "info",
 ]
+

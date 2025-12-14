@@ -14,7 +14,7 @@ except FileNotFoundError:
 
 setup(
     name="cmfo",
-    version="0.1.2",
+    version="0.1.3",
     author="Jonathan Montero Viques",
     author_email="jesuslocopor@gmail.com",
     description="Experimental framework for deterministic fractal computation",

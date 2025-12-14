@@ -1,6 +1,6 @@
 {
     "name": "@cmfo/core",
-    "version": "0.1.1",
+    "version": "0.1.3",
     "description": "Node.js bindings for CMFO Fractal Universal Computation Engine",
     "main": "index.js",
     "types": "index.d.ts",

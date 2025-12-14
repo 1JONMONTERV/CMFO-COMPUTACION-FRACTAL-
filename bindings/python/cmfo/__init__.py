@@ -42,12 +42,25 @@ from .core.t7_tensor import T7Tensor
 from .core.matrix import T7Matrix
 from .core.gamma_phi import gamma_step
 
-# Legacy logic (for backward compatibility)
-from .logic.phi_logic import (
-    phi_sign,
+# New Fractal Core
+from .core.fractal import (
+    fractal_root,
+    fractal_add,
+    fractal_multiply,
+    PhiBit,
     phi_and,
     phi_or,
     phi_not,
+    phi_decision,
+    geometric_state_collapse
+)
+
+# Legacy logic (for backward compatibility)
+from .logic.phi_logic import (
+    phi_sign,
+    # phi_and, # Now available from core.fractal
+    # phi_or,  # Now available from core.fractal
+    # phi_not, # Now available from core.fractal
     phi_xor,
     phi_nand,
 )
@@ -63,11 +76,11 @@ def info():
     print(f"CMFO Fractal Engine v{__version__}")
     print(f"Author: {__author__}")
     print("-" * 50)
-    print("Status: PRODUCTION READY")
-    print("Core: 7D φ-Manifold (T⁷_φ)")
-    print("Algebra: Fractal operations (⊗_φ, √_φ)")
+    print("Status: PRODUCTION READY + FRACTAL CORE")
+    print("Core: 7D φ-Manifold + Geometric Collapse")
+    print("Algebra: Fractal operations (⊕_φ, ⊗_φ, ℛ_φ)")
     print("Logic: Geometric operators (∧_φ, ∨_φ, ¬_φ)")
-    print("Physics: Compton-based mass relations")
+    print("Physics: Compton mass, Fractal Time")
     print("-" * 50)
     print("Documentation: https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-")
     print("For commercial licensing: jmvlavacar@hotmail.com")
@@ -89,6 +102,7 @@ __all__ = [
     "fractal_product",
     "fractal_add",
     "fractal_root",
+    "fractal_multiply", # New
     "iterated_fractal_root",
     # Logic (new)
     "TRUE",
@@ -98,6 +112,10 @@ __all__ = [
     "f_and",
     "f_or",
     "f_xor",
+    # Fractal Core (New)
+    "PhiBit",
+    "phi_decision",
+    "geometric_state_collapse",
     # Physics
     "geometric_mass",
     "compton_wavelength",

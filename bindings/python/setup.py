@@ -36,7 +36,8 @@ try:
             sources=["../../core/language/matrix_engine.cpp"],
             include_dirs=["../../core/language"],
             language="c++",
-            extra_compile_args=["/O2", "/fp:fast", "/std:c++17"] if os.name == 'nt' else ["-O3", "-ffast-math", "-std=c++17"],
+            extra_compile_args=["/O2", "/fp:fast", "/openmp", "/std:c++17"] if os.name == 'nt' else ["-O3", "-ffast-math", "-fopenmp", "-std=c++17"],
+            extra_link_args=["/OPENMP"] if os.name == 'nt' else ["-fopenmp"],
             optional=True
         )
     ]

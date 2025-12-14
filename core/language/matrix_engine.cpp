@@ -2,6 +2,10 @@
 #include <Python.h>
 #include <iomanip>
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 Matrix7x7::Matrix7x7() { data.fill(Complex(0, 0)); }
 
 Matrix7x7 Matrix7x7::Identity() {
@@ -240,44 +244,71 @@ CMFO_API void Matrix7x7_BatchEvolve(void *mat_ptr, double *batch_real,
   auto *mat = static_cast<Matrix7x7 *>(mat_ptr);
   auto *mat_data = mat->raw_data();
 
+  // OpenMP include moved to top of file
+
+  // ... (existing code)
+
   // PARALLEL FRACTAL SUPERPOSITION
   // Process N independent states effectively in parallel
   // This simulates "Superposition of Fractal Timelines"
-  // Ideally we would use #pragma omp parallel for here if /openmp is enabled
 
+#ifdef _OPENMP
+#pragma omp parallel for
+#endif
   for (int idx = 0; idx < batch_size; idx++) {
     // Each node (state) has 7 components.
     // batch arrays are flat: [r0_n0, ... r6_n0, r0_n1, ... ]
     int offset = idx * 7;
 
     // Load State from Batch
-    std::complex<double> state[7];
-    for (int i = 0; i < 7; i++) {
-      state[i] =
-          std::complex<double>(batch_real[offset + i], batch_imag[offset + i]);
+    // Use raw doubles to avoid complex<overhead> in thread-local storage,
+    // although std::complex on stack is usually fine.
+
+    double state_r[7];
+    double state_i[7];
+    double next_r[7];
+    double next_i[7];
+
+    for (int i = 0; i < 7; ++i) {
+      state_r[i] = batch_real[offset + i];
+      state_i[i] = batch_imag[offset + i];
     }
 
     // Evolve Timeline
-    std::complex<double> next_state[7];
-    for (int s = 0; s < steps; s++) {
-      // MatMul
-      for (int row = 0; row < 7; row++) {
-        std::complex<double> acc(0, 0);
-        for (int col = 0; col < 7; col++) {
-          acc += mat_data[row * 7 + col] * state[col];
+    for (int s = 0; s < steps; ++s) {
+      // 1. Matrix Multiplication (7x7 unrolled)
+      for (int r = 0; r < 7; ++r) {
+        double acc_r = 0.0;
+        double acc_i = 0.0;
+        const int row_offset = r * 7;
+
+        for (int c = 0; c < 7; ++c) {
+          int mat_idx = row_offset + c;
+          double mr = mat_data[mat_idx].real();
+          double mi = mat_data[mat_idx].imag();
+          double vr = state_r[c];
+          double vi = state_i[c];
+
+          acc_r += (mr * vr - mi * vi);
+          acc_i += (mr * vi + mi * vr);
         }
-        next_state[row] = acc;
+        next_r[r] = acc_r;
+        next_i[r] = acc_i;
       }
-      // Gamma Activation
-      for (int i = 0; i < 7; i++) {
-        state[i] = std::sin(next_state[i]);
+
+      // 2. Gamma Activation
+      for (int i = 0; i < 7; ++i) {
+        double nr = next_r[i];
+        double ni = next_i[i];
+        state_r[i] = std::sin(nr) * std::cosh(ni);
+        state_i[i] = std::cos(nr) * std::sinh(ni);
       }
     }
 
     // Save Back
-    for (int i = 0; i < 7; i++) {
-      batch_real[offset + i] = state[i].real();
-      batch_imag[offset + i] = state[i].imag();
+    for (int i = 0; i < 7; ++i) {
+      batch_real[offset + i] = state_r[i];
+      batch_imag[offset + i] = state_i[i];
     }
   }
 }

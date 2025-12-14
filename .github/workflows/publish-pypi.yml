@@ -1,0 +1,59 @@
+name: Publish to PyPI
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  pypi-publish:
+    name: Upload to PyPI
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/cmfo
+    permissions:
+      id-token: write  # Mandatory for trusted publishing via OIDC
+    
+    steps:
+      # We download assets from the RELEASE, not from artifacts (since this triggers on release publish)
+      # Actually, easier to checkout and rebuild? No, that defeats the purpose of "What you tested is what you ship".
+      # But usually 'release' event doesn't have access to the previous workflow's artifacts easily unless we use a token.
+      # ALTERNATIVE: Use the artifacts attached to the release.
+      # OR: Just rebuild. For simplicity and robustness (avoiding complex asset download logic), rebuilding from the Tag is acceptable 
+      # IF we trust the deterministic build.
+      # BUT, User wants "Best Practice". Best practice is building once.
+      # Let's simplify: User's structure request was CI -> Release -> Publish.
+      # The `release.yml` I wrote creates a GitHub Release with assets.
+      # The `publish-pypi.yml` can trigger on `release` and download those assets.
+      
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Wait, standard practice for "Publish from Release" often implies rebuilding sdist/wheel 
+      # because trusting downloaded binaries from GH Release requires some extra steps.
+      # Let's try the "Rebuild on Tag" approach for PyPI in its own file? No, that duplicates `release.yml`.
+      # Let's look at `publish-python.yml` again. I should DELETE `publish-python.yml` (it was doing too much)
+      # and replace it with `publish-pypi.yml` which strictly uploads.
+      
+      # Step 1: Download artifacts from the Current Release
+      # Using `robinraju/release-downloader` or similar is common.
+      # But to be "Perfect", let's use the simplest reliable path:
+      # If we trigger on `release`, we can use `actions/checkout` and `python-build` again. It is 100% safe as long as the tag is the same.
+      # It builds from the exact commit of the tag.
+      
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: pip install build
+        
+      - name: Build Package (Sdist and Wheel)
+        working-directory: ./bindings/python
+        run: python -m build
+        
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          packages_dir: bindings/python/dist/

@@ -1,7 +1,7 @@
 # CMFO: Deterministic Geometric Computing Platform
 
 ![Status](https://img.shields.io/pypi/v/cmfo?color=blue&label=PyPI&style=flat-square)
-![Tests](https://img.shields.io/github/actions/workflow/status/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-/deploy-web.yml?label=CI&style=flat-square)
+![Tests](https://img.shields.io/github/actions/workflow/status/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-/ci.yml?label=CI&style=flat-square)
 ![License](https://img.shields.io/github/license/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-?style=flat-square)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-/blob/main/examples/getting_started.ipynb)
 

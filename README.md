@@ -10,6 +10,24 @@ It creates a unified mathematical structure where Physics, Logic, and Language a
 
 ---
 
+## 📦 Installation
+
+### Python
+```bash
+pip install cmfo
+```
+
+### Node.js
+```bash
+npm install @cmfo/core
+```
+
+For detailed installation instructions and optional dependencies, see the package-specific READMEs:
+- [Python Package](bindings/python/README.md)
+- [Node.js Package](bindings/node/README.md)
+
+---
+
 ## 🛑 The Auditor's Report (Verified Claims)
 *Audited Date: 2025-12-14*
 

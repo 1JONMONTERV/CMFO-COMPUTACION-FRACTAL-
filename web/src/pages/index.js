@@ -144,7 +144,7 @@ export default function Home() {
           <div className="container">
             <h2 className={styles.sectionTitle}>La Revolución Práctica</h2>
             <p className={styles.sectionSubtitle}>
-              "Juan envía el reporte" -> Acción Ejecutable
+              "Juan envía el reporte" → Acción Ejecutable
             </p>
 
             <div className={styles.codeExamples}>

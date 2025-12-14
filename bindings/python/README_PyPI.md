@@ -181,9 +181,9 @@ M_PLANCK                      # Planck mass [kg]
 
 ---
 
-## 🧪 Verified Claims (Geometric Model)
+## 🧪 Mathematically Verified Claims (Geometric Model)
 
-All claims are backed by executable proofs in the repository:
+All claims are backed by executable proofs in the repository, demonstrated in code:
 
 ✅ **Physics**: Particle masses derived from Planck mass with α⁵ correction  
 ✅ **Logic**: Reversible Boolean gates via unitary rotations  

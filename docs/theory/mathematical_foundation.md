@@ -2,6 +2,30 @@
 
 This document defines the formal mathematical framework used in the CMFO engine. It serves as the primary reference for the physical and geometric principles implemented in the `core` module.
 
+## 0. The Unified Field (Maximum Expression)
+
+The CMFO system is defined not by a collection of equations, but by a single geometric closure:
+
+### I. The Master Object
+$$ \mathfrak{U}\varphi \;=\;\Big(\mathcal{T}^7_\varphi,\; g_\varphi,\; D^\varphi_\mu,\; H_\varphi,\; \mathcal{C}=1\Big) $$
+*   $\mathcal{T}^7_\varphi$: The 7D Fractal Torus (The Geometric Machine).
+*   $g_\varphi$: The Fractal Metric (Measure).
+*   $D^\varphi_\mu$: The Fractal Covariant Derivative (Gauge Dynamics).
+*   $H_\varphi$: The Universal Fractal Hamiltonian (Time Evolution).
+*   $\mathcal{C}=1$: The Closure Condition (No ad-hoc parameters).
+
+### II. The Master Equation
+$$ \partial_t \Psi \;=\; -\frac{i}{\hbar}\,H_\varphi\,\Psi\;,\qquad H_\varphi \equiv H\big(\mathcal{T}^7_\varphi,g_\varphi,D^\varphi\big) $$
+This implies that all physics (particles, fields, interactions) are spectral projections of the evolution on $\mathcal{T}^7_\varphi$.
+
+### III. The Observable Map
+$$ \mathrm{Observables} \;=\; \mathrm{Spec}(H_\varphi)\;\oplus\;\mathrm{Hol}(D^\varphi)\;\oplus\;\mathrm{Top}(\mathcal{T}^7_\varphi) $$
+*   $\mathrm{Spec}(H_\varphi)$: Masses, Energy Levels.
+*   $\mathrm{Hol}(D^\varphi)$: Charges, Phases, Gauge Structure.
+*   $\mathrm{Top}(\mathcal{T}^7_\varphi)$: Spin, Periodicity, Chemical Stability.
+
+---
+
 ## 1. The Space: 7-Dimensional $\varphi$-Manifold
 
 We premise our computation on a 7-dimensional manifold $T^7_\varphi$, structured not as a continuous coordinate system, but as a discrete lattice governed by the Golden Ratio ($\varphi \approx 1.618033988$).

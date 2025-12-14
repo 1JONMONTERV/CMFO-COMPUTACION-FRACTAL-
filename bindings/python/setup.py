@@ -3,20 +3,21 @@ from setuptools import setup, find_packages, Extension
 
 # Robustly find the README in the root directory
 here = os.path.abspath(os.path.dirname(__file__))
-root_readme = os.path.join(here, "..", "..", "README.md")
+# Point to the PyPI-specific README
+local_readme = os.path.join(here, "README_PyPI.md")
 
 try:
-    with open(root_readme, encoding="utf-8") as f:
+    with open(local_readme, encoding="utf-8") as f:
         long_description = f.read()
 except FileNotFoundError:
-    long_description = "CMFO: Continuous Modal Fractal Oscillation Engine"
+    long_description = "CMFO: Continuous Modal Fractal Oscillation Engine (Experimental)"
 
 setup(
     name="cmfo",
     version="0.1.0",
     author="Jonathan Montero Viques",
     author_email="jesuslocopor@gmail.com",
-    description="Fractal Universal Computation Engine",
+    description="Experimental framework for deterministic fractal computation",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-",
@@ -36,8 +37,15 @@ setup(
         )
     ],
     classifiers=[
+        "Development Status :: 3 - Alpha",
+        "Intended Audience :: Science/Research",
+        "Topic :: Scientific/Engineering :: Mathematics",
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
     ],
+    project_urls={
+        "Documentation": "https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-/tree/main/docs",
+        "Source": "https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-",
+    },
 )

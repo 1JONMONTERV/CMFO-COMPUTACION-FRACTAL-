@@ -36,8 +36,8 @@ try:
             sources=["../../core/language/matrix_engine.cpp"],
             include_dirs=["../../core/language"],
             language="c++",
-            extra_compile_args=["/std:c++17"] if os.name == 'nt' else ["-std=c++17"],
-            optional=True  # Mark as optional
+            extra_compile_args=["/O2", "/fp:fast", "/std:c++17"] if os.name == 'nt' else ["-O3", "-ffast-math", "-std=c++17"],
+            optional=True
         )
     ]
 except Exception as e:

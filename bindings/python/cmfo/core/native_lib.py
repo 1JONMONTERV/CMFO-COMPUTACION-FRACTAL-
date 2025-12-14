@@ -9,31 +9,37 @@ class NativeLib:
     
     @staticmethod
     def _find_library():
-        # Heuristic: verify if we are running in source or installed
-        # Look for .pyd or .so in the same directory (inplace build) or site-packages
-        
-        # 1. Look in current directory (if built inplace)
+        # Heuristic to find the compiled extension
         curr_dir = os.path.dirname(os.path.abspath(__file__))
+        root_dir = os.path.abspath(os.path.join(curr_dir, "..", "..")) # bindings/python
         
-        # Common patterns for setuptools build
-        # cmfo_core_native.cp39-win_amd64.pyd
-        pattern = "cmfo_core_native*" + sysconfig.get_config_var("EXT_SUFFIX") if sysconfig.get_config_var("EXT_SUFFIX") else "cmfo_core_native*"
-        
-        # Search up to package root
-        # bindings/python/cmfo/core -> bindings/python/cmfo -> bindings/python -> build/lib...
-        
-        # Attempt to import it using importlib to find path?
-        # But it's an extension module.
+        # 1. Try standard import (if installed via pip)
         try:
             import cmfo_core_native
             return cmfo_core_native.__file__
         except ImportError:
             pass
 
-        # Fallback: Search in local build directory (development)
-        # ../../../build/lib*
-        root_search = os.path.join(curr_dir, "..", "..", "..", "build", "lib*", "cmfo_core_native*")
-        matches = glob.glob(root_search)
+        # 2. Search in local build directory (pip install -e . or python setup.py build_ext --inplace)
+        # Patterns to check
+        patterns = [
+            # Inplace build in root
+            os.path.join(root_dir, "cmfo_core_native*.pyd"), 
+            os.path.join(root_dir, "cmfo_core_native*.so"),
+            # Build directory
+            os.path.join(root_dir, "build", "lib*", "cmfo_core_native*.pyd"),
+            os.path.join(root_dir, "build", "lib*", "cmfo_core_native*.so"),
+             # Subdirectory build?
+             os.path.join(root_dir, "*", "cmfo_core_native*.pyd"),
+        ]
+        
+        for pattern in patterns:
+            matches = glob.glob(pattern)
+            if matches:
+                return matches[0]
+                
+        # 3. Last resort: check if it's in the same folder as this file (hack)
+        matches = glob.glob(os.path.join(curr_dir, "cmfo_core_native*"))
         if matches:
             return matches[0]
             
@@ -46,21 +52,24 @@ class NativeLib:
             
         lib_path = NativeLib._find_library()
         if not lib_path:
-            # Fallback for development if file is manually placed or compiled with --inplace
-            # Check current folder
-            root = os.path.dirname(os.path.abspath(__file__))
-            matches = glob.glob(os.path.join(root, "cmfo_core_native*")) # Loose match
-            if matches:
-                lib_path = matches[0]
-        
-        if not lib_path:
-            raise RuntimeError("Could not locate cmfo_core_native library. Did you run 'pip install .'? \nWarning: C++ Extension not found.")
+            # Silent fallback? Or warning?
+            # We want to know if it's missing when debugging
+            if os.environ.get("CMFO_DEBUG"):
+                print("WARNING: CMFO Native Engine not found. Using pure Python fallback.")
+            return None
 
         try:
+            # On Windows, we might need to add directory to DLL path, but usually full path works
+            if os.name == 'nt' and sys.version_info >= (3, 8):
+                 try:
+                     os.add_dll_directory(os.path.dirname(lib_path))
+                 except:
+                     pass
             lib = ctypes.CDLL(lib_path)
         except OSError as e:
-            # Windows specific: add directory to DLL path?
-            raise RuntimeError(f"Could not load library at {lib_path}: {e}")
+            if os.environ.get("CMFO_DEBUG"):
+                 print(f"WARNING: Failed to load native lib at {lib_path}: {e}")
+            return None
 
         # Define Signatures
         lib.Matrix7x7_Create.restype = ctypes.c_void_p

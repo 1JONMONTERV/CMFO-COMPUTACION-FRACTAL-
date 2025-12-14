@@ -98,6 +98,7 @@ ALL SYSTEMS GREEN.
 ## 📜 Vision
 
 Detailed roadmap and philosophical alignment:
+- **[🚀 OFFICIAL LAUNCHES & PROJECTS](PROJECTS.md)** (Miner, Memory, Superposition)
 - [Practical Revolution (User Manifesto)](docs/general/practical_revolution.md)
 - [Technical Whitepaper](docs/communication/CMFO_Explained.md)
 - [Blue Sky Research](VISION.md)

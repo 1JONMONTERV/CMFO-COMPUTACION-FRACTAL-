@@ -14,7 +14,7 @@ except FileNotFoundError:
 
 setup(
     name="cmfo",
-    version="0.1.1",
+    version="0.1.2",
     author="Jonathan Montero Viques",
     author_email="jesuslocopor@gmail.com",
     description="Experimental framework for deterministic fractal computation",
@@ -47,5 +47,10 @@ setup(
     project_urls={
         "Documentation": "https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-/tree/main/docs",
         "Source": "https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-",
+    },
+    entry_points={
+        "console_scripts": [
+            "cmfo=cmfo.cli:main",
+        ],
     },
 )

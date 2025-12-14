@@ -1,0 +1,45 @@
+.heroBanner {
+  padding: 6rem 0;
+  text-align: center;
+  background: #116642;
+  color: white;
+}
+
+.title {
+  font-size: 4rem;
+  font-weight: 800;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  opacity: 0.9;
+}
+
+.buttons {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.mainSection {
+  padding: 4rem 2rem;
+}
+
+.section {
+  max-width: 900px;
+  margin: auto;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.sectionAlt {
+  max-width: 900px;
+  margin: auto;
+  margin-bottom: 4rem;
+  text-align: center;
+  background: #f2f7f4;
+  padding: 2rem;
+  border-radius: 12px;
+}

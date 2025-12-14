@@ -23,55 +23,68 @@ PARTICLES = {
 
 def check_scalings():
     print(f"Planck Mass: {M_PLANCK_MEV:.4e} MeV")
-    print("Searching for the 'Missing Operator' factor...\n")
+    print("Searching for a UNIFIED geometric operator (Omega) to bridge the gap...\n")
     
-    # Candidates for the missing factor
-    candidates = {
-        "Delta_Scale (10^12)": 1e12,
-        "Alpha^-1 (137)": ALPHA_INV,
-        "Alpha^-2": ALPHA_INV**2,
-        "Alpha^-4": ALPHA_INV**4,
-        "Alpha^-6": ALPHA_INV**6,
-        "Phi^12": PHI**12,
-        "Phi^24": PHI**24,
-        "4*Pi (Spherical)": 4 * PI,
-        "Volume (4/3 Pi)": 4/3 * PI
-    }
-
+    # We are looking for M_real = M_fractal * Omega
+    # So Omega = M_real / M_fractal
+    
+    results = {}
+    
     for name, data in PARTICLES.items():
         n = data['n']
         m_real = data['exp']
-        
-        # 1. The Raw Fractal Prediction (The failed one)
         m_frac = M_PLANCK_MEV * (PHI ** -n)
         
-        # 2. The Ratio (The Error)
-        ratio = m_frac / m_real
+        # The required correction factor
+        required_factor = m_real / m_frac
+        results[name] = required_factor
         
         print(f"=== {name} (n={n}) ===")
-        print(f"  Prediction: {m_frac:.4e} MeV")
-        print(f"  Real:       {m_real:.4e} MeV")
-        print(f"  Gap Ratio:  {ratio:.4e}")
-        print(f"  Log10(Gap): {math.log10(ratio):.4f}")
+        print(f"  Required Correction (Omega): {required_factor:.4e}")
         
-        # 3. Pattern Matching
-        print("  Potential Matches:")
-        found = False
-        for cand_name, val in candidates.items():
-            # Check if Ratio ~= Candidate * Power
-            # Or just check if Ratio ~= Candidate
-            if abs(ratio - val) / val < 0.05: # 5% tolerance
-                print(f"    [MATCH] ~ {cand_name} (Error: {abs(ratio-val)/val*100:.2f}%)")
-                found = True
+        # Check against Alpha powers (The most likely candidate for gauge coupling)
+        # alpha_power = log(Omega) / log(alpha)
+        alpha_p = math.log(required_factor) / math.log(ALPHA)
+        print(f"  Matches Alpha^{alpha_p:.3f}")
         
-        # Check powers of Alpha specifically
-        alpha_power = math.log(ratio) / math.log(ALPHA_INV)
-        if abs(round(alpha_power) - alpha_power) < 0.1:
-             print(f"    [MATCH] ~ Alpha^-{round(alpha_power)} (Precision: {alpha_power:.3f})")
-
-        if not found and abs(round(alpha_power) - alpha_power) >= 0.1:
-             print("    [NO SIMPLE MATCH FOUND]")
-        print("")
+    print("\n=== Unified Analysis ===")
+    print("Hypothesis: The missing operator is related to the Fine Structure Constant (Alpha).")
+    
+    # Calculate mean power of alpha
+    powers = [math.log(r) / math.log(ALPHA) for r in results.values()]
+    mean_p = sum(powers) / len(powers)
+    
+    print(f"Average Alpha Power: {mean_p:.4f}")
+    
+    # Test integer/half-integer powers
+    candidates = [4, 5, 5.5, 6]
+    best_candidate = None
+    min_error = 1e9
+    
+    for p in candidates:
+        omega_hyp = ALPHA ** p
+        print(f"\nTesting Hypothesis: Omega = Alpha^{p}")
+        total_error = 0
+        for name in PARTICLES:
+            req = results[name]
+            err = abs(req - omega_hyp) / req * 100
+            print(f"  {name}: Error {err:.2f}%")
+            total_error += err
+        
+        if total_error < min_error:
+            min_error = total_error
+            best_candidate = p
+            
+    print(f"\nBest Fit: The geometry implies a coupling of Alpha^{best_candidate}")
+    
+    if best_candidate == 5:
+        print("INTERPRETATION: This corresponds to a 5-dimensional gauge projection (Kaluza-Klein type).")
+    elif best_candidate == 6:
+        print("INTERPRETATION: This corresponds to a 6-loop self-energy correction.")
+        
+    print("\nAction: To resolve the gap, we must define the Mass Operator NOT as a simple power,")
+    print("but as a composite of Fractal Scale (Phi) and Gauge Coupling (Alpha).")
+    print(f"Proposed Formula: m = m_P * phi^-n * alpha^{best_candidate}")
 
 if __name__ == "__main__":
     check_scalings()

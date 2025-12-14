@@ -1,5 +1,6 @@
 import os
 from setuptools import setup, find_packages, Extension
+from setuptools.command.build_ext import build_ext
 
 # Robustly find the README in the root directory
 here = os.path.abspath(os.path.dirname(__file__))
@@ -11,6 +12,37 @@ try:
         long_description = f.read()
 except FileNotFoundError:
     long_description = "CMFO: Continuous Modal Fractal Oscillation Engine (Experimental)"
+
+
+# Custom build_ext to make C++ extension optional
+class OptionalBuildExt(build_ext):
+    """Build extension, but don't fail if C++ compiler is not available"""
+    def build_extensions(self):
+        try:
+            super().build_extensions()
+        except Exception as e:
+            print(f"WARNING: C++ extension build failed: {e}")
+            print("Installing without native acceleration (pure Python mode)")
+            # Remove failed extensions
+            self.extensions = []
+
+
+# Try to build C++ extension, but make it optional
+ext_modules = []
+try:
+    ext_modules = [
+        Extension(
+            "cmfo_core_native",
+            sources=["../../core/language/matrix_engine.cpp"],
+            include_dirs=["../../core/language"],
+            language="c++",
+            extra_compile_args=["/std:c++17"] if os.name == 'nt' else ["-std=c++17"],
+            optional=True  # Mark as optional
+        )
+    ]
+except Exception as e:
+    print(f"WARNING: Could not configure C++ extension: {e}")
+    ext_modules = []
 
 setup(
     name="cmfo",
@@ -27,15 +59,8 @@ setup(
     install_requires=[
         "numpy>=1.20",
     ],
-    ext_modules=[
-        Extension(
-            "cmfo_core_native",
-            sources=["../../core/language/matrix_engine.cpp"],
-            include_dirs=["../../core/language"],
-            language="c++",
-            extra_compile_args=["/std:c++17"] if os.name == 'nt' else ["-std=c++17"]
-        )
-    ],
+    ext_modules=ext_modules,
+    cmdclass={'build_ext': OptionalBuildExt},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Science/Research",

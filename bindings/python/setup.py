@@ -46,8 +46,8 @@ except Exception as e:
     ext_modules = []
 
 setup(
-    name="cmfo",
-    version="0.1.4",
+    name="cmfo-fractal",
+    version="0.1.5",
     author="Jonathan Montero Viques",
     author_email="jesuslocopor@gmail.com",
     description="Experimental framework for deterministic fractal computation",

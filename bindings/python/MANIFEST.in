@@ -1,5 +1,6 @@
 include LICENSE.txt
 include README.md
+include README_PyPI.md
 recursive-include cmfo *.py
 recursive-include cmfo *.so *.dll *.dylib *.pyd
 recursive-include native_src *

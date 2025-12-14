@@ -37,7 +37,7 @@
 ## 📦 Installation
 
 ```bash
-pip install cmfo
+pip install cmfo-fractal
 ```
 
 **Requirements:**
@@ -174,7 +174,7 @@ M_PLANCK                      # Planck mass [kg]
 
 ---
 
-## 🧪 Verified Claims
+## 🧪 Verified Claims (Geometric Model)
 
 All claims are backed by executable proofs in the repository:
 

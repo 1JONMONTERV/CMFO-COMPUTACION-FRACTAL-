@@ -1,9 +1,9 @@
 # CMFO: Deterministic Geometric Computing Platform
 
-![Status](https://img.shields.io/badge/Status-Verified-brightgreen)
-![Tests](https://img.shields.io/badge/Tests-100%25_Passing-brightgreen)
-![Architecture](https://img.shields.io/badge/Architecture-Unified-blueviolet)
-![License](https://img.shields.io/badge/License-Apache_2.0-blue)
+![Status](https://img.shields.io/pypi/v/cmfo?color=blue&label=PyPI&style=flat-square)
+![Tests](https://img.shields.io/github/actions/workflow/status/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-/deploy-web.yml?label=CI&style=flat-square)
+![License](https://img.shields.io/github/license/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-?style=flat-square)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-/blob/main/examples/getting_started.ipynb)
 
 **CMFO** is a computing paradigm that replaces probabilistic approximation (AI/ML) with **deterministic geometric inversion**. 
 It creates a unified mathematical structure where Physics, Logic, and Language are isomorphic operations on a 7-dimensional $\varphi$-manifold.

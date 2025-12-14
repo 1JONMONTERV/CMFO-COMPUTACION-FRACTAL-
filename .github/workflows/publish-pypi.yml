@@ -12,13 +12,20 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    environment:
-      name: pypi
-      url: https://pypi.org/p/cmfo
 
-
-    
     steps:
+      - name: Debug Secret Availability
+        shell: bash
+        env:
+          HAS_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN != '' }}
+          HAS_API_TOKEN: ${{ secrets.PYPI_API_TOKEN != '' }}
+          HAS_PYP: ${{ secrets.PYP != '' }}
+        run: |
+          echo "Debug Secrets:"
+          echo "PYPI_TOKEN present: $HAS_PYPI_TOKEN"
+          echo "PYPI_API_TOKEN present: $HAS_API_TOKEN"
+          echo "PYP present: $HAS_PYP"
+
       - name: Checkout
         uses: actions/checkout@v4
       

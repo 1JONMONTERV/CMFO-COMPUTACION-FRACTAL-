@@ -1,7 +1,10 @@
 import React from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.css';
+import FractalChart from '@site/src/components/FractalChart';
+import clsx from 'clsx'; // Need clsx for hero class
 
 function Feature({ title, description, icon }) {
   return (
@@ -25,23 +28,25 @@ function CodeExample({ title, language, code }) {
 }
 
 export default function Home() {
+  const { siteConfig } = useDocusaurusContext();
   return (
     <Layout
       title="CMFO: Computación Fractal"
       description="La Plataforma de Computación Determinista Unificada"
     >
       {/* Hero Section */}
-      <header className={styles.heroBanner}>
+      <header className={clsx('hero hero--primary', styles.heroBanner)}>
         <div className="container">
           <div className={styles.heroContent}>
             <div className={styles.heroText}>
-              <h1 className={styles.title}>CMFO UNIVERSE</h1>
-              <p className={styles.subtitle}>
-                Física. Lógica. Lenguaje. <span style={{ color: '#00ff9d' }}>Unificados.</span>
-              </p>
-              <p className={styles.tagline}>
-                La primera plataforma de computación determinista verificada científicamente.
-              </p>
+              <h1 className={styles.title}>{siteConfig.title}</h1>
+              <p className={styles.subtitle}>{siteConfig.tagline}</p>
+
+              {/* VIZ SECTION */}
+              <div style={{ marginTop: '20px', marginBottom: '20px' }}>
+                <FractalChart />
+              </div>
+
               <div className={styles.buttons}>
                 <Link
                   className="button button--primary button--lg"
@@ -107,12 +112,12 @@ export default function Home() {
 # 1. Entrada Natural
 texto = "Juan envía el archivo"
 
-# 2. Compilación Matricial (7x7)
+# 2. Compilación Matricial(7x7)
 matriz = MatrixCompiler.compile(texto)
 
 # 3. Verificación Unitaria
 if matriz.is_unitary():
-    matriz.execute()  # Acción Real`}
+  matriz.execute()  # Acción Real`}
               />
             </div>
           </div>

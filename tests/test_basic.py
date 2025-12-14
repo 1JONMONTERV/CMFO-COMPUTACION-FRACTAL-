@@ -5,7 +5,7 @@ import pytest
 def test_import_cmfo():
     """Test that cmfo package can be imported"""
     import cmfo
-    assert cmfo.__version__ == "0.1.4"
+    assert cmfo.__version__ == "1.0.0"
 
 
 def test_cmfo_info():

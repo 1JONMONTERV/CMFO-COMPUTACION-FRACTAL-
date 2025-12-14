@@ -9,6 +9,13 @@
 
 ---
 
+---
+
+## 📜 Standard Definition
+
+The complete, formal mathematical definition of the CMFO system (Axioms 0-10) is frozen as the canonical standard:
+[**CMFO Formal Definition (Standard v1.0)**](https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-/blob/main/docs/standards/CMFO_FORMAL_DEFINITION.md)
+
 ## ✨ Key Features
 
 ### 🧮 Fractal Algebra
@@ -242,7 +249,7 @@ If you use CMFO in your research, please cite:
   title = {CMFO: Fractal Universal Computation Engine},
   author = {Montero Viquez, Jonathan},
   year = {2024},
-  version = {0.1.4},
+  version = {1.0.0},
   url = {https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-}
 }
 ```

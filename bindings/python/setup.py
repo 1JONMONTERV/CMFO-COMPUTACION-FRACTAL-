@@ -47,7 +47,7 @@ except Exception as e:
 
 setup(
     name="cmfo-fractal",
-    version="0.1.5",
+    version="1.0.0",
     author="Jonathan Montero Viques",
     author_email="jesuslocopor@gmail.com",
     description="Experimental framework for deterministic fractal computation",

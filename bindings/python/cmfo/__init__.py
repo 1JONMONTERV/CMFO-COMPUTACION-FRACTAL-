@@ -8,7 +8,7 @@
 #   jmvlavacar@hotmail.com
 # =====================================================================
 
-__version__ = "0.1.4"
+__version__ = "1.0.0"
 __author__ = "Jonathan Montero Viquez"
 __credits__ = "CMFO Universe"
 
@@ -133,5 +133,10 @@ __all__ = [
     "phi_nand",
     # Utilities
     "info",
+    "verify",
 ]
+
+
+# Verification
+from .verify import run as verify
 

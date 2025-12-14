@@ -12,9 +12,6 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    environment:
-      name: pypi
-      url: https://pypi.org/p/cmfo
 
     steps:
       - name: Debug Secret Availability
@@ -23,13 +20,13 @@ jobs:
           HAS_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN != '' }}
           HAS_API_TOKEN: ${{ secrets.PYPI_API_TOKEN != '' }}
           HAS_PYP: ${{ secrets.PYP != '' }}
-          HAS_VAR_TOKEN: ${{ vars.PYPI_TOKEN != '' }}
+          HAS_CMFO_TOKEN: ${{ secrets.CMFO_TOKEN != '' }}
         run: |
           echo "Debug Secrets:"
           echo "PYPI_TOKEN present: $HAS_PYPI_TOKEN"
           echo "PYPI_API_TOKEN present: $HAS_API_TOKEN"
           echo "PYP present: $HAS_PYP"
-          echo "VAR_PYPI_TOKEN present: $HAS_VAR_TOKEN"
+          echo "CMFO_TOKEN present: $HAS_CMFO_TOKEN"
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -56,5 +53,5 @@ jobs:
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          password: ${{ secrets.PYPI_API_TOKEN || secrets.PYPI_TOKEN || secrets.PYP || secrets.SECRETO_PYP || secrets.SECRETO || vars.PYPI_TOKEN || vars.PYP }}
+          password: ${{ secrets.CMFO_TOKEN || secrets.PYPI_API_TOKEN || secrets.PYPI_TOKEN || secrets.PYP || secrets.SECRETO_PYP || secrets.SECRETO || vars.PYPI_TOKEN || vars.PYP }}
           packages-dir: bindings/python/dist/

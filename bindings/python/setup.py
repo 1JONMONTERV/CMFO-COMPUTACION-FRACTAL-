@@ -6,7 +6,7 @@ setup(
     author="Jonathan Montero Viques",
     author_email="jesuslocopor@gmail.com",
     description="Fractal Universal Computation Engine",
-    long_description=open("README.md", encoding="utf-8").read(),
+    long_description=open("../../README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-",
     packages=find_packages(),

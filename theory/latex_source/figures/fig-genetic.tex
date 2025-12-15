@@ -1,0 +1,13 @@
+\begin{tikzpicture}
+
+\foreach \i in {0,...,6} {
+    \node[circle,draw,fill=blue!20] (n\i) at (360/7*\i:3cm) {$\varphi^{-\i}$};
+}
+
+\foreach \i in {0,...,6} {
+    \pgfmathsetmacro{\j}{mod(\i+1,7)}
+    \draw[->,thick] (n\i) -- (n\j);
+}
+
+\node at (0,-3.8) {\small 7-Dimensional Genetic Automaton};
+\end{tikzpicture}

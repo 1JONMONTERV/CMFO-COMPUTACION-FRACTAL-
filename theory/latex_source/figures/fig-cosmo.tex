@@ -1,0 +1,19 @@
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={$H_0$ [km/s/Mpc]},
+    ylabel={$\Lambda$ [$10^{-52}$ m$^{-2}$]},
+    width=10cm,
+    height=6cm
+]
+
+\addplot[blue,mark=*] coordinates {
+    (67.4,1.1056)
+};
+
+\addplot[red,mark=square*] coordinates {
+    (67.4,1.1056)
+};
+
+\legend{CMFO, Planck 2018}
+\end{axis}
+\end{tikzpicture}

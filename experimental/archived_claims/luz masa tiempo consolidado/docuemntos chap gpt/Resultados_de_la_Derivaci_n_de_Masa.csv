@@ -1,0 +1,17 @@
+,Valor
+Longitud de Compton (λ_c) [m],2.42631027637202e-12
+Radio mayor (R) [m],2.4e-12
+Radio menor (r = R*sinθ) [m],9.184402376762153e-13
+Ángulo θ [rad],0.39269908169872414
+Dimensión fractal D,2.5
+"Factor fractal F(D,θ)",0.3826834323650898
+Longitud efectiva ℓ [m],5.7707302068897235e-12
+Campo eléctrico |E₀|² [V²/m²],280447178876911.6
+Densidad de energía u [J/m²],4.3109930460485606e+26
+Volumen fractal V_D [m^2.5],2.4376496094301793e-11
+Energía total E [J],1.0508690514956492e+16
+Energía total E [eV],6.559008720980069e+34
+Masa derivada m = E/c² [kg],0.11692495090516469
+Masa del electrón esperada [kg],9.10938356e-31
+Masa del electrón esperada [eV],510998.9420585963
+Error relativo en masa (%),1.2835660078975169e+31

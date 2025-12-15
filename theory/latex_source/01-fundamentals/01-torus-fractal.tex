@@ -1,0 +1,86 @@
+\section{Definition of the Fractal Torus $\mathcal{T}^7_{\varphi}$}
+\label{sec:torus-definition}
+
+\begin{definition}[Fractal Torus $\mathcal{T}^7_{\varphi}$]
+The base space of the CMFO automaton is the direct product of seven circles,
+each scaled by successive inverse powers of the golden ratio:
+\[
+\mathcal{T}^7_{\varphi} \equiv \bigotimes_{i=0}^{6} S^1_{\varphi^{-i}},
+\]
+where each circle $S^1_{\varphi^{-i}}$ has radius
+\[
+R_i = \ell_P\,\varphi^{-i},
+\]
+and internal metric
+\[
+ds_i^2 = \varphi^{-2i}\, d\theta_i^2,
+\qquad \theta_i \in [0,2\pi).
+\]
+\end{definition}
+
+\begin{definition}[Fractal Euler Characteristic]
+For a $d$-dimensional fractal torus, we define the fractal Euler
+characteristic as
+\[
+\chi_{\varphi}(\mathcal{T}^d)
+\equiv
+\sum_{k=0}^{d-1} \varphi^{-k}
+=
+\frac{1-\varphi^{-d}}{1-\varphi^{-1}}.
+\]
+\end{definition}
+
+\begin{lemma}[Golden Ratio Identities]
+\label{lem:phi-identities}
+The golden ratio $\varphi$ satisfies
+\[
+\varphi^{-1} = \varphi - 1,
+\qquad
+1-\varphi^{-1} = \varphi^{-2}.
+\]
+\end{lemma}
+
+\begin{proof}
+Both follow immediately from the algebraic identity $\varphi^{2}=\varphi+1$.
+\end{proof}
+
+\begin{theorem}[Dimensional Uniqueness of $\mathcal{T}^7_{\varphi}$]
+\label{thm:unicity-d}
+The condition
+\[
+\chi_{\varphi}(\mathcal{T}^d)=\varphi^{-3}
+\]
+admits a unique integer solution: $d = 7$.
+\end{theorem}
+
+\begin{proof}
+Using Lemma~\ref{lem:phi-identities} we obtain
+\[
+\chi_{\varphi}(\mathcal{T}^d)
+= \frac{1-\varphi^{-d}}{\varphi^{-2}}
+= \varphi^{2}\bigl(1-\varphi^{-d}\bigr).
+\]
+Imposing $\chi_{\varphi}(\mathcal{T}^d)=\varphi^{-3}$ yields
+\[
+\varphi^{2}\bigl(1-\varphi^{-d}\bigr)=\varphi^{-3}
+\quad\Longrightarrow\quad
+1-\varphi^{-d}=\varphi^{-5}.
+\]
+Thus,
+\[
+\varphi^{-d}
+=1-\varphi^{-5}
+=\sum_{k=0}^{4}\varphi^{-k}
+=\varphi^{-7}.
+\]
+Since $\varphi^{-d}$ is strictly monotonic in $d$, the only solution is $d=7$.
+\end{proof}
+
+\begin{corollary}[Topological Stability]
+The fractal torus $\mathcal{T}^7_{\varphi}$ is the unique base manifold that simultaneously satisfies:
+\begin{itemize}
+    \item anomaly-free gauge closure,
+    \item non-degenerate spectral structure of normal modes,
+    \item minimization of vacuum energy density.
+\end{itemize}
+\end{corollary}

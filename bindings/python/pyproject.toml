@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cmfo-fractal"
-version = "1.0.0"
+version = "1.1.0"
 description = "Professional fractal computation framework based on golden ratio (φ) and 7D geometric manifolds"
 authors = [
     { name = "Jonathan Montero Viquez", email = "jmvlavacar@hotmail.com" }

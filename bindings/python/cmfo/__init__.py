@@ -8,7 +8,7 @@
 #   jmvlavacar@hotmail.com
 # =====================================================================
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 __author__ = "Jonathan Montero Viquez"
 __credits__ = "CMFO Universe"
 

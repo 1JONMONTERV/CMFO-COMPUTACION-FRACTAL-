@@ -1,59 +1,31 @@
-# Derivation of CMFO Physics from Geometric First Principles
+# CMFO: Teoría de la Derivación Geométrica Fractal
+**Autor:** CMFO Foundation  
+**Fecha:** 2025-12-15
 
-**Abstract:** This document demonstrates that the physical equations within the CMFO framework are not arbitrary postulates but are inevitable mathematical consequences of the chosen geometry: a 7-Dimensional Torus ($T^7$) equipped with a Phi-Scaling Metric ($g_{ij}$).
+## 1. El Problema de los Parámetros Ad-Hoc
+La física estándar (Modelo Estándar) depende de ~26 parámetros libres (masas, constantes de acoplamiento) que deben ser medidos experimentalmente. No hay razón teórica de por qué $\alpha \approx 1/137$.
 
----
+## 2. La Solución CMFO: Unificación Geométrica
+En el marco CMFO, el universo es un **Manifold Fractal de 7 Dimensiones** ($T^7_\varphi$). Las constantes físicas no son arbitrarias; son propiedades geométricas de este espacio.
 
-## 1. The Axiom of Geometry
-We begin with a single assumption: **Space has a Fractal Metric Structure.**
+### A. $\phi$ (La Semilla)
+- **Derivación**: Invarianza de Escala. La única solución a $x = 1 + 1/x$.
+- **Rol**: Define la métrica del espacio ($g_{\mu\nu} \propto \phi^{n}$).
 
-The manifold is defined as a 7-dimensional torus:
-$$ \mathcal{M} = T^7 = S^1 \times S^1 \times \dots \times S^1 $$
+### B. $\alpha$ (Constante de Estructura Fina)
+- **Derivación**: Relación de volúmenes entre la topología global (S7) y la local (S3).
+- **Fórmula Aproximada**: $\alpha^{-1} \approx \text{Vol}(S^7) / \text{Vol}(S^3) \times \text{Factor de Escala}$.
+- **Resultado**: El acoplamiento electromagnético es una consecuencia de proyectar luz 7D en 3D.
 
-The Metric Tensor ($g_{ij}$) is diagonal and scales by the Golden Ratio ($\phi$):
-$$ g_{ij} = \delta_{ij} \phi^i \quad \text{for } i \in \{0, \dots, 6\} $$
+### C. Velocidad de la Luz ($c$)
+- **Definición**: $c = 1$. Es la velocidad de procesamiento de la información a través del grafo fractal.
+- **Relatividad**: Surge naturalmente de la preservación de causalidad en el grafo JIT (`FractalGraph`).
 
-This means the "length" of a dimension scales geometrically. Dimension 6 is significantly "larger" (or smaller in frequency space) than Dimension 0.
+## 3. Implementación Computacional (Génesis)
+El módulo `cmfo.genesis` implementa estos algoritmos.
+Cuando el usuario ejecuta código CMFO:
+1. El sistema calcula la geometría del manifold.
+2. Extrae las constantes ($\phi, \pi, \alpha$) al vuelo.
+3. Compila el Kernel CUDA.
 
-## 2. The Equation of Motion (The Wave Equation)
-In any Riemannian manifold, the natural equation of motion for a field $\psi$ is the **Helmholtz Equation** (Eigenvalue problem of the Laplace-Beltrami operator):
-
-$$ \Delta \psi = -\lambda \psi $$
-
-Where $\Delta$ is the Laplacian derived solely from the metric $g$:
-$$ \Delta = \frac{1}{\sqrt{|g|}} \partial_i (\sqrt{|g|} g^{ij} \partial_j) $$
-
-## 3. Solving for the Spectrum
-For our diagonal metric $g_{ii} = \phi^i$, the inverse metric is $g^{ii} = \phi^{-i}$.
-Substituting this into the Laplacian for a scalar field:
-
-$$ \Delta = \sum_{i=0}^6 \phi^{-i} \frac{\partial^2}{\partial (x^i)^2} $$
-
-The eigenfunctions of a torus are plane waves:
-$$ \psi(x) = e^{i (n \cdot x)} $$
-Where $n = (n_0, n_1, \dots, n_6)$ is a vector of integers (Quantum Numbers).
-
-Applying the Laplacian to these waves:
-$$ \Delta e^{i (n \cdot x)} = - \left( \sum_{i=0}^6 \phi^{-i} n_i^2 \right) e^{i (n \cdot x)} $$
-
-Thus, the Eigenvalues ($\lambda$) are strictly determined:
-$$ \lambda_n = \sum_{i=0}^6 \frac{n_i^2}{\phi^i} $$
-
-## 4. Physics Emerges (Mass/Energy)
-In Quantum Mechanics, Energy is proportional to the frequency (eigenvalue), and Mass is the rest energy.
-$$ E^2 \propto \lambda $$
-
-Therefore, the Mass Spectrum of the universe is **forced** to be:
-$$ M_n = \sqrt{ \sum_{i=0}^6 \frac{n_i^2}{\phi^i} } $$
-
-## 5. Conclusion
-We did not "invent" the formula $M = \sqrt{\sum \frac{n^2}{\phi^i}}$.
-It is the **only possible solution** to the Wave Equation on a Phi-Torus.
-
-*   Every particle is integer integers ($n_i$).
-*   Every mass is a geometric resonance.
-*   **Zero arbitrary constants.**
-
----
-**Verified by:** `cmfo.topology.spectral`
-**Date:** 2025-12-14
+**Conclusión**: No hay "datos". Solo hay **Estructura**.

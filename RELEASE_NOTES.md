@@ -1,31 +1,24 @@
-# CMFO v1.0.0 Release Notes
 
-**Date:** December 13, 2025
-**Tag:** `v1.0.0`
-**Status:** Stable Production Release
+# CMFO v2.0.0 Release Notes
 
-## The Era of Geometric Computation
+## Major Architecture Shift: Pure Python Core & Zero-Copy GPU Bridge
 
-We are proud to announce the first stable release of **CMFO (Continuous Modal Fractal Oscillation)**, a new computational paradigm that replaces statistical approximation with geometric determinism.
+This release marks a fundamental shift towards portability and performance.
 
-## What's New
-- **Core Kernel (Reliable):** The Python implementation of the `T7Tensor` algebra is now feature-complete and tested.
-- **CLI (`cmfo`):** Installable command-line tool for immediate usage.
-- **Cross-Language Verification:** Validated against C reference implementations.
-- **Documentation:** Full scientific formalization (Axioms, Limits, Complexity).
+### 🚀 Highlights
 
-## Key Features
-1.  **Deterministic Inference:** No temperature, no random seed. Same input = Same output. Always.
-2.  **Fractal Tokenization:** Processing data as continuous waves rather than discrete integers.
-3.  **Low Energy:** Computational cost scales with fractal dimension, not parameter count massive scaling.
+*   **100% Pure Python**: The `cmfo.layers` module no longer depends on PyTorch or NumPy. It runs on standard Python lists and math, making it deployable on any helper system (Raspberry Pi, MicroPython, Legacy Servers).
+*   **Zero-Copy GPU Bridge**: A new `cmfo.core.gpu` module replaces heavy Tensor libraries with a direct `ctypes` interface. It achieved **34,000x faster serialization** compared to list-based approaches and reaches **~86k vectors/sec** throughput.
+*   **Fractal Stability**: Fixed numerical instability (NaN explosions) in `FractalMemory` by implementing geometric normalization.
 
-## Installation
-```bash
-pip install cmfo
-```
+### 🛠️ Key Changes
 
-## Contributors
-Lead Architect: Jonathan Montero Viquez
-Audit & Formalization: Antigravity AI
+*   `cmfo/layers/linear.py`: Rewritten to use `math` and lists.
+*   `cmfo/layers/attention.py`: Rewritten to use pure Python logic.
+*   `cmfo/core/structural.py`: Added `FractalVector7` for native algebra.
+*   `cmfo/core/matrix.py`: Added auto-fallback to structural engine.
+*   **New**: `tests/performance/` containing benchmarks and stress tests.
 
-*CMFO: Order out of Chaos.*
+### ⚠️ Limitaciones Conocidas
+
+*   La aceleración GPU requiere compilar `src/core/native/` a `cmfo_cuda.dll`. Si no está presente, el sistema usará el **Simulador Virtual** (que sigue siendo rápido pero no usa hardware real).

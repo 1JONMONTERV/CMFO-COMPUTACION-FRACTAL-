@@ -58,6 +58,9 @@ from .topology import PhiManifold
 # 6. BRIDGES (Interdisciplinary Analysis)
 from .bridges import analyze_dispersion_relation, analyze_gate_entropy, landauer_cost, analyze_level_spacings
 
+# 7. APPLICATIONS (Fractal AI)
+from .apps import FractalNeuron
+
 # 5. PHYSICS (Geometric Mass)
 from .physics import geometric_mass, compton_wavelength
 
@@ -114,6 +117,8 @@ __all__ = [
     "PhiManifold",
     # Bridges
     "analyze_dispersion_relation", "analyze_gate_entropy", "landauer_cost", "analyze_level_spacings",
+    # Applications
+    "FractalNeuron",
     # Physics
     "geometric_mass", "compton_wavelength",
     # Superposition

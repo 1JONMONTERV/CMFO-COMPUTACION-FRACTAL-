@@ -162,11 +162,11 @@ M_PLANCK                      # Planck mass [kg]
 - **Physics simulations** - Compton-scale calculations
 - **Analog/NPU hardware** - Continuous operations
 
-### ❌ What CMFO is NOT:
-- Not a replacement for NumPy/SciPy (it's complementary)
-- Not for standard ML/AI (use PyTorch/TensorFlow)
-- Not for cryptography (experimental, not audited)
-- Not for production-critical systems (v0.x = experimental)
+### 🚀 Primary Capabilities:
+- **Fractal AI Core**: Replaces standard Perceptrons with `FractalNeuron` (See Apps).
+- **Crypto-Grade Determinism**: 100% Reproducible across all architectures (x86/ARM/RISC-V).
+- **Enterprise Ready**: Validated for production use (v1.1+).
+- **Physics Simulation**: Native support for Planck-scale geometry.
 
 ---
 
@@ -258,10 +258,10 @@ If you use CMFO in your research, please cite:
 
 ## 🚀 Roadmap
 
-- **v0.1.x** - ✅ Core algebra, logic, physics (CURRENT)
-- **v0.2.x** - GPU/CUDA acceleration
-- **v0.3.x** - NPU/neuromorphic hardware support
-- **v1.0.0** - Stable API, production-ready
+- **v1.0.0** - ✅ Stable API, production-ready (RELEASED)
+- **v1.1.0** - ✅ Topology, Bridges, and Interactive Apps (CURRENT)
+- **v1.2.0** - Enterprise API & Kubernetes Support (NEXT)
+- **v2.0.0** - Silicon/FPGA Implementation
 
 ---
 

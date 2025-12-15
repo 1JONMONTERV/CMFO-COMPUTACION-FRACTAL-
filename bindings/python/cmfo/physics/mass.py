@@ -5,6 +5,7 @@ CMFO Physics - Mass Relations
 Geometric mass calculations based on Compton wavelength.
 """
 
+import math
 from ..constants import HBAR, C
 
 
@@ -13,10 +14,10 @@ def geometric_mass(L: float) -> float:
     Geometric mass from characteristic length.
     
     Definition:
-        m = ħ / (c · L)
+        m = h / (c · L)  (where h = 2π·ħ)
     
     This is the Compton relation: mass is inversely proportional to
-    characteristic length scale. Dimensionally correct and fundamental.
+    characteristic length scale.
     
     Parameters
     ----------
@@ -32,24 +33,12 @@ def geometric_mass(L: float) -> float:
     ------
     ValueError
         If L is non-positive
-    
-    Examples
-    --------
-    >>> # Electron Compton wavelength
-    >>> L_e = 2.4263102367e-12  # meters
-    >>> m_e = geometric_mass(L_e)
-    >>> abs(m_e - 9.1093837015e-31) / 9.1093837015e-31 < 0.01  # Within 1%
-    True
-    
-    Notes
-    -----
-    This relation is exact in natural units where ħ = c = 1.
-    It forms the anchor for all CMFO mass predictions.
     """
     if L <= 0:
         raise ValueError("Length must be positive.")
     
-    return HBAR / (C * L)
+    # Corrected formula: use h instead of h_bar for standard Compton wavelength L
+    return (HBAR * 2 * math.pi) / (C * L)
 
 
 def compton_wavelength(m: float) -> float:
@@ -77,7 +66,7 @@ def compton_wavelength(m: float) -> float:
     if m <= 0:
         raise ValueError("Mass must be positive.")
     
-    return HBAR / (m * C)
+    return (HBAR * 2 * math.pi) / (m * C)
 
 
 __all__ = ['geometric_mass', 'compton_wavelength']

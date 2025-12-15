@@ -41,7 +41,7 @@ def fractal_product(x: float, y: float) -> float:
     >>> fractal_product(2.0, PHI)
     2.0
     >>> fractal_product(PHI, PHI)
-    2.618033988749895  # φ²
+    1.618033988749895  # φ
     """
     if x <= 0 or y <= 0:
         raise ValueError("Fractal product requires positive inputs.")

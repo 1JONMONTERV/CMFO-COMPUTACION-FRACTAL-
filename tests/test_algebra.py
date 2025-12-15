@@ -27,9 +27,9 @@ class TestFractalProduct:
         assert abs(result - x) < 1e-12
     
     def test_fractal_product_phi_squared(self):
-        """Test fractal_product(PHI, PHI) = PHI^2."""
+        """Test fractal_product(PHI, PHI) = PHI (Identity under fractal scaling)."""
         result = fractal_product(PHI, PHI)
-        expected = PHI ** 2
+        expected = PHI
         assert abs(result - expected) < 1e-12
     
     def test_fractal_product_negative_raises(self):

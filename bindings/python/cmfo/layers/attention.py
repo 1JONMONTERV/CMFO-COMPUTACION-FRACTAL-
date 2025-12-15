@@ -1,60 +1,77 @@
-import numpy as np
-
+import math
 
 class CMFOAttention:
     """
-    A Drop-in replacement for Self-Attention.
+    A Drop-in replacement for Self-Attention (Pure Python).
 
     Replaces: Softmax(QK^T)V
     With:     Fractal State Absorption
-
-    Complexity: O(N) instead of O(N^2)
     """
 
     def __init__(self, embed_dim: int, num_heads: int):
         self.embed_dim = embed_dim
         self.num_heads = num_heads
 
-    def __call__(self, x: np.ndarray) -> np.ndarray:
+    def __call__(self, x):
         """
         Args:
-            x: Input tensor (Batch, Seq_Len, Embed_Dim)
+            x: Input list (Batch, Seq_Len, Embed_Dim)
         Returns:
-            Output tensor (Batch, Seq_Len, Embed_Dim)
+            Output list (Batch, Seq_Len, Embed_Dim)
         """
-        batch, seq_len, dim = x.shape
-        output = np.zeros_like(x)
+        # Dimensions
+        batch_size = len(x)
+        if batch_size == 0: return []
+        seq_len = len(x[0])
+        dim = self.embed_dim
 
+        output = []
         PHI = 1.6180339887
+        denom = 1 + PHI
 
         # For each sequence in batch
-        for b in range(batch):
+        for b in range(batch_size):
+            batch_out = []
+            
             # Initialize Fractal State (The "Context")
-            # State is tiny compared to KV-Cache
-            state: np.ndarray = np.zeros(7)
+            # 7-Dimensional accumulator
+            state = [0.0] * 7
 
             # Causal Scan (Left-to-Right)
             for t in range(seq_len):
-                input_vec = x[b, t]  # (Dim,)
-
+                input_vec = x[b][t] # List of floats
+                
                 # 1. Reduced Input (Focus)
                 # Map massive embedding to 7D manifold
-                input_reduced = (
-                    np.sum(input_vec.reshape(-1, 7)[:7], axis=0)
-                    if dim >= 7 else np.zeros(7)
-                )
+                # Take first 7 dims or 0 pad
+                input_reduced = [0.0] * 7
+                limit = min(len(input_vec), 7)
+                for i in range(limit):
+                    input_reduced[i] = input_vec[i]
 
                 # 2. Absorb into State (The "Attention" Mechanism)
-                # T7 Operator replaces QK^T
-                state = (state * input_reduced + PHI) / (1 + PHI)
+                # T7 Operator: state = (state * input + PHI) / (1 + PHI)
+                for i in range(7):
+                    state[i] = (state[i] * input_reduced[i] + PHI) / denom
 
                 # 3. Project back to Embedding (Contextualized Output)
-                # This ensures the output at step t contains history of 0..t
-                # Expansion logic:
+                step_out = []
                 for d in range(dim):
-                    output[b, t, d] = state[d % 7] * (PHI ** (d % 3))
+                    # Re-expand: state[i] scaled by harmonic
+                    val = state[d % 7] * (PHI ** (d % 3))
+                    step_out.append(val)
+                
+                batch_out.append(step_out)
+            
+            output.append(batch_out)
 
         return output
 
     def to(self, device):
+        # GPU Hook
+        if "cuda" in str(device).lower():
+             from ..core.gpu import Accelerator
+             if Accelerator.is_available():
+                 # We would return a GPU-backed proxy here
+                 pass
         return self

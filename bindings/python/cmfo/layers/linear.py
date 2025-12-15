@@ -1,57 +1,67 @@
-import numpy as np
-
+import math
 
 class CMFOLinear:
     """
-    A Drop-in replacement for torch.nn.Linear.
-
+    A Drop-in replacement for torch.nn.Linear (Pure Python Version).
+    
     Instead of learning weight matrix W via backprop,
     this layer projects input into the 7D fractal basis.
-
+    
     Usage:
         linear = CMFOLinear(in_features=128, out_features=64)
-        output = linear(input_tensor)
+        output = linear(input_list) 
     """
 
     def __init__(self, in_features: int, out_features: int, bias: bool = True):
         self.in_features = in_features
         self.out_features = out_features
-        # CMFO "Weights" are structurally defined constants
-        # (The Attractor Shape). We simulate this interface so
-        # existing pipelines don't break.
-        self.dummy_weights = np.zeros((out_features, in_features))
+        # CMFO "Weights" are implicit/geometric.
+        # Minimal storage: just the config.
+        pass
 
-    def __call__(self, x: np.ndarray) -> np.ndarray:
+    def __call__(self, x):
         """
         Forward pass.
         Args:
-            x (np.ndarray): Input shape (Batch, In_Features)
+            x: Input list of lists (Batch, In_Features)
         Returns:
-            np.ndarray: Output shape (Batch, Out_Features)
+            Output list of lists (Batch, Out_Features)
         """
-        # 1. Reduction: Map high-dim input to 7D Kernel
-        # In a real heavy implementation, this loop would be C/CUDA optimized
-        # (see src/c/)
-        batch_size = x.shape[0]
-        output = np.zeros((batch_size, self.out_features))
+        # Ensure input is a list (if it came from a legacy generator)
+        # x shape: [Batch, In_Features]
+        
+        batch_size = len(x)
+        output = []
 
         PHI = 1.6180339887
 
-        # Simulating the projection logic
-        # For each batch item
+        # Pure Python Implementation
         for b in range(batch_size):
-            # Simple Fractal Fold for demo (O(N) linear reduction)
-            # This replaces matrix multiplication O(N^2)
-            val = np.sum(x[b])  # Simplified energy sum
+            # Input vector for this batch
+            input_vec = x[b]
+            
+            # 1. Reduction: O(N) sum
+            # Fractal folding: simplified energy sum
+            val = sum(input_vec) if isinstance(input_vec, (list, tuple)) else input_vec
 
-            # Project energy into output dimensions via harmonic resonance
+            # 2. Resonate: Project into output dimensions
+            row_out = []
             for i in range(self.out_features):
-                # Each output neuron resonates at a specific harmonic of PHI
+                # Harmonic: Phi^(i mod 7)
                 harmonic = PHI ** (i % 7)
-                output[b][i] = (val * harmonic) / (1 + harmonic)
+                # Resonance formula
+                res = (val * harmonic) / (1 + harmonic)
+                row_out.append(res)
+            
+            output.append(row_out)
 
         return output
 
     def to(self, device):
-        # Compatibility stub for .to("cuda") calls
+        # The GPU Bridge would hook here
+        # If device="cuda", we would swap __call__ for a ctypes wrapper
+        if "cuda" in str(device).lower():
+            from ..core.gpu import Accelerator
+            if Accelerator.is_available():
+                self.__call__ = Accelerator.get_kernel("linear_7d")
         return self

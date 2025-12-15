@@ -92,13 +92,13 @@ class CompiladorCMFO_V2:
         
         # Base canónica: cada tipo tiene una matriz identidad escalada
         base = {
-            "N": np.matrix(np.diag([1.0, 0.2, 0.1, 0.1, 0.1, 0.1, 0.1])),
-            "V": np.matrix(np.diag([0.2, 1.0, 0.1, 0.1, 0.1, 0.1, 0.1])),
-            "Det": np.matrix(np.diag([0.1, 0.1, 1.0, 0.1, 0.1, 0.1, 0.1])),
-            "Adj": np.matrix(np.diag([0.1, 0.1, 0.1, 1.0, 0.1, 0.1, 0.1])),
-            "Adv": np.matrix(np.diag([0.1, 0.1, 0.1, 0.1, 1.0, 0.1, 0.1])),
-            "C": np.matrix(np.diag([0.1, 0.1, 0.1, 0.1, 0.1, 1.0, 0.1])),
-            "P": np.matrix(np.diag([0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1.0])),
+            "N": np.matrix(np.diag([1.0, 0.2, 0.1, 0.1, 0.1, 0.1, 0.1]), dtype=complex),
+            "V": np.matrix(np.diag([0.2, 1.0, 0.1, 0.1, 0.1, 0.1, 0.1]), dtype=complex),
+            "Det": np.matrix(np.diag([0.1, 0.1, 1.0, 0.1, 0.1, 0.1, 0.1]), dtype=complex),
+            "Adj": np.matrix(np.diag([0.1, 0.1, 0.1, 1.0, 0.1, 0.1, 0.1]), dtype=complex),
+            "Adv": np.matrix(np.diag([0.1, 0.1, 0.1, 0.1, 1.0, 0.1, 0.1]), dtype=complex),
+            "C": np.matrix(np.diag([0.1, 0.1, 0.1, 0.1, 0.1, 1.0, 0.1]), dtype=complex),
+            "P": np.matrix(np.diag([0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1.0]), dtype=complex),
         }
         
         # Nombres propios: matriz específica (tipo + referencia)
@@ -281,10 +281,10 @@ def demo_v2():
         resultado = compilador_matricial.ejecutar_pipeline(oracion, parser)
         
         if "error" in resultado:
-            print("❌ No parseable")
+            print("[X] No parseable")
             continue
         
-        print(f"✓ Matriz 7x7 compilada")
+        print(f"[OK] Matriz 7x7 compilada")
         print(f"  Traza: {resultado['traza']:.4f}")
         print(f"  Determinante: {resultado['det']:.4f}")
         print(f"  Rango: {resultado['rank']}")

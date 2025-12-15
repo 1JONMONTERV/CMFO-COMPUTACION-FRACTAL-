@@ -4,6 +4,7 @@ Tests for CMFO Physics Module
 """
 
 import pytest
+import math
 from cmfo.physics import geometric_mass, compton_wavelength
 from cmfo.constants import HBAR, C
 
@@ -14,7 +15,8 @@ class TestGeometricMass:
     def test_geometric_mass_basic(self):
         """Test basic geometric mass calculation."""
         L = 1e-12  # 1 picometer
-        expected = HBAR / (C * L)
+        # Corrected formula expectation: m = h / (c * L) = (hbar * 2pi) / (c * L)
+        expected = (HBAR * 2 * math.pi) / (C * L)
         result = geometric_mass(L)
         assert abs(result - expected) < 1e-50
     
@@ -54,7 +56,8 @@ class TestComptonWavelength:
     def test_compton_wavelength_basic(self):
         """Test basic Compton wavelength calculation."""
         m = 1e-30  # kg
-        expected = HBAR / (m * C)
+        # Corrected formula expectation
+        expected = (HBAR * 2 * math.pi) / (m * C)
         result = compton_wavelength(m)
         assert abs(result - expected) < 1e-50
     

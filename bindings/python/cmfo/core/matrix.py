@@ -1,6 +1,8 @@
+import sys
 import ctypes
 import numpy as np
 from .native_lib import NativeLib
+from .structural import FractalMatrix7, FractalVector7
 
 class T7Matrix:
     """
@@ -8,12 +10,27 @@ class T7Matrix:
     """
     def __init__(self, _ptr=None):
         self.lib = NativeLib.get()
+        if not self.lib:
+            self.ptr = None
+            self.owned = False
+            # Fallback Logic: Try NumPy first, then pure Structural
+            try:
+                import numpy as np
+                self.python_matrix = np.zeros((7, 7), dtype=complex)
+                self.backend = "numpy"
+            except ImportError:
+                self.python_matrix = FractalMatrix7()
+                self.backend = "structural"
+            return
+
         if _ptr:
             self.ptr = _ptr
             self.owned = False
         else:
             self.ptr = self.lib.Matrix7x7_Create()
             self.owned = True
+            self.python_matrix = None
+            self.backend = "native"
 
     def __del__(self):
         if hasattr(self, 'owned') and self.owned and hasattr(self, 'ptr') and self.ptr:
@@ -22,6 +39,12 @@ class T7Matrix:
     @staticmethod
     def identity():
         m = T7Matrix()
+        if not m.ptr:
+             if m.backend == "numpy":
+                 m.python_matrix = np.eye(7, dtype=complex)
+             else:
+                 m.python_matrix = FractalMatrix7.identity()
+             return m
         m.lib.Matrix7x7_SetIdentity(m.ptr)
         return m
 
@@ -69,6 +92,26 @@ class T7Matrix:
         v = np.array(initial_state, dtype=complex)
         if v.size != 7:
             raise ValueError("State must be 7D")
+
+        # Python Fallback
+        if not self.ptr:
+            if self.backend == "numpy":
+                 for _ in range(steps):
+                    v = np.sin(self.python_matrix @ v)
+                    # STABILITY FIX: Normalize
+                    norm = np.linalg.norm(v)
+                    if norm > 1e-9:
+                        v = v / norm
+                 return v
+            else:
+                 # Structural Backend (Pure Python)
+                 # Input 'initial_state' might be list or numpy array. Convert to FractalVector7
+                 fv = FractalVector7(initial_state)
+                 for _ in range(steps):
+                     # v = sin(M @ v)
+                     fv = self.python_matrix.dot(fv).apply_complex_sin().normalize()
+                 # Return list or numpy array? Keep consistent with input if possible, or list
+                 return np.array(fv.v) if 'numpy' in sys.modules else fv.v
             
         # We need mutable buffers for the C function to write back into
         # But wait, C function arg is 'vec_real', 'vec_imag'. 
@@ -95,6 +138,22 @@ class T7Matrix:
             raise ValueError("Batch must be (N, 7)")
             
         N = batch.shape[0]
+
+        # Python Fallback
+        if not self.ptr:
+            # Vectorized implementation
+            # v (N,7), M (7,7). v' = sin( (M @ v.T).T ) = sin( v @ M.T )
+            M_T = self.python_matrix.T
+            v = batch
+            for _ in range(steps):
+                v = np.sin(v @ M_T)
+                # STABILITY FIX: Batch Normalize
+                # Norm along axis 1 (rows)
+                norms = np.linalg.norm(v, axis=1, keepdims=True)
+                # Avoid div by zero
+                norms[norms < 1e-15] = 1.0
+                v = v / norms
+            return v
         
         # Contiguous buffers representing the flat batch
         v_real = np.ascontiguousarray(batch.real.flatten(), dtype=np.float64)

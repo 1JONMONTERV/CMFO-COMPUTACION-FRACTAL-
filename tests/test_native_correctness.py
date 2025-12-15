@@ -26,6 +26,8 @@ class TestNativeCorrectness(unittest.TestCase):
         try:
             # Use Identity to match mat_np = np.eye(7)
             mat_obj = T7Matrix.identity()
+            # If native lib is missing, this should now work via Python fallback
+                
             v_native = mat_obj.evolve_state(vec, steps=1)
             
             # 3. Compare

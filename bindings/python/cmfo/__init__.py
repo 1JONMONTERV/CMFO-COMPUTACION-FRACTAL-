@@ -12,18 +12,20 @@ __version__ = "1.0.0"
 __author__ = "Jonathan Montero Viquez"
 __credits__ = "CMFO Universe"
 
-# Core constants
+# 1. CORE CONSTANTS
 from .constants import PHI, PHI_INV, HBAR, C, G, ALPHA, M_PLANCK
 
-# Algebra module
+# 2. ALGEBRA (Fractal Field Operations)
 from .algebra import (
     fractal_product,
     fractal_add,
     fractal_root,
     iterated_fractal_root,
 )
+# Alias for backward compatibility / explicit naming
+fractal_multiply = fractal_product
 
-# Logic module (unified - using new fractal_logic)
+# 3. LOGIC (Geometric Operations)
 from .logic.fractal_logic import (
     TRUE,
     FALSE,
@@ -34,36 +36,21 @@ from .logic.fractal_logic import (
     f_xor,
 )
 
-# Physics module
+# 4. GEOMETRY (Fundamental Units)
+# The Triangle decides. The Rhombus remembers.
+from .geometry.triangle import Triangle
+from .geometry.rhombus import Rhombus
+
+# 5. PHYSICS (Geometric Mass)
 from .physics import geometric_mass, compton_wavelength
 
-# Legacy core modules (for backward compatibility)
+# 6. SUPERPOSITION (Deterministic Parallelism)
+from .superposition.batch import FractalBatch
+
+# 7. CORE (Legacy & Native)
 from .core.t7_tensor import T7Tensor
 from .core.matrix import T7Matrix
-from .core.gamma_phi import gamma_step
-
-# New Fractal Core
-from .core.fractal import (
-    fractal_root,
-    fractal_add,
-    fractal_multiply,
-    PhiBit,
-    phi_and,
-    phi_or,
-    phi_not,
-    phi_decision,
-    geometric_state_collapse
-)
-
-# Legacy logic (for backward compatibility)
-from .logic.phi_logic import (
-    phi_sign,
-    # phi_and, # Now available from core.fractal
-    # phi_or,  # Now available from core.fractal
-    # phi_not, # Now available from core.fractal
-    phi_xor,
-    phi_nand,
-)
+from .core.fractal import geometric_state_collapse, phi_decision
 
 
 def tensor(v):
@@ -76,67 +63,35 @@ def info():
     print(f"CMFO Fractal Engine v{__version__}")
     print(f"Author: {__author__}")
     print("-" * 50)
-    print("Status: PRODUCTION READY + FRACTAL CORE")
-    print("Core: 7D φ-Manifold + Geometric Collapse")
-    print("Algebra: Fractal operations (⊕_φ, ⊗_φ, ℛ_φ)")
-    print("Logic: Geometric operators (∧_φ, ∨_φ, ¬_φ)")
-    print("Physics: Compton mass, Fractal Time")
+    print("Status: PRODUCTION READY (STANDARD v1.0)")
+    print("Architecture: 7D φ-Manifold + Geometric Collapse")
+    print("Geometry: Triangle (Decision) | Rhombus (Memory)")
+    print("Logic: Geometric Operators (∧_φ, ∨_φ, ¬_φ)")
+    print("Physics: Compton Mass | Fractal Time")
     print("-" * 50)
     print("Documentation: https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-")
     print("For commercial licensing: jmvlavacar@hotmail.com")
 
 
-__all__ = [
-    # Version info
-    "__version__",
-    "__author__",
-    # Constants
-    "PHI",
-    "PHI_INV",
-    "HBAR",
-    "C",
-    "G",
-    "ALPHA",
-    "M_PLANCK",
-    # Algebra
-    "fractal_product",
-    "fractal_add",
-    "fractal_root",
-    "fractal_multiply", # New
-    "iterated_fractal_root",
-    # Logic (new)
-    "TRUE",
-    "FALSE",
-    "NEUTRAL",
-    "f_not",
-    "f_and",
-    "f_or",
-    "f_xor",
-    # Fractal Core (New)
-    "PhiBit",
-    "phi_decision",
-    "geometric_state_collapse",
-    # Physics
-    "geometric_mass",
-    "compton_wavelength",
-    # Legacy core
-    "T7Tensor",
-    "T7Matrix",
-    "tensor",
-    "gamma_step",
-    # Legacy logic
-    "phi_sign",
-    "phi_and",
-    "phi_or",
-    "phi_not",
-    "phi_xor",
-    "phi_nand",
-    # Utilities
-    "info",
-    "verify",
-]
-
-
-# Verification
+# Validation Entry Point
 from .verify import run as verify
 
+__all__ = [
+    # Version
+    "__version__", "__author__",
+    # Constants
+    "PHI", "PHI_INV", "HBAR", "C", "G", "ALPHA", "M_PLANCK",
+    # Algebra
+    "fractal_product", "fractal_add", "fractal_root", "iterated_fractal_root", "fractal_multiply",
+    # Logic
+    "TRUE", "FALSE", "NEUTRAL", "f_not", "f_and", "f_or", "f_xor",
+    # Geometry
+    "Triangle", "Rhombus",
+    # Physics
+    "geometric_mass", "compton_wavelength",
+    # Superposition
+    "FractalBatch",
+    # Core/Utilities
+    "T7Tensor", "T7Matrix", "tensor", "phi_decision", "geometric_state_collapse",
+    "info", "verify",
+]

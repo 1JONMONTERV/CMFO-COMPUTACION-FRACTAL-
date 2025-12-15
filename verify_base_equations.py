@@ -46,10 +46,10 @@ def verify_equations():
     print(f"    Graph: {dist_node}")
     try:
         code = gen.generate_kernel(dist_node, "topology_metric_kernel")
-        print("    ✅ Topology Compilation: SUCCESS")
+        print("    [PASS] Topology Compilation: SUCCESS")
         print("    Sample Code: " + code.split('\n')[6].strip())
     except Exception as e:
-        print(f"    ❌ Topology Failed: {e}")
+        print(f"    [FAIL] Topology Failed: {e}")
 
     # --------------------------------------------------------
     # 2. LOGIC: Phi-Logic Gates
@@ -75,14 +75,14 @@ def verify_equations():
     print(f"    Graph: {phi_and_node}")
     try:
         code = gen.generate_kernel(phi_and_node, "phi_logic_kernel")
-        print("    ✅ Logic Compilation: SUCCESS")
+        print("    [PASS] Logic Compilation: SUCCESS")
         # Check if 'min' or conditional logic is generated
         # CUDAGenerator needs to handle 'min' and 'step'. 
         # Since I added IR node but maybe not Codegen support, it might fail or produce generic output.
         # Let's hope I updated CUDAGenerator... wait I didn't update cuda.py yet!
         # This part requires CodeGen update.
     except Exception as e:
-        print(f"    ⚠️ Logic Compilation Pending CodeGen Update: {e}")
+        print(f"    [WARN] Logic Compilation Pending CodeGen Update: {e}")
 
 if __name__ == "__main__":
     verify_equations()

@@ -1,44 +1,26 @@
-name: Deploy to GitHub Pages
+name: Deploy Static Docs
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'web/**'
+      - 'docs/**'
 
 permissions:
   contents: write
 
 jobs:
   deploy:
-    name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: web
-    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: 'npm'
-          cache-dependency-path: web/package-lock.json
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build Website
-        run: npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: apps/web/build
+          publish_dir: ./docs
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'

@@ -57,11 +57,17 @@ def main():
     skipped = 0
     
     for s in scripts:
-        result = run_script(s)
-        if result:
-            passed += 1
-        else:
-            failed += 1
+        # TRIPLE VERIFICATION ("All Proofs 3x")
+        # As requested by user for maximum rigor
+        for i in range(1, 4):
+            print(f"\n[ITERATION {i}/3]")
+            result = run_script(s)
+            if result:
+                passed += 1
+            else:
+                failed += 1
+                print(f"❌ FAIL AT ITERATION {i}")
+                break # Stop if one fails? Or continue? Let's stop to be rigorous.
             
     print(f"\n{'='*60}")
     print(f"SUMMARY: {passed} Passed, {failed} Failed")

@@ -49,7 +49,12 @@ try {
     cmfo = ffi.Library(libPath, {
         'cmfo_phi': [double, []],
         'cmfo_tensor7': ['void', [Vector7, Vector7, Vector7]],
-        'cmfo_gamma_step': [double, [double]]
+        'cmfo_gamma_step': [double, [double]],
+        // Matrix API
+        'Matrix7x7_Create': ['pointer', []],
+        'Matrix7x7_Destroy': ['void', ['pointer']],
+        'Matrix7x7_SetIdentity': ['void', ['pointer']],
+        'Matrix7x7_BatchEvolve': ['void', ['pointer', 'pointer', 'pointer', 'int', 'int']]
     });
 } catch (error) {
     console.error('Failed to load CMFO native library.');
@@ -145,6 +150,67 @@ class T7Tensor {
 }
 
 /**
+ * T7Matrix class for Batch Operations
+ */
+class T7Matrix {
+    constructor() {
+        this.ptr = cmfo.Matrix7x7_Create();
+    }
+
+    static identity() {
+        const m = new T7Matrix();
+        cmfo.Matrix7x7_SetIdentity(m.ptr);
+        return m;
+    }
+
+    destroy() {
+        if (this.ptr) {
+            cmfo.Matrix7x7_Destroy(this.ptr);
+            this.ptr = null;
+        }
+    }
+
+    /**
+     * Evolve a batch of states
+     * @param {Array<Object>} batch - Array of {real: [], imag: []}
+     * @param {number} steps
+     * @returns {Array<Object>} Evolved batch
+     */
+    evolveBatch(batch, steps) {
+        const N = batch.length;
+        const realData = new Float64Array(N * 7);
+        const imagData = new Float64Array(N * 7);
+
+        // Flatten data
+        for (let i = 0; i < N; i++) {
+            for (let j = 0; j < 7; j++) {
+                realData[i * 7 + j] = batch[i].real[j];
+                imagData[i * 7 + j] = batch[i].imag[j];
+            }
+        }
+
+        // Pointers
+        const pReal = Buffer.from(realData.buffer);
+        const pImag = Buffer.from(imagData.buffer);
+
+        cmfo.Matrix7x7_BatchEvolve(this.ptr, pReal, pImag, N, steps);
+
+        // Reconstruct
+        const outReal = new Float64Array(pReal.buffer, pReal.byteOffset, N * 7);
+        const outImag = new Float64Array(pImag.buffer, pImag.byteOffset, N * 7);
+
+        const result = [];
+        for (let i = 0; i < N; i++) {
+            result.push({
+                real: Array.from(outReal.slice(i * 7, (i + 1) * 7)),
+                imag: Array.from(outImag.slice(i * 7, (i + 1) * 7))
+            });
+        }
+        return result;
+    }
+}
+
+/**
  * Display CMFO information
  */
 function info() {
@@ -152,6 +218,7 @@ function info() {
     console.log(`Phi Constant: ${phi()}`);
     console.log('Status: LOADED');
     console.log('Core: T7 Phi-Manifold');
+    console.log('Extensions: Matrix/Batch API Enabled');
     console.log('Author: Jonnathan Montero Viques');
     console.log('=============================');
 }
@@ -162,5 +229,6 @@ module.exports = {
     tensor7,
     gammaStep,
     T7Tensor,
+    T7Matrix,
     info
 };

@@ -50,6 +50,12 @@ from .compiler import FractalGraph, FractalJIT
 # 4.9 NPU (Hardware Simulation)
 from .npu import FractalNPU, OpCode, asm
 
+# 4.95 TOPOLOGY (Riemannian Manifold)
+from .topology import PhiManifold
+
+# 6. BRIDGES (Interdisciplinary Analysis)
+from .bridges import analyze_dispersion_relation, analyze_gate_entropy, landauer_cost
+
 # 5. PHYSICS (Geometric Mass)
 from .physics import geometric_mass, compton_wavelength
 
@@ -102,6 +108,10 @@ __all__ = [
     "FractalGraph", "FractalJIT",
     # NPU
     "FractalNPU", "OpCode", "asm",
+    # Topology
+    "PhiManifold",
+    # Bridges
+    "analyze_dispersion_relation", "analyze_gate_entropy", "landauer_cost",
     # Physics
     "geometric_mass", "compton_wavelength",
     # Superposition

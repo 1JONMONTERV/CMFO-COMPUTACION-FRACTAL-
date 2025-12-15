@@ -45,7 +45,7 @@ from .geometry.rhombus import Rhombus
 from .memory import FractalMemoryCell, FractalMemoryBank
 
 # 4.8 COMPILER (Structural Execution)
-from .compiler import FractalGraph, FractalJIT
+# from .compiler import FractalGraph, FractalJIT
 
 # 4.9 NPU (Hardware Simulation)
 from .npu import FractalNPU, OpCode, asm

@@ -8,10 +8,60 @@ Zero dependencies (no torch, no cupy required).
 
 import ctypes
 import os
-import ctypes
-import os
-import sys
 import array
+import itertools
+
+class VirtualGPU:
+    """
+    Simulation backend when no hardware/compiled library is available.
+    """
+    @staticmethod
+    def get_kernel(name):
+        if name == "linear_7d":
+            return VirtualGPU._kernel_linear_7d
+        return None
+
+    @staticmethod
+    def _kernel_linear_7d(input_data):
+        # Optimized Path Simulator
+        if isinstance(input_data, tuple):
+            # (array, batch, dim)
+            flat_arr, batch, dim = input_data
+            out_features = 64
+            out_arr = array.array('f', [0.0] * (batch * out_features))
+            PHI = 1.6180339887
+            
+            # Use memoryview for zero-copy slicing of the input
+            mv = memoryview(flat_arr)
+            
+            # Pre-calc harmonics to remove math from loop (simulation opt)
+            harmonics = [PHI**(float(i%7)) for i in range(out_features)]
+            # Denom is (1+h), store multiplier h/(1+h)
+            multipliers = [h / (1.0 + h) for h in harmonics]
+            
+            for b in range(batch):
+                start = b * dim
+                # Zero-copy slice sum
+                val = sum(mv[start : start+dim])
+                
+                out_start = b * out_features
+                for i in range(out_features):
+                    out_arr[out_start + i] = val * multipliers[i]
+            return out_arr
+
+        # Legacy list path
+        input_list = input_data
+        batch = len(input_list)
+        output = []
+        PHI = 1.6180339887
+        out_features = 64
+        
+        for b in range(batch):
+           input_vec = input_list[b]
+           val = sum(input_vec) if isinstance(input_vec, (list, tuple)) else input_vec
+           row = [(val * (PHI**(i%7)))/(1+(PHI**(i%7))) for i in range(out_features)]
+           output.append(row)
+        return output
 
 class Accelerator:
     """
@@ -19,6 +69,7 @@ class Accelerator:
     """
     _lib = None
     _checked = False
+    _is_virtual = False
 
     @staticmethod
     def is_available():
@@ -32,6 +83,7 @@ class Accelerator:
         """Attempts to load cmfo_cuda.dll or libcmfo_cuda.so"""
         Accelerator._checked = True
         Accelerator._lib = None # Reset
+        Accelerator._is_virtual = False
         
         # Paths to search
         names = ["cmfo_cuda.dll", "libcmfo_cuda.so"]
@@ -52,10 +104,10 @@ class Accelerator:
                     except Exception as e:
                         print(f"[CMFO] Found GPU lib but failed to load: {e}")
         
-        # Fallback: Create a Mock Object for Demonstration if requested
-        # This allows users to see the pipeline work even without compiling C
+        # Fallback: Virtual Accelerator
         print("[CMFO] GPU Library not found. Using Virtual Accelerator (Simulation).")
-        Accelerator._lib = "VIRTUAL_GPU"
+        Accelerator._lib = VirtualGPU
+        Accelerator._is_virtual = True
 
     @staticmethod
     def get_kernel(name):
@@ -65,73 +117,18 @@ class Accelerator:
         if not Accelerator.is_available():
             raise RuntimeError("GPU Accelerator not available.")
             
-        # Example: mapping linear_7d to C function
+        # Virtual Path
+        if Accelerator._is_virtual:
+             return VirtualGPU.get_kernel(name)
+
+        # Real Ctypes Bridge
         if name == "linear_7d":
-            if Accelerator._lib == "VIRTUAL_GPU":
-                 # Return a Python simulator that LOOKS like the C wrapper
-                 def virtual_kernel(input_data):
-                     # Optimized Path Simulator
-                     if isinstance(input_data, tuple):
-                         # (array, batch, dim)
-                         flat_arr, batch, dim = input_data
-                         out_features = 64
-                         out_arr = array.array('f', [0.0] * (batch * out_features))
-                         PHI = 1.6180339887
-                         
-                         # Use memoryview for zero-copy slicing of the input
-                         mv = memoryview(flat_arr)
-                         
-                         # Pre-calc harmonics to remove math from loop (simulation opt)
-                         harmonics = [PHI**(float(i%7)) for i in range(out_features)]
-                         # Denom is (1+h), store multiplier h/(1+h)
-                         multipliers = [h / (1.0 + h) for h in harmonics]
-                         
-                         for b in range(batch):
-                             start = b * dim
-                             # Zero-copy slice sum
-                             # Still implies iterating in CPython, but avoids allocation
-                             val = sum(mv[start : start+dim])
-                             
-                             out_start = b * out_features
-                             for i in range(out_features):
-                                 out_arr[out_start + i] = val * multipliers[i]
-                         return out_arr
-
-                     # Legacy list path
-                     input_list = input_data
-                     batch = len(input_list)
-                     output = []
-                     PHI = 1.6180339887
-                     out_features = 64
-                     
-                     for b in range(batch):
-                        input_vec = input_list[b]
-                        val = sum(input_vec)
-                        row = [(val * (PHI**(i%7)))/(1+(PHI**(i%7))) for i in range(out_features)]
-                        output.append(row)
-                     return output
-                 return virtual_kernel
-
-            # Real Ctypes Bridge
             func = Accelerator._lib.cmfo_linear_gpu
             func.argtypes = [ctypes.c_void_p, ctypes.c_void_p, ctypes.c_int, ctypes.c_int]
             
             def wrapper(input_data):
                 # Optimization Path: Check if input is already a flat buffer (array.array)
                 if isinstance(input_data, array.array):
-                    # Zero-Copy Path!
-                    # Input is already flat float array
-                    # We assume (Batch * Dim) layout
-                    # Recover batch/dim from metadata or arguments (simplified here)
-                    # For stress test: we pass batch/dim explicitly or assume fixed
-                    # Let's infer: we need batch count.
-                     
-                    # For this demo, we assume input_data is FLATTENED array
-                    # We need 'batch' and 'dim' passed or inferred. 
-                    # Let's adhere to the previous signature taking list-of-lists?
-                    # No, to be zero-copy the input MUST be flat array.
-                    # We will support a tuple (array, batch, dim) for the optimized call
-                    
                     if isinstance(input_data, tuple):
                         flat_arr, batch, dim = input_data
                     else:
@@ -141,18 +138,13 @@ class Accelerator:
                     c_in = (ctypes.c_float * len(flat_arr)).from_buffer(flat_arr)
                     
                     out_features = 64
-                    # Output Buffer (Zero Copy)
-                    # Pre-allocate output array in Python
                     out_arr = array.array('f', [0.0] * (batch * out_features))
                     c_out = (ctypes.c_float * len(out_arr)).from_buffer(out_arr)
                     
-                    # RUN
                     func(c_in, c_out, batch, dim)
-                    
-                    return out_arr # Return flat array
+                    return out_arr 
                 
                 # Slow Path (Legacy List of Lists)
-                import itertools
                 flat_input = list(itertools.chain(*input_data))
                 batch = len(input_data)
                 dim = len(input_data[0]) if batch > 0 else 0

@@ -1,4 +1,9 @@
-from .graph import FractalGraph, FractalNode
-from .jit import FractalJIT
+"""
+CMFO Compiler Package
+=====================
+Home of 'The Sniper' - The specialized 7D Fractal Compiler.
+"""
 
-__all__ = ["FractalGraph", "FractalNode", "FractalJIT"]
+from .ir import *
+from .codegen import CUDAGenerator
+from .jit import FractalJIT

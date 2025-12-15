@@ -52,9 +52,11 @@ from .npu import FractalNPU, OpCode, asm
 
 # 4.95 TOPOLOGY (Riemannian Manifold)
 from .topology import PhiManifold
+# Physics is DERIVED from Topology (Spectral Geometry)
+# See DERIVATION.md
 
 # 6. BRIDGES (Interdisciplinary Analysis)
-from .bridges import analyze_dispersion_relation, analyze_gate_entropy, landauer_cost
+from .bridges import analyze_dispersion_relation, analyze_gate_entropy, landauer_cost, analyze_level_spacings
 
 # 5. PHYSICS (Geometric Mass)
 from .physics import geometric_mass, compton_wavelength
@@ -111,7 +113,7 @@ __all__ = [
     # Topology
     "PhiManifold",
     # Bridges
-    "analyze_dispersion_relation", "analyze_gate_entropy", "landauer_cost",
+    "analyze_dispersion_relation", "analyze_gate_entropy", "landauer_cost", "analyze_level_spacings",
     # Physics
     "geometric_mass", "compton_wavelength",
     # Superposition

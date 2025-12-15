@@ -17,7 +17,6 @@ Math:
     where n_i are integers (winding numbers) around the 7 dimensions.
 """
 
-import numpy as np
 import math
 from ..constants import PHI
 
@@ -27,7 +26,7 @@ def get_metric_diagonal(dim=7):
     This defines the 'shape' of the torus.
     """
     # Dimensions are compacted by powers of Phi
-    return np.array([PHI**i for i in range(dim)])
+    return [PHI**i for i in range(dim)]
 
 def calculate_eigenvalue(n_vector, metric):
     """
@@ -36,8 +35,8 @@ def calculate_eigenvalue(n_vector, metric):
     """
     # High dimensions (large g_ii) contribute LESS to energy (lighter modes).
     # Low dimensions (small g_ii) contribute MORE to energy (heavy modes).
-    terms = (np.array(n_vector)**2) / metric
-    return 4 * (math.pi**2) * np.sum(terms)
+    terms = [(n**2) / g for n, g in zip(n_vector, metric)]
+    return 4 * (math.pi**2) * sum(terms)
 
 def derive_geometric_spectrum(max_quantum_number=2):
     """

@@ -1,5 +1,3 @@
-import numpy as np
-
 # =====================================================================
 # CMFO-COMPUTE - AVISO DE LICENCIA
 # Uso académico y personal permitido bajo Apache 2.0.
@@ -11,7 +9,10 @@ import numpy as np
 
 
 def phi_sign(x):
-    x = float(np.array(x).mean())
+    # Convert to float if it's a list/iterable
+    if isinstance(x, (list, tuple)):
+        x = sum(x) / len(x) if x else 0.0
+    x = float(x)
     return 1.0 if x >= 0 else -1.0
 
 

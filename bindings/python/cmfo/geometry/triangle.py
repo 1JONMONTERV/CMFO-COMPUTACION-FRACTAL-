@@ -49,7 +49,6 @@ class Triangle:
         If the state is a vector/tensor, this applies `phi_decision`.
         If the state is a scalar, it returns the stabilized value.
         """
-        import numpy as np
         from ..core.fractal import phi_decision, fractal_root
         
         # 1. Apply Relation (Project the state)
@@ -59,9 +58,9 @@ class Triangle:
             projected = self.relation
             
         # 2. Geometric Collapse (The "Decision")
-        if isinstance(projected, (list, np.ndarray)):
+        if isinstance(projected, (list, tuple)):
             # "The triangle decides" -> collapses vector to index/class
-            return phi_decision(np.array(projected))
+            return phi_decision(projected)
         else:
             # Scalar stabilization
             return fractal_root(projected * self.scale)

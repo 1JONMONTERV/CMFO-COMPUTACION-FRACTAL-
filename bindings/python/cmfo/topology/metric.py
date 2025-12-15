@@ -16,7 +16,7 @@ Metric Definition:
     carry more "geometric weight" (or less, depending on curvature choice).
 """
 
-import numpy as np
+import math
 from ..constants import PHI
 
 class PhiManifold:
@@ -28,17 +28,17 @@ class PhiManifold:
         # Covariant Metric Tensor (Standard)
         # We choose scales such that higher dimensions are 'larger' or 'smaller'
         # Standard CMFO: Hierarchical scaling.
-        self.metric = np.array([PHI**i for i in range(dim)])
+        self.metric = [PHI**i for i in range(dim)]
         
     def distance(self, p1, p2):
         """
         Compute Geodesic Distance between two points.
         On a flat diagonal manifold, this is weighted Euclidean.
         """
-        diff = np.array(p1) - np.array(p2)
+        diff = [a - b for a, b in zip(p1, p2)]
         # ds^2 = sum( g_ii * (dx_i)^2 )
-        ds_squared = np.sum(self.metric * (diff**2))
-        return np.sqrt(ds_squared)
+        ds_squared = sum(g * (d**2) for g, d in zip(self.metric, diff))
+        return math.sqrt(ds_squared)
         
     def curvature(self):
         """
@@ -54,10 +54,8 @@ class PhiManifold:
         For diagonal metric, these are straight lines in mapped space.
         """
         # Linear interpolation in coordinate space is geodesic for constant metric
-        t = np.linspace(0, 1, steps)
-        p1 = np.array(p1)
-        p2 = np.array(p2)
-        path = [p1 * (1-ti) + p2 * ti for ti in t]
+        t = [i / (steps - 1) for i in range(steps)]
+        path = [[a * (1-ti) + b * ti for a, b in zip(p1, p2)] for ti in t]
         return path
 
 def fractal_measure(points):

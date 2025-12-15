@@ -10,11 +10,11 @@ Complete implementation of the CMFO algebraic framework:
 Reference: docs/theory/CMFO_COMPLETE_ALGEBRA.md
 """
 
-import numpy as np
-from typing import Union
+import math
+from typing import Union, List
 
 # Golden ratio constant
-PHI = (1 + np.sqrt(5)) / 2
+PHI = (1 + math.sqrt(5)) / 2
 PHI_INV = 1 / PHI
 
 
@@ -22,7 +22,7 @@ PHI_INV = 1 / PHI
 # I. FRACTAL FIELD OPERATIONS
 # ============================================================================
 
-def fractal_root(x: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
+def fractal_root(x: Union[float, List[float]]) -> Union[float, List[float]]:
     """
     The fundamental CMFO operator: ℛφ(x) = x^(1/φ)
     
@@ -34,12 +34,14 @@ def fractal_root(x: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
     - Non-linear: ℛφ(x+y) ≠ ℛφ(x) + ℛφ(y)
     
     Args:
-        x: Positive real number or array
+        x: Positive real number or list
         
     Returns:
         Fractally collapsed value
     """
-    return np.power(x, PHI_INV)
+    if isinstance(x, (list, tuple)):
+        return [val ** PHI_INV for val in x]
+    return x ** PHI_INV
 
 
 def fractal_add(x: float, y: float) -> float:
@@ -59,7 +61,7 @@ def fractal_multiply(x: float, y: float) -> float:
     """
     if y <= 0:
         raise ValueError("Fractal multiplication requires positive arguments")
-    return np.power(x, np.log(y) / np.log(PHI))
+    return x ** (math.log(y) / math.log(PHI))
 
 
 # ============================================================================
@@ -120,26 +122,27 @@ def phi_not(a: float) -> float:
 # III. DETERMINISTIC DECISION FUNCTIONS
 # ============================================================================
 
-def phi_normalize(x: np.ndarray) -> np.ndarray:
+def phi_normalize(x: List[float]) -> List[float]:
     """
     Fractal normalization: replaces softmax and L2 normalization.
     
     Each component is collapsed to its geometric core, then renormalized.
     """
-    collapsed = fractal_root(np.abs(x))
-    return collapsed / np.sum(collapsed)
+    collapsed = [fractal_root(abs(val)) for val in x]
+    total = sum(collapsed)
+    return [val / total for val in collapsed]
 
 
-def phi_activation(x: np.ndarray) -> np.ndarray:
+def phi_activation(x: List[float]) -> List[float]:
     """
     Fractal activation function for neural networks.
     
     Replaces ReLU, sigmoid, tanh with geometric collapse.
     """
-    return fractal_root(np.maximum(x, PHI_INV))
+    return [fractal_root(max(val, PHI_INV)) for val in x]
 
 
-def phi_decision(logits: np.ndarray) -> int:
+def phi_decision(logits: List[float]) -> int:
     """
     Deterministic decision from logits (no softmax, no sampling).
     
@@ -152,14 +155,14 @@ def phi_decision(logits: np.ndarray) -> int:
         Index of selected class (deterministic)
     """
     normalized = phi_normalize(logits)
-    return int(np.argmax(normalized))
+    return max(range(len(normalized)), key=lambda i: normalized[i])
 
 
 # ============================================================================
 # IV. GEOMETRIC COLLAPSE (PHYSICS)
 # ============================================================================
 
-def geometric_state_collapse(psi: np.ndarray) -> float:
+def geometric_state_collapse(psi: List[complex]) -> float:
     """
     Geometric quantum state collapse: ψ_real = ℛφ(Σ|ψ_i|²)
     
@@ -171,8 +174,8 @@ def geometric_state_collapse(psi: np.ndarray) -> float:
     Returns:
         Collapsed real value
     """
-    probabilities = np.abs(psi) ** 2
-    return fractal_root(np.sum(probabilities))
+    probabilities = [abs(p) ** 2 for p in psi]
+    return fractal_root(sum(probabilities))
 
 
 def fractal_time_flow(velocity_norm: float) -> float:

@@ -13,7 +13,8 @@ Fractal Neuron:
 The activation is provided by the Phi-Stability of the Triangle.
 """
 
-import numpy as np
+import math
+import random
 from ..constants import PHI, PHI_INV
 from ..algebra.fractal_ops import fractal_product, fractal_add
 from ..geometry.triangle import Triangle
@@ -21,7 +22,7 @@ from ..geometry.triangle import Triangle
 class FractalNeuron:
     def __init__(self, input_dim):
         # Weights are initialized around PHI alignment
-        self.weights = np.random.uniform(0.5, PHI, input_dim)
+        self.weights = [random.uniform(0.5, PHI) for _ in range(input_dim)]
         self.bias = 0.0
         
     def forward(self, inputs):
@@ -43,7 +44,7 @@ class FractalNeuron:
         # "Fractal" implies periodic/recursive structure.
         # Let's use: sin(phi * x) for a holographic neuron
         
-        output = np.sin(PHI * accumulation)
+        output = math.sin(PHI * accumulation)
         # Squash to 0..1
         return (output + 1) / 2.0
 

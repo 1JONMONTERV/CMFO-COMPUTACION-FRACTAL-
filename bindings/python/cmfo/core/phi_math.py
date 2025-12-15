@@ -1,4 +1,4 @@
-import numpy as np
+import math
 
 PHI = (1 + 5 ** 0.5) / 2
 
@@ -8,5 +8,5 @@ def phi_pow(x):
 
 
 def phi_norm(v):
-    v = np.array(v, dtype=float)
-    return np.linalg.norm(v)
+    v = list(v) if not isinstance(v, list) else v
+    return math.sqrt(sum(x * x for x in v))

@@ -6,9 +6,10 @@
 #   Jonathan Montero Viquez – San José, Costa Rica
 #   jmvlavacar@hotmail.com
 # =====================================================================
-import numpy as np
+import math
 
 
 def gamma_step(v):
-    v = np.array(v, dtype=float)
-    return np.sin(v)
+    v = list(v) if not isinstance(v, list) else v
+    return [math.sin(x) for x in v]
+

@@ -88,3 +88,14 @@ def algebraic_op(op, left, right):
 
 def geometric_op(op, node, params=None):
     return GeometricOp(op_type=op, input_node=node, params=params)
+
+def fractal_min(a, b):
+    # For fuzzy/fractal logic: min(a,b) is AND
+    return AlgebraicOp(op_type='min', left=a, right=b)
+
+def fractal_step(a):
+    # Heaviside step / Sign function
+    return GeometricOp(op_type='step', input_node=a)
+
+def fractal_sqrt(a):
+    return GeometricOp(op_type='sqrt', input_node=a)

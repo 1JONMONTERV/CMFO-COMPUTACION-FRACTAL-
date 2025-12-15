@@ -72,20 +72,32 @@ class FractalVector7:
 
     def __add__(self, other):
         # JIT Path
-        if self.is_lazy or (isinstance(other, FractalVector7) and other.is_lazy):
-            left = self._node if self.is_lazy else constant(self.v) # TODO: constant vector support needed in IR
-            right = other._node if isinstance(other, FractalVector7) and other.is_lazy else constant(0.0) # Placeholder
-            # Note: constant() currently supports float, not vector?
-            # IR needs update to support 'ConstantVector'. For now, assume symbolic or scalar.
+        if self.is_lazy or (isinstance(other, FractalVector7) and other.is_lazy) or self.is_lazy:
+            left = self._node if self.is_lazy else constant(0.0) # Placeholder for non-lazy vector injection (Not supported yet)
+            
+            if isinstance(other, FractalVector7):
+                 right = other._node if other.is_lazy else constant(0.0)
+            elif isinstance(other, (int, float)):
+                 right = constant(other)
+            else:
+                 right = constant(0.0)
+                 
             return FractalVector7(node=fractal_add(left, right))
             
         return FractalVector7([a + b for a, b in zip(self.v, other.v)])
 
     def __sub__(self, other):
         # JIT Path
-        if self.is_lazy or (isinstance(other, FractalVector7) and other.is_lazy):
-            left = self._node if self.is_lazy else constant(0.0) 
-            right = other._node if isinstance(other, FractalVector7) and other.is_lazy else constant(0.0)
+        if self.is_lazy or (isinstance(other, FractalVector7) and other.is_lazy) or self.is_lazy:
+            left = self._node if self.is_lazy else constant(0.0)
+            
+            if isinstance(other, FractalVector7):
+                 right = other._node if other.is_lazy else constant(0.0)
+            elif isinstance(other, (int, float)):
+                 right = constant(other)
+            else:
+                 right = constant(0.0)
+
             return FractalVector7(node=fractal_sub(left, right))
 
         return FractalVector7([a - b for a, b in zip(self.v, other.v)])

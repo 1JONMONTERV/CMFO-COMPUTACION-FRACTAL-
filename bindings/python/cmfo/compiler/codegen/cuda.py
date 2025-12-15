@@ -15,37 +15,55 @@ class CUDAGenerator:
     def generate_kernel(self, op: FractalNode, kernel_name="fused_kernel"):
         """
         Generates a complete CUDA kernel string for a given operation graph.
+        Analisis Graph to find all unique input symbols.
         """
         self.code = ""
         self.indent_level = 0
         
-        # Header
-        self.emit(f'extern "C" __global__ void {kernel_name}(const float* v, const float* h, float* out, int N) {{')
+        # 1. Collect Symbols
+        symbols = self._collect_symbols(op)
+        raw_syms = list(set(s.name for s in symbols))
+        
+        # HACK: Enforce 'v', 'h' order for compatibility with fixed C++ Bridge
+        # The C++ bridge calls (v_ptr, h_ptr, out_ptr).
+        # So we MUST generate kernel(const float* v, const float* h, ...)
+        uniq_symbols = []
+        if 'v' in raw_syms: uniq_symbols.append('v')
+        if 'h' in raw_syms: uniq_symbols.append('h')
+        
+        # Add any other symbols (dynamic mode) - Future proofing
+        for s in sorted(raw_syms):
+            if s not in uniq_symbols:
+                uniq_symbols.append(s)
+        
+        # 2. Generate Signature
+        # extern "C" __global__ void kernel(const float* sym1, const float* sym2, ..., float* out, int N)
+        args = [f"const float* {s}" for s in uniq_symbols]
+        args.append("float* out")
+        args.append("int N")
+        signature = ", ".join(args)
+        
+        self.emit(f'extern "C" __global__ void {kernel_name}({signature}) {{')
         self.indent()
         
-        # Thread Indexing
+        # 3. Thread Indexing
         self.emit("int idx = threadIdx.x + blockIdx.x * blockDim.x;")
         self.emit("if (idx >= N) return;")
         self.emit("")
         
-        # Load Constants (Snippet)
-        self.emit("// Constants")
+        # 4. Load Constants
         self.emit("const float PHI = 1.6180339887f;")
         self.emit("")
         
-        # Semantic Unrolling (The Sniper)
+        # 5. Dynamic Unrolled Loads
         self.emit("// 7D Unrolled Loads")
-        for i in range(7):
-            self.emit(f"float v{i} = v[idx*7 + {i}];")
-            self.emit(f"float h{i} = h[idx*7 + {i}];")
+        for sym in uniq_symbols:
+            for i in range(7):
+                self.emit(f"float {sym}{i} = {sym}[idx*7 + {i}];")
         self.emit("")
         
-        # Generate Logic
+        # 6. Generate Logic
         self.emit("// Fused Logic")
-        # We recursively generate the expression for each dimension 0..6
-        # For this prototype, we assume the graph is uniform across dimensions (element-wise)
-        # We generate the code for a *scalar* operation and apply it to v{i}, h{i}
-        
         for i in range(7):
             result_expr = self.visit(op, subscript=i)
             self.emit(f"out[idx*7 + {i}] = {result_expr};")
@@ -54,10 +72,24 @@ class CUDAGenerator:
         self.emit("}")
         return self.code
 
+    def _collect_symbols(self, node):
+        syms = []
+        if isinstance(node, Symbol):
+            return [node]
+        elif isinstance(node, AlgebraicOp):
+            return self._collect_symbols(node.left) + self._collect_symbols(node.right)
+        elif isinstance(node, GeometricOp):
+            return self._collect_symbols(node.input_node)
+        return []
+
     def visit(self, node: FractalNode, subscript: int) -> str:
         """
         Recursive visitor that returns a C++ expression string.
         """
+        if not isinstance(node, FractalNode):
+             # Debugging type issues
+             print(f"DEBUG: Visit called with {type(node)} -> {node}")
+             
         if isinstance(node, Symbol):
             # Maps symbol 'v' to local var 'v0', 'v1' etc
             return f"{node.name}{subscript}"
@@ -65,27 +97,36 @@ class CUDAGenerator:
         elif isinstance(node, Constant):
             return f"{node.value}f"
             
-        elif isinstance(node, AlgebraicOp):
+        if isinstance(node, AlgebraicOp) or type(node).__name__ == 'AlgebraicOp':
             l = self.visit(node.left, subscript)
             r = self.visit(node.right, subscript)
             
-            if node.op_type == 'add':
+            if node.op_type in ['add', '+']:
                 return f"({l} + {r})"
-            elif node.op_type == 'mul':
+            elif node.op_type in ['sub', '-']:
+                return f"({l} - {r})"
+            elif node.op_type in ['mul', '*']:
                 return f"({l} * {r})"
-            elif node.op_type == 'div':
+            elif node.op_type in ['div', '/']:
                 return f"({l} / {r})"
             elif node.op_type == 'pow':
                 # Use CUDA intrinsic
                 return f"powf({l}, {r})"
+            elif node.op_type == 'min':
+                return f"fminf({l}, {r})" # CUDA min
+            else:
+                raise ValueError(f"Unknown AlgebraicOp type: {node.op_type} in {node}")
                 
-        elif isinstance(node, GeometricOp):
-             # Harder, not implemented in this minimal prototype
-             # Gamma ops mix dimensions, so they break the "element-wise" simple unroll
-             # They require a Matrix Mul unroll
-             return "0.0f /* TODO GammaOp */"
+        elif isinstance(node, GeometricOp) or type(node).__name__ == 'GeometricOp':
+            inp = self.visit(node.input_node, subscript)
+            if node.op_type == 'sqrt':
+                return f"sqrtf({inp})"
+            elif node.op_type == 'step':
+                return f"({inp} >= 0.0f ? 1.0f : -1.0f)" # Sign function
+            elif node.op_type == 'gamma':
+                return f"tgammaf({inp})"
              
-        return "0.0f"
+        raise ValueError(f"Unknown Node: {node}")
 
     def emit(self, line):
         self.code += "  " * self.indent_level + line + "\n"

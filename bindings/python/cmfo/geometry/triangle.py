@@ -38,11 +38,30 @@ class Triangle:
     def __repr__(self):
         return f"Triangle(x={self.state}, f(x)={self.relation}, scale={self.scale})"
     
+    
     def decide(self):
         """
         Produce a deterministic decision.
-        The triangle stabilizes the state via the relation.
+        
+        The triangle stabilizes the state by applying the relation and 
+        collapsing any ambiguity using the fractal geometry.
+        
+        If the state is a vector/tensor, this applies `phi_decision`.
+        If the state is a scalar, it returns the stabilized value.
         """
-        # Placeholder for the "decision" logic logic if detailed elsewhere.
-        # For v1.0 structure, identity or relation check is sufficient.
-        return self.relation(self.state) if callable(self.relation) else self.relation
+        import numpy as np
+        from ..core.fractal import phi_decision, fractal_root
+        
+        # 1. Apply Relation (Project the state)
+        if callable(self.relation):
+            projected = self.relation(self.state)
+        else:
+            projected = self.relation
+            
+        # 2. Geometric Collapse (The "Decision")
+        if isinstance(projected, (list, np.ndarray)):
+            # "The triangle decides" -> collapses vector to index/class
+            return phi_decision(np.array(projected))
+        else:
+            # Scalar stabilization
+            return fractal_root(projected * self.scale)

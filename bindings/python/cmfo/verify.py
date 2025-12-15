@@ -39,6 +39,7 @@ EV_TO_JOULE = 1.602176634e-19
 M_PLANCK_KG = math.sqrt((H_BAR * C) / G)
 M_PLANCK_MEV = (M_PLANCK_KG * (C**2)) / EV_TO_JOULE / 1e6
 
+
 def check_system() -> Dict[str, Any]:
     """Collects system information."""
     sys_info = {
@@ -49,7 +50,8 @@ def check_system() -> Dict[str, Any]:
         "implementation": platform.python_implementation(),
         "cpu_cores": os.cpu_count(),
         "native_extension": False,
-        "numpy_version": "Not Installed"
+        "numpy_version": "Not Installed",
+        "modules": {}
     }
 
     try:
@@ -63,6 +65,14 @@ def check_system() -> Dict[str, Any]:
         sys_info["native_extension"] = NativeLib is not None
     except ImportError:
         pass
+
+    # Check new v1.0 modules
+    for mod in ['geometry', 'logic', 'memory', 'compiler', 'npu']:
+        try:
+            exec(f"import cmfo.{mod}")
+            sys_info["modules"][mod] = "Present"
+        except ImportError:
+            sys_info["modules"][mod] = "Missing"
 
     return sys_info
 
@@ -121,6 +131,59 @@ def verify_logic() -> Dict[str, Any]:
         "status": "PASS" if passed else "FAIL"
     }
 
+def verify_npu() -> Dict[str, Any]:
+    """Verifies the Fractal NPU simulator."""
+    try:
+        from .npu import FractalNPU, OpCode, asm
+        cpu = FractalNPU()
+        # Program: R0 = 2.0; R1 = 3.0; R2 = F_ADD(R0, R1) -> 5.0
+        cpu.memory[0] = 2.0
+        cpu.memory[1] = 3.0
+        prog = [
+            asm(OpCode.LOAD, 0, 0),       # R0 <- MEM[0] (2.0)
+            asm(OpCode.LOAD, 1, 1),       # R1 <- MEM[1] (3.0)
+            asm(OpCode.F_ADD, 2, 0, 1),   # R2 <- R0 + R1
+            asm(OpCode.HALT,)
+        ]
+        cpu.load_program(prog)
+        cpu.run()
+        
+        result = cpu.registers[2]
+        passed = abs(result - 5.0) < 1e-9
+        return {
+            "test": "NPU Simulator (F_ADD)",
+            "result": result,
+            "status": "PASS" if passed else "FAIL"
+        }
+    except Exception as e:
+         return {"test": "NPU Simulator", "status": f"FAIL ({e})"}
+
+def verify_compiler() -> Dict[str, Any]:
+    """Verifies the Fractal Graph Compiler."""
+    try:
+        from .compiler import FractalGraph, FractalJIT
+        
+        # Build x + x graph
+        g = FractalGraph()
+        x = g.add_input('x')
+        sum_node = g.add_op('sum', lambda a,b: a+b, [x, x])
+        g.set_output(sum_node)
+        
+        jit = FractalJIT()
+        exe = jit.compile(g)
+        res = exe.run({'x': 10.0})
+        
+        val = res['sum']
+        passed = abs(val - 20.0) < 1e-9
+         
+        return {
+            "test": "Compiler (DAG Execution)",
+            "result": val,
+            "status": "PASS" if passed else "FAIL"
+        }
+    except Exception as e:
+        return {"test": "Compiler", "status": f"FAIL ({e})"}
+
 def verify_performance() -> Dict[str, Any]:
     """Quick performance benchmark."""
     try:
@@ -152,7 +215,7 @@ def run(json_output=False):
     """Main entry point for verification."""
     
     if not json_output:
-        print(Colors.colorize("\nCMFO Verification Suite v0.1.5", Colors.HEADER))
+        print(Colors.colorize("\nCMFO Verification Suite v1.0.0", Colors.HEADER))
         print("=" * 40)
     
     # 1. System Check
@@ -163,22 +226,29 @@ def run(json_output=False):
         print(f"NumPy:    {sys_info['numpy_version']}")
         native = Colors.colorize("DETECTED", Colors.OKGREEN) if sys_info['native_extension'] else Colors.colorize("NOT FOUND (Falling back to Pure Python)", Colors.WARNING)
         print(f"Native:   {native}")
+        
+        print("\nChecking Modules:")
+        for m, s in sys_info['modules'].items():
+            col = Colors.OKGREEN if s == "Present" else Colors.FAIL
+            print(f"  - cmfo.{m:<10}: {Colors.colorize(s, col)}")
+            
         print("-" * 40)
 
     # 2. Run Tests
     results = []
     
     # Physics
-    p_res = verify_physics()
-    results.append(p_res)
+    results.append(verify_physics())
     
     # Logic
-    l_res = verify_logic()
-    results.append(l_res)
+    results.append(verify_logic())
     
+    # Architecture (New)
+    results.append(verify_compiler())
+    results.append(verify_npu())
+
     # Performance
-    perf_res = verify_performance()
-    results.append(perf_res)
+    results.append(verify_performance())
     
     # 3. Report
     all_pass = True
@@ -197,6 +267,8 @@ def run(json_output=False):
                 metric = f"Err: {res['error_percent']:.2f}%"
             elif "gflops" in res:
                 metric = f"{res['gflops']:.2f} GFLOPS"
+            elif "result" in res:
+                metric = f"Val: {res['result']}"
                 
             print(f"{res['test']:<30} | {Colors.colorize(status, color):<10} | {metric}")
             

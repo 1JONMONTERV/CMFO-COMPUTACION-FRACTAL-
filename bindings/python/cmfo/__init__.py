@@ -41,6 +41,15 @@ from .logic.fractal_logic import (
 from .geometry.triangle import Triangle
 from .geometry.rhombus import Rhombus
 
+# 4.5 MEMORY (Fractal Storage)
+from .memory import FractalMemoryCell, FractalMemoryBank
+
+# 4.8 COMPILER (Structural Execution)
+from .compiler import FractalGraph, FractalJIT
+
+# 4.9 NPU (Hardware Simulation)
+from .npu import FractalNPU, OpCode, asm
+
 # 5. PHYSICS (Geometric Mass)
 from .physics import geometric_mass, compton_wavelength
 
@@ -87,6 +96,12 @@ __all__ = [
     "TRUE", "FALSE", "NEUTRAL", "f_not", "f_and", "f_or", "f_xor",
     # Geometry
     "Triangle", "Rhombus",
+    # Memory
+    "FractalMemoryCell", "FractalMemoryBank",
+    # Compiler
+    "FractalGraph", "FractalJIT",
+    # NPU
+    "FractalNPU", "OpCode", "asm",
     # Physics
     "geometric_mass", "compton_wavelength",
     # Superposition

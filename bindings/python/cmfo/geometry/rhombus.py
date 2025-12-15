@@ -34,10 +34,47 @@ class Rhombus:
     def __repr__(self):
         return f"Rhombus(F={self.forward}, B={self.backward})"
         
-    def is_reversible(self) -> bool:
+    def invert(self):
+        """
+        Return the geometric inverse of the Rhombus.
+        Since it is symmetric, this swaps forward and backward components.
+        """
+        return Rhombus(forward=self.backward, backward=self.forward)
+
+    def process(self, input_state):
+        """
+        Process an input through the Rhombus.
+        Returns the transformed state.
+        """
+        # Updates the internal forward triangle state and decides
+        self.forward.state = input_state
+        return self.forward.decide()
+
+    def recover(self, output_state):
+        """
+        Recover the original input from the output (Reversibility).
+        """
+        # Updates the internal backward triangle state and decides
+        self.backward.state = output_state
+        return self.backward.decide()
+
+    def is_reversible(self, test_input=1.0, tolerance=1e-9) -> bool:
         """
         Check if the computation is strictly reversible.
-        In a perfect Rhombus, F(B(x)) == x.
+        In a perfect Rhombus, B(F(x)) == x.
         """
-        # Conceptual implementation for v1.0
-        return True
+        try:
+            y = self.process(test_input)
+            x_rec = self.recover(y)
+            return abs(x_rec - test_input) < tolerance
+        except Exception:
+            return False
+            
+    def remember(self):
+        """
+        Store the current state in the geometric structure.
+        """
+        return {
+            'forward': self.forward.decide(),
+            'backward': self.backward.decide()
+        }

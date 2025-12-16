@@ -1,0 +1,49 @@
+{
+    "domain": "MATH_10",
+    "problems": {
+        "binomial_expansion": {
+            "prompt": "Expand (a+b)^2",
+            "required_structure": {
+                "terms": [
+                    "a^2",
+                    "2ab",
+                    "b^2"
+                ],
+                "ordering": "any",
+                "completeness": "exact"
+            },
+            "common_violations": {
+                "distributive_error": {
+                    "pattern": [
+                        "a^2",
+                        "b^2"
+                    ],
+                    "missing": [
+                        "2ab"
+                    ],
+                    "axiom_ref": "distributive_property",
+                    "feedback": "Falta el término cruzado (2ab). Recuerda que la multiplicación distribuye sobre la suma."
+                }
+            }
+        },
+        "linear_eq_solve": {
+            "prompt": "Solve 2x - 4 = 10",
+            "required_structure": {
+                "final_state": "x=7",
+                "steps": [
+                    "add_4",
+                    "divide_2"
+                ]
+            },
+            "common_violations": {
+                "sign_error": {
+                    "pattern": [
+                        "x=3"
+                    ],
+                    "axiom_ref": "inverse_operation",
+                    "feedback": "Error de signo al mover el -4. Debes sumar 4, no restar."
+                }
+            }
+        }
+    }
+}

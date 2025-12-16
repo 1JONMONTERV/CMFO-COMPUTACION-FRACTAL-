@@ -1,0 +1,19 @@
+{
+    "domain": "LEGAL",
+    "description": "Corporate Compliance and Contracts",
+    "roles": {
+        "compliance": {
+            "authorities": [
+                "validate_contract"
+            ],
+            "constraints": {
+                "requires_active_nda": true,
+                "blocked_jurisdictions": [
+                    "NK",
+                    "IR",
+                    "SY"
+                ]
+            }
+        }
+    }
+}

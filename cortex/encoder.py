@@ -1,10 +1,21 @@
 
+
+
 import hashlib
 import struct
 import math
 import sys
-sys.path.insert(0, '../bindings/python')
+import os
+
+# Add bindings/python to path
+repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+bindings_path = os.path.join(repo_root, 'bindings', 'python')
+if bindings_path not in sys.path:
+    sys.path.insert(0, bindings_path)
+
 from cmfo.core.structural import FractalVector7
+
+
 
 class FractalEncoder:
     """

@@ -1,0 +1,120 @@
+{
+    "cmfo_domain": {
+        "name": "CMFO-EDU-MATH-10",
+        "description": "Dominio educativo gobernado para Matemáticas de 10º grado. El sistema solo puede razonar, explicar y evaluar conceptos explícitamente definidos en este syllabus.",
+        "epistemic_policy": {
+            "truth_definition": "Validez matemática demostrable dentro del nivel",
+            "authority_policy": "No se valida por fuente externa, solo por axiomas y reglas",
+            "forbidden_modes": [
+                "answer_only",
+                "advanced_shortcuts",
+                "calculus"
+            ]
+        },
+        "grade_level": 10,
+        "age_range": [
+            15,
+            16
+        ],
+        "learning_objectives": [
+            "Comprender estructuras algebraicas básicas",
+            "Detectar errores conceptuales comunes",
+            "Justificar procedimientos paso a paso",
+            "Traducir entre lenguaje simbólico y verbal"
+        ],
+        "allowed_topics": {
+            "algebra": [
+                "variables_and_constants",
+                "algebraic_expressions",
+                "polynomials",
+                "monomials",
+                "binomials",
+                "factoring_basic",
+                "expansion_of_products",
+                {
+                    "special_products": [
+                        "square_of_a_binomial",
+                        "product_of_conjugates"
+                    ]
+                }
+            ],
+            "equations": [
+                "linear_equations_one_variable",
+                "linear_equations_two_variables",
+                "systems_of_linear_equations_basic"
+            ],
+            "functions": [
+                "concept_of_function",
+                "linear_functions",
+                "slope_of_a_line",
+                "intercepts",
+                "graphing_linear_functions"
+            ],
+            "arithmetic_foundations": [
+                "order_of_operations",
+                "distributive_property",
+                "associative_property",
+                "commutative_property"
+            ]
+        },
+        "forbidden_topics": [
+            "derivada",
+            "integral",
+            "limite",
+            "trigonometria",
+            "logaritmo",
+            "exponencial",
+            "formula cuadratica",
+            "matric",
+            "vector",
+            "complejo"
+        ],
+        "axioms": {
+            "distributive_property": {
+                "statement": "a(b + c) = ab + ac",
+                "level": "foundational",
+                "common_violations": [
+                    "(a+b)^2 = a^2 + b^2"
+                ],
+                "pedagogical_response": "Violación del axioma distributivo.\nAl elevar un binomio al cuadrado, falta el término cruzado 2ab.\n"
+            },
+            "order_of_operations": {
+                "statement": "PEMDAS",
+                "level": "foundational",
+                "common_violations": [
+                    "2 + 3 * 4 = 20"
+                ],
+                "pedagogical_response": "Error en el orden de operaciones.\nLa multiplicación se evalúa antes que la suma.\n"
+            }
+        },
+        "response_policy": {
+            "incorrect_answer": {
+                "strategy": [
+                    "identify_axiom_violation",
+                    "explain_missing_structure",
+                    "provide_correct_form",
+                    "ask_reflection_question"
+                ],
+                "tone": "corrective_explanatory"
+            },
+            "out_of_scope_query": {
+                "message": "Este concepto está fuera del nivel de Matemáticas de 10º grado.\nPara este curso, concéntrate en los conceptos definidos en el programa,\npor ejemplo: la pendiente de la recta en lugar de derivadas.\n"
+            }
+        },
+        "evaluation_modes": [
+            "step_by_step_explanation",
+            "error_diagnosis",
+            "concept_comparison",
+            "guided_practice"
+        ],
+        "auditability": {
+            "log": [
+                "concept_used",
+                "axiom_applied",
+                "violation_detected",
+                "syllabus_rule_id"
+            ],
+            "explainability_level": "full"
+        }
+    }
+}

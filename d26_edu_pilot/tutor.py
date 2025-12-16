@@ -30,10 +30,16 @@ class PedagogicalTutor:
         # 3. Initialize "Knowledge Base" (Simulated Proof Generation)
         # In a full system, this would be D16 reasoning engine.
         self.knowledge_base = {
-            "péndulo": {"proof": "physics_laws", "action": "explain_concept"}, # Intentional typo to test normalized matching? No, "pendiente"
             "pendiente": {"proof": "geom_analytic_def_1", "action": "explain_concept"},
             "recta": {"proof": "euclid_axiom_1", "action": "explain_concept"},
-            "2x+4=10": {"proof": "linear_alg_step_1", "action": "solve_step"},
+            "ecuación": {"proof": "algebra_linear_1", "action": "explain_concept"},
+            "ecuacion": {"proof": "algebra_linear_1", "action": "explain_concept"},
+            "equation": {"proof": "algebra_linear_1", "action": "explain_concept"},
+            "lineal": {"proof": "algebra_linear_1", "action": "explain_concept"},
+            "linear": {"proof": "algebra_linear_1", "action": "explain_concept"},
+            "resolver": {"proof": "algebra_solve_1", "action": "solve_step"},
+            "solve": {"proof": "algebra_solve_1", "action": "solve_step"},
+            "resuelve": {"proof": "algebra_solve_1", "action": "solve_step"},
         }
 
     def process_student_query(self, query: str, user_id: str = "student_01") -> Dict[str, Any]:
@@ -130,30 +136,169 @@ class PedagogicalTutor:
         }
 
     def _extract_concept(self, query: str) -> str:
-        # Naive extraction for prototype
+        # Improved extraction for prototype
         q = query.lower()
+        
+        # Forbidden topics
         if "derivada" in q: return "derivada"
         if "integral" in q: return "integral"
-        if "pendiente" in q: return "pendiente"
-        if "recta" in q: return "recta"
-        if "2x+4=10" in q.replace(" ", ""): return "2x+4=10"
+        if "cálculo" in q or "calculus" in q: return "derivada"
+        
+        # Allowed topics - check for keywords
+        if "ecuación" in q or "ecuacion" in q or "equation" in q:
+            return "ecuación"
+        if "lineal" in q or "linear" in q:
+            return "lineal"
+        if "resolver" in q or "resuelve" in q or "solve" in q:
+            return "resolver"
+        if "pendiente" in q: 
+            return "pendiente"
+        if "recta" in q: 
+            return "recta"
+        
+        # Check for equation patterns (contains x and =)
+        if "x" in q and "=" in q:
+            return "resolver"
+            
         return query # Fallback
 
     def _lookup_knowledge(self, concept: str, query: str) -> Optional[Dict]:
         return self.knowledge_base.get(concept)
 
     def _generate_content(self, action: str, query: str, proof_ref: str) -> str:
-        # Simulated content generator
+        # Improved content generator
+        q = query.lower()
+        
         if action == "explain_concept":
-            if "pendiente" in query.lower():
-                return "La pendiente (m) representa el cambio vertical dividido por el cambio horizontal. m = (y2-y1)/(x2-x1)."
-            if "ecuación" in query.lower() or "equation" in query.lower():
-                return "Una ecuación lineal tiene la forma ax + b = c. Para resolverla, aislamos la variable x usando operaciones inversas."
-        if action == "solve_step":
-            return "Paso 1: Restar 4 a ambos lados. 2x = 6."
+            if "pendiente" in q:
+                return "La pendiente (m) representa el cambio vertical dividido por el cambio horizontal.\n\nFórmula: m = (y₂-y₁)/(x₂-x₁)\n\nEjemplo: Si tenemos los puntos (1,2) y (3,6):\nm = (6-2)/(3-1) = 4/2 = 2"
+            
+            if "ecuación" in q or "ecuacion" in q or "equation" in q:
+                return "Una ecuación lineal tiene la forma: ax + b = c\n\nPara resolverla:\n1. Aísla los términos con x en un lado\n2. Aísla los términos constantes en el otro lado\n3. Despeja x dividiendo\n\nEjemplo: 2x + 3 = 7\n→ 2x = 7 - 3\n→ 2x = 4\n→ x = 2"
+            
+            if "lineal" in q or "linear" in q:
+                return "El álgebra lineal estudia ecuaciones de primer grado (sin exponentes mayores a 1).\n\nFormas comunes:\n• ax + b = c (ecuación simple)\n• y = mx + b (forma pendiente-intersección)\n• ax + by = c (forma general)\n\n¿Qué tipo de ecuación te gustaría explorar?"
+                
+        if action == "solve_step" or "resolver" in q or "resuelve" in q or "solve" in q:
+            # Try to solve the equation if present
+            solution = self._solve_linear_equation(query)
+            if solution:
+                return solution
+            return "Para resolver ecuaciones, necesito ver la ecuación en formato claro.\nEjemplo: 2x + 3 = 7 o 5x - 2 = 3x + 4"
+            
         if action == "general_response":
-            return "Puedo ayudarte con temas de matemáticas de 10º grado: álgebra lineal, geometría euclidiana y aritmética básica. ¿Qué te gustaría aprender?"
-        return "Entiendo tu pregunta. Estoy aquí para ayudarte con matemáticas de 10º grado."
+            return "Puedo ayudarte con:\n• Ecuaciones lineales (resolver y explicar)\n• Geometría analítica (pendiente, rectas)\n• Álgebra básica\n\n¿Qué tema específico te interesa?"
+            
+        return "Entiendo tu pregunta sobre matemáticas de 10º grado. ¿Podrías reformularla o ser más específico?"
+    
+    
+    def _solve_linear_equation(self, query: str) -> str:
+        """
+        Solve linear equation using 100% CMFO algebra (no regex).
+        
+        Uses cmfo.education.equation_solver for pure geometric parsing.
+        """
+        try:
+            from cmfo.education.equation_solver import solve_equation_cmfo
+            solution = solve_equation_cmfo(query)
+            return solution if solution else ""
+        except Exception as e:
+            # Fallback to simple response
+            return f"Error al resolver: {str(e)}"
+
+            
+        # Split by =
+        parts = clean.split("=")
+        if len(parts) != 2:
+            return None
+            
+        left, right = parts[0], parts[1]
+        
+        try:
+            # Simple parser for linear equations
+            # Extract coefficients for x and constants
+            def parse_side(expr):
+                """Parse one side of equation, return (x_coef, constant)"""
+                x_coef = 0
+                constant = 0
+                
+                # Add + at start if doesn't start with - or +
+                if expr and expr[0] not in ['+', '-']:
+                    expr = '+' + expr
+                
+                # Find all terms
+                terms = re.findall(r'[+-][^+-]+', expr)
+                
+                for term in terms:
+                    term = term.strip()
+                    if 'x' in term:
+                        # Extract coefficient
+                        coef_str = term.replace('x', '').strip()
+                        if coef_str in ['+', '']:
+                            x_coef += 1
+                        elif coef_str == '-':
+                            x_coef -= 1
+                        else:
+                            x_coef += float(coef_str)
+                    else:
+                        # It's a constant
+                        if term.strip():
+                            constant += float(term)
+                
+                return x_coef, constant
+            
+            left_x, left_c = parse_side(left)
+            right_x, right_c = parse_side(right)
+            
+            # Move all x to left, constants to right
+            # left_x*x + left_c = right_x*x + right_c
+            # (left_x - right_x)*x = right_c - left_c
+            
+            final_x_coef = left_x - right_x
+            final_constant = right_c - left_c
+            
+            if abs(final_x_coef) < 0.0001:
+                return "Esta ecuación no tiene solución única (los coeficientes de x se cancelan)."
+            
+            solution = final_constant / final_x_coef
+            
+            # Format solution with steps
+            result = "**Resolución paso a paso:**\n\n"
+            result += f"Ecuación original:\n{left} = {right}\n\n"
+            
+            if right_x != 0:
+                result += f"Paso 1: Mover términos con x al lado izquierdo\n"
+                if right_x > 0:
+                    result += f"{left} - {right_x}x = {right_c}\n"
+                else:
+                    result += f"{left} + {abs(right_x)}x = {right_c}\n"
+                result += f"→ {final_x_coef}x + {left_c} = {right_c}\n\n"
+            
+            if left_c != 0:
+                result += f"Paso 2: Mover constantes al lado derecho\n"
+                if left_c > 0:
+                    result += f"{final_x_coef}x = {right_c} - {left_c}\n"
+                else:
+                    result += f"{final_x_coef}x = {right_c} + {abs(left_c)}\n"
+                result += f"→ {final_x_coef}x = {final_constant}\n\n"
+            
+            result += f"Paso 3: Despejar x dividiendo\n"
+            result += f"x = {final_constant} / {final_x_coef}\n"
+            result += f"\n**x = {solution}**"
+            
+            # Verification
+            result += f"\n\nVerificación:\n"
+            left_check = left_x * solution + left_c
+            right_check = right_x * solution + right_c
+            result += f"Lado izquierdo: {left_x}({solution}) + {left_c} = {left_check:.2f}\n"
+            result += f"Lado derecho: {right_x}({solution}) + {right_c} = {right_check:.2f}\n"
+            result += "✓ Correcto" if abs(left_check - right_check) < 0.01 else "✗ Error"
+            
+            return result
+            
+        except Exception as e:
+            print(f"[ERROR] Could not parse equation: {e}")
+            return None
     
     def _generate_conversational_response(self, query: str) -> str:
         """Handle greetings and general conversational queries"""

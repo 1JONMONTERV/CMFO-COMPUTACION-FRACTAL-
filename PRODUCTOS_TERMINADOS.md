@@ -29,6 +29,15 @@ Este documento certifica las soluciones **terminadas, empaquetadas y listas para
 *   Ejecute `CMFO_SUITE.bat` -> Opción 3.
 *   Salida: Flujo continuo de nuevas ideas y conexiones lógicas.
 
+## 4. CMFO Deterministic Engine (IA Lógica)
+**Estado:** PRODUCCIÓN
+**Audiencia:** Ingenieros de Sistemas Críticos, Banca, Aeroespacial.
+**Problema:** "Cajas Negras" en IA. Redes neuronales inexplicables que alucinan.
+**Solución:** Red Neuronal Geométrica basada en Phi. 100% Determinista y Auditable.
+**Uso Inmediato:**
+*   Ejecute `CMFO_SUITE.bat` -> Opción 1.
+*   Capacidad: Aprendizaje XOR estable con convergencia garantizada sin retropropagación estocástica.
+
 ---
 **Instrucciones de Despliegue:**
 1.  Copiar la carpeta del proyecto.

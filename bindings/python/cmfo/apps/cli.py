@@ -32,7 +32,7 @@ def print_header():
     print(Colors.ENDC)
 
 def run_ai_demo():
-    print(Colors.OKCYAN + "\n[APP] FRACTAL NEURON STUDIO" + Colors.ENDC)
+    print(Colors.OKCYAN + "\n[APP] CMFO DETERMINISTIC ENGINE v1.0" + Colors.ENDC)
     print("Training a generic Fractal Neuron on XOR Logic...")
     
     inputs = [[0.1, 0.1], [0.1, 0.9], [0.9, 0.1], [0.9, 0.9]]
@@ -94,11 +94,11 @@ def run_physics_lab():
 def main_menu():
     while True:
         print_header()
-        print("1. CMFO Neural Studio (IA)")
-        print("2. CMFO Physics Lab (Análisis)")
-        print("3. Omniverso Semántico (Generador)")
-        print("4. Fractal Upscaler (Gráficos)")
-        print("5. Hyper-Memory (Virtual RAM)")
+        print("1. CMFO Deterministic Engine v1.0 (IA)")
+        print("2. CMFO Topology Lab v1.0 (Física)")
+        print("3. CMFO Semantic Omniverse v1.0")
+        print("4. CMFO Fractal Upscaler v1.0")
+        print("5. CMFO Hyper-Memory v1.0")
         print("6. Salir")
         
         choice = input(f"\n{Colors.OKBLUE}Seleccione Producto [1-6]: {Colors.ENDC}")

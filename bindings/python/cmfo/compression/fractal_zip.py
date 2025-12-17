@@ -5,11 +5,6 @@ import shutil
 import pickle
 import math
 import sys
-from concurrent.futures import ThreadPoolExecutor
-
-# Try to import FractalSwap from memory if available, else lightweight reimplement
-# For "Product" reliability, I'll include the lightweight swap logic here to ensure
-# it works standalone without circular dependencies.
 
 class FractalCompressor:
     """
@@ -26,7 +21,6 @@ class FractalCompressor:
     def compress_file(self, file_path):
         """
         Compresses a file and sends it directly to Hyper-Memory.
-        Returns the 'Fractal Key' needed to retrieve it.
         """
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"File not found: {file_path}")
@@ -39,18 +33,20 @@ class FractalCompressor:
         
         # 1. Compress
         print("[ZIP] Applying Fractal Compression (LZMA2)...")
-        compressed_data = lzma.compress(data, preset=9) # Max compression
+        compressed_data = lzma.compress(data, preset=9)
         comp_size = len(compressed_data)
-        ratio = (1 - (comp_size / orig_size)) * 100
+        if orig_size > 0:
+            ratio = (1 - (comp_size / orig_size)) * 100
+        else:
+            ratio = 0
         
         # 2. Store in Hyper-Memory
         fname = os.path.basename(file_path)
         key = f"{fname}.fractal"
         
-        # Use Phi-based hashing for distribution (Simulated)
+        # Use Phi-based hashing
         phi = 1.6180339887
-        shard_id = int((hash(fname) * phi) % 10) # 10 Shards
-        
+        shard_id = int((hash(fname) * phi) % 10) 
         shard_dir = os.path.join(self.swap_dir, f"shard_{shard_id}")
         if not os.path.exists(shard_dir):
             os.makedirs(shard_dir)
@@ -61,7 +57,7 @@ class FractalCompressor:
         with open(store_path, 'wb') as f:
             pickle.dump(compressed_data, f)
             
-        print(f"[SUCCESS] Stored '{key}'")
+        print(f"[SUCCESS] Stored '{key}' at {store_path}")
         print(f"   Original: {orig_size/1024:.2f} KB")
         print(f"   Fractal:  {comp_size/1024:.2f} KB")
         print(f"   Ratio:    {ratio:.2f}% Saved")
@@ -86,4 +82,3 @@ class FractalCompressor:
             f.write(data)
             
         print(f"[SUCCESS] Restored to {output_path}")
-

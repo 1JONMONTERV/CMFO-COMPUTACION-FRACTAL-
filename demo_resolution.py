@@ -28,16 +28,17 @@ def create_test_pattern():
 
 def run_demo():
     print("========================================")
-    print("   CMFO SUPER-RESOLUCIÓN FRACTAL")
-    print("   Solución para Gamers y Artistas")
+    print("   CMFO FRACTAL UPSCALER v1.0")
+    print("   Motor de Super-Resolución Profesional")
     print("========================================")
     
-    # 1. Crear Input
+    # 1. Crear Input (Modo Automático para demostración rápida)
+    # En versión comercial, aquí iría un 'input()' para elegir archivo.
     input_file = create_test_pattern()
-    print(f"[1] Generada imagen de entrada (Baja Res): {input_file}")
+    print(f"[INFO] Procesando archivo: {input_file}")
     
     # 2. Iniciar Upscaler
-    upscaler = FractalUpscaler(intensity=0.15) # Un poco más intenso para demo
+    upscaler = FractalUpscaler(intensity=0.15)
     
     start_t = time.time()
     print("[2] Iniciando Escalado Fractal x2...")

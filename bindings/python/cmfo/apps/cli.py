@@ -94,14 +94,14 @@ def run_physics_lab():
 def main_menu():
     while True:
         print_header()
-        print("1. IA Neurona Fractal (Entrenamiento)")
-        print("2. Laboratorio de Física (Análisis T7)")
-        print("3. Generador Infinito (Omniverso)")
-        print("4. Super-Resolución (Gráficos)")
-        print("5. Memoria Virtual (Solución RAM)")
+        print("1. CMFO Neural Studio (IA)")
+        print("2. CMFO Physics Lab (Análisis)")
+        print("3. Omniverso Semántico (Generador)")
+        print("4. Fractal Upscaler (Gráficos)")
+        print("5. Hyper-Memory (Virtual RAM)")
         print("6. Salir")
         
-        choice = input(f"\n{Colors.OKBLUE}Seleccione Aplicación [1-6]: {Colors.ENDC}")
+        choice = input(f"\n{Colors.OKBLUE}Seleccione Producto [1-6]: {Colors.ENDC}")
         
         if choice == '1':
             run_ai_demo()

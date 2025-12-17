@@ -71,15 +71,15 @@ class FractalSwap:
 
 def run_demo():
     print("=========================================")
-    print("   CMFO VIRTUAL RAM (FRACTAL SWAP)")
-    print("   Solución para Escasez de Hardware")
+    print("   CMFO HYPER-MEMORY v1.0")
+    print("   Sistema de Paginación Fractal")
     print("=========================================")
-    print("Simulando entorno con memoria CRÍTICA.\n")
+    print("[INFO] Inicializando Virtualización de RAM...\n")
     
     fs = FractalSwap()
     
     # 1. Generate Massive Data
-    print("\n1. Generando Big Data (Simulado)...")
+    print("\n[PROCESO] Ingestando Big Data...")
     huge_datasets = {}
     for i in range(20):
         # Each 'dataset' is large text

@@ -99,9 +99,10 @@ def main_menu():
         print("3. CMFO Semantic Omniverse v1.0")
         print("4. CMFO Fractal Upscaler v1.0")
         print("5. CMFO Hyper-Memory v1.0")
-        print("6. Salir")
+        print("6. CMFO Fractal Zip v1.0 (Compresión)")
+        print("7. Salir")
         
-        choice = input(f"\n{Colors.OKBLUE}Seleccione Producto [1-6]: {Colors.ENDC}")
+        choice = input(f"\n{Colors.OKBLUE}Seleccione Producto [1-7]: {Colors.ENDC}")
         
         if choice == '1':
             run_ai_demo()
@@ -114,6 +115,8 @@ def main_menu():
         elif choice == '5':
             os.system("python demo_virtual_ram.py")
         elif choice == '6':
+            os.system("python demo_fractal_zip.py")
+        elif choice == '7':
             print("Saliendo de CMFO Suite.")
             sys.exit(0)
 

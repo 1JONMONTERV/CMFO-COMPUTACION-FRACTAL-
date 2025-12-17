@@ -38,6 +38,15 @@ Este documento certifica las soluciones **terminadas, empaquetadas y listas para
 *   Ejecute `CMFO_SUITE.bat` -> Opción 1.
 *   Capacidad: Aprendizaje XOR estable con convergencia garantizada sin retropropagación estocástica.
 
+## 5. CMFO Fractal Zip (Compresión Avanzada)
+**Estado:** PRODUCCIÓN
+**Audiencia:** Empresas de almacenamiento, Usuarios con poco disco.
+**Problema:** Archivos grandes ocupando demasiado espacio.
+**Solución:** Compresión Fractal (LZMA) + Almacenamiento "Hyper-Memory".
+**Uso Inmediato:**
+*   Ejecute `CMFO_SUITE.bat` -> Opción 6.
+*   Capacidad: Comprime y descarga automáticamente el resultado al disco duro como memoria virtual, liberando RAM.
+
 ---
 **Instrucciones de Despliegue:**
 1.  Copiar la carpeta del proyecto.

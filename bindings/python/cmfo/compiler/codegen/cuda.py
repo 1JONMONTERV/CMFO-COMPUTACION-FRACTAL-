@@ -125,6 +125,8 @@ class CUDAGenerator:
                 return f"({inp} >= 0.0f ? 1.0f : -1.0f)" # Sign function
             elif node.op_type == 'gamma':
                 return f"tgammaf({inp})"
+            elif node.op_type == 'sin':
+                return f"sinf({inp})"
              
         raise ValueError(f"Unknown Node: {node}")
 

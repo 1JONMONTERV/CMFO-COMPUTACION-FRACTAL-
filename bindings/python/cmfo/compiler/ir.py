@@ -99,3 +99,6 @@ def fractal_step(a):
 
 def fractal_sqrt(a):
     return GeometricOp(op_type='sqrt', input_node=a)
+
+def fractal_sin(a):
+    return GeometricOp(op_type='sin', input_node=a)

@@ -94,23 +94,28 @@ def run_physics_lab():
 def main_menu():
     while True:
         print_header()
-        print("1. Launch Fractal Neuron AI (Demo)")
-        print("2. Run Physics & Topology Lab (Analysis)")
-        print("3. Run Full System Verification (Test Suite)")
-        print("4. Exit")
+        print("1. IA Neurona Fractal (Entrenamiento)")
+        print("2. Laboratorio de Física (Análisis T7)")
+        print("3. Generador Infinito (Omniverso)")
+        print("4. Super-Resolución (Gráficos)")
+        print("5. Memoria Virtual (Solución RAM)")
+        print("6. Salir")
         
-        choice = input(f"\n{Colors.OKBLUE}Select Application [1-4]: {Colors.ENDC}")
+        choice = input(f"\n{Colors.OKBLUE}Seleccione Aplicación [1-6]: {Colors.ENDC}")
         
         if choice == '1':
             run_ai_demo()
         elif choice == '2':
             run_physics_lab()
         elif choice == '3':
-            verify.run(json_output=False)
-            input("\nPress Enter to return...")
+            os.system("python infinite_generator.py")
         elif choice == '4':
-            print("Exiting CMFO Suite.")
+            os.system("python demo_resolution.py")
+        elif choice == '5':
+            os.system("python demo_virtual_ram.py")
+        elif choice == '6':
+            print("Saliendo de CMFO Suite.")
             sys.exit(0)
-            
+
 if __name__ == "__main__":
     main_menu()

@@ -82,63 +82,45 @@ d\mu_\varphi(\theta) = w_\varphi(\theta) \, d\theta, \quad \text{donde } w_\varp
 La función de peso $w_\varphi$ captura la estructura de "renormalización" del sistema, permitiendo que la masa se concentre jerárquicamente sin romper la conexión topológica.
 \end{definition}
 
-\section{Análisis Funcional: Formas de Energía y Laplaciano}
+\section{Análisis Funcional: Espacios RMM y Derivaciones}
 \label{sec:analisis_funcional}
 
-En lugar de postular un operador diferencial ad-hoc, construimos la dinámica a partir de la energía (Formas de Dirichlet), el estándar moderno en análisis en espacios singulares o ponderados.
+Para fundamentar el cálculo diferencial en este espacio singular, adoptamos el marco de Espacios de Medida Métrico-Resistivos (RMM) y derivaciones cerrables (Cipriani-Sauvageot).
 
-\begin{definition}[Espacios Funcionales]
-Sea $\cH = L^2(T^7_\varphi, d\mu_\varphi)$ el espacio de Hilbert base. Definimos el espacio de energía $\cV$ (espacio de Sobolev ponderado) como:
-\[
-\cV := H^1(T^7_\varphi, d\mu_\varphi) = \{ f \in \cH : \partial_{\theta_i} f \in \cH, \ i=0\dots6 \}.
-\]
-Dado que $w_\varphi$ está acotada inferiormente por $c > 0$, la norma en $\cV$ es equivalente a la norma estándar en $H^1(\mathbb{T}^7)$, garantizando propiedades de inmersión y compacidad usuales.
+\begin{assumption}[Estructura RMM]
+El triple $(\bbT^7, d_{(\varphi)}, \mu_\varphi)$ constituye un espacio compacto de tipo resistencia (Resistance Space), donde $\mu_\varphi$ es una medida de Radon Ahlfors-regular de dimensión $s$ y la topología inducida por la métrica de resistencia coincide con la topología del toro.
+\end{assumption}
+
+\begin{definition}[Forma de Dirichlet y Espacio de Energía]
+Sea $\cH = L^2(\bbT^7, \mu_\varphi)$. Definimos el espacio de energía $\cF$ como el dominio de una forma de Dirichlet local, regular y fuertemente local $\cE : \cF \times \cF \to \bbR$. Esta forma captura la "energía cinética" en el fractal y sustituye al operador Laplaciano clásico.
 \end{definition}
 
-\subsection{Conexión Covariante y Álgebra Interna}
+\subsection{Cálculo Diferencial Covariante (Cipriani-Sauvageot)}
 
-Para incorporar efectos no conmutativos en un toro (cuya homotopía es abeliana), introducimos un grado de libertad interno.
+En lugar de vectores tangentes mal definidos, utilizamos módulos de 1-formas funcionales.
 
-\begin{definition}[Álgebra Interna CMFO]
-Sea $\mathfrak{A}_\varphi$ una $\ast$-álgebra de dimensión finita generada por la base $\{e_0, \dots, e_6\}$ con reglas de producto (tabla de Cayley fractal):
-\[
-e_i \cdot e_j = \Gamma^\varphi_{ij} \, e_{(i+j)\!\!\pmod 7}, \quad \text{con coeficientes de estructura } \Gamma^\varphi_{ij} \in \mathbb{C}.
-\]
-\end{definition}
-
-\begin{definition}[Derivada Covariante Generalizada]
-Sea $A(\theta)$ una 1-forma con valores en $\mathfrak{A}_\varphi$, i.e., $A_i \in L^\infty(T^7_\varphi; \mathfrak{A}_\varphi)$. Definimos la derivada covariante actuando sobre funciones con valores en la representación del álgebra:
-\[
-\nabla^A_i f := \partial_{\theta_i} f + A_i(\theta) \cdot f.
-\]
-Esta definición es puramente débil (distribucional).
-\end{definition}
-
-\begin{definition}[Forma de Energía Covariante]
-Definimos la forma bilineal $\cE_A : \cV \times \cV \to \mathbb{C}$:
-\[
-\cE_A(f, g) := \int_{T^7_\varphi} \sum_{i,j=0}^6 g^{ij}_{(\varphi)} \inner{\nabla^A_i f}{\nabla^A_j g}_{\mathfrak{A}} \, d\mu_\varphi(\theta).
-\]
-\end{definition}
-
-\begin{theorem}[Existencia y Autoadjunción del Laplaciano $L_A$]
-\label{thm:friedrichs}
-Bajo las hipótesis $w_\varphi \geq c > 0$ y $A_i \in L^\infty$:
+\begin{theorem}[Existencia de Derivación Cerrable]
+Existe un espacio de Hilbert de 1-formas $\cH_\Omega$ y un operador lineal densamente definido $\partial : \cF \to \cH_\Omega$ (la derivación de Cipriani-Sauvageot) tal que:
 \begin{enumerate}
-    \item La forma $\cE_A$ es densamente definida, cerrada y semibloqueada inferiormente en $\cH$.
-    \item Existe un único operador autoadjunto $L_A$ (la Extensión de Friedrichs) tal que:
-    \[
-    \cE_A(f, g) = \inner{L_A f}{g}_{\cH} \quad \forall f \in \dom(L_A), \ g \in \cV.
-    \]
+    \item La regla de Leibniz se satisface: $\partial(fg) = f\partial g + g\partial f$.
+    \item La forma de energía se recupera como: $\cE(f,g) = \inner{\partial f}{\partial g}_{\cH_\Omega}$.
 \end{enumerate}
 \end{theorem}
-\begin{proof}
-Se sigue directamente del Primer Teorema de Representación de Kato para formas sesquilineales cerradas. La coercividad proviene de la desigualdad de Poincaré en el toro y la acotación de $A$.
-\end{proof}
 
-\begin{corollary}[Laplaciano Variacional]
-El operador $L_A$ es la realización rigurosa del "Laplaciano Fractal Covariante". Satisface, en sentido débil, la ecuación $-\Delta_A f = L_A f$.
-\end{corollary}
+\begin{definition}[Conexión de Gauge Generalizada]
+Sea $\mathfrak{A}_\varphi$ el álgebra interna definida anteriormente. Un potencial de gauge es un elemento $A \in \cH_\Omega \otimes \mathfrak{A}_\varphi$. Definimos la derivada covariante $\partial_A : \cF \otimes \mathfrak{A}_\varphi \to \cH_\Omega \otimes \mathfrak{A}_\varphi$ como:
+\[
+\partial_A \psi := \partial \psi + i \psi \cdot A.
+\]
+\end{definition}
+
+\begin{definition}[Laplaciano Magnético Fractal]
+Definimos el operador Laplaciano covariante $\Delta_A$ mediante la identidad de Green asociada a la forma magnética:
+\[
+\cE_A(\psi, \phi) := \inner{\partial_A \psi}{\partial_A \phi}_{\cH_\Omega} = - \inner{\Delta_A \psi}{\phi}_{\cH}.
+\]
+Este operador es autoadjunto y semidefinido negativo ($\Delta_A \le 0$).
+\end{definition}
 
 \section{Dinámica: Elíptica vs. Hiperbólica}
 \label{sec:dinamica}

@@ -1,4 +1,3 @@
-% CMFO_Calculo_Variacional_Fractal_Covariante_v1.3.tex
 \documentclass[12pt,a4paper]{article}
 
 \usepackage[utf8]{inputenc}
@@ -413,18 +412,19 @@ Resuelto por \cref{sec:discrete_continuum}: $U(\Delta t)=e^{i\Delta t \hat H_\va
 \end{enumerate}
 
 % =========================================================
+% New Sections Added in v1.3
+% =========================================================
 
-% ========== SECCIÓN 10: CÁLCULO DIFERENCIAL EN FRACTALES (FORMA DE DIRICHLET) ==========
 \section{Cálculo diferencial intrínseco vía formas de Dirichlet}
 \label{sec:dirichlet_intrinseco}
 
-La Sección \ref{sec:calculo_variacional} define el operador $\Delta_A^{(\varphi)}$ en formulación débil a partir de derivadas covariantes.
+La Sección \ref{sec:dirichlet} define el operador $\Delta_A^{(\varphi)}$ en formulación débil a partir de derivadas covariantes.
 Para eliminar cualquier ambigüedad asociada a la falta de estructura diferenciable clásica en conjuntos fractales, introducimos una
 \emph{construcción intrínseca} basada en \emph{formas de Dirichlet regulares}.
 
 \begin{assumption}[Regularidad energética mínima]
 \label{ass:energy_regular}
-Asumimos que $T^7_\varphi$ es un conjunto autosimilar que satisface OSC (Hipótesis \ref{ass:osc}) y admite una forma de resistencia
+Asumimos que $T^7_\varphi$ es un conjunto autosimilar que satisface OSC y admite una forma de resistencia
 (regular resistance form) en el sentido de Kigami, de modo que existe una forma de Dirichlet regular $(\mathcal{E},\mathcal{F})$ en
 $L^2(T^7_\varphi,\mu_\varphi)$.
 \end{assumption}
@@ -450,7 +450,7 @@ Teorema estándar de representación de formas cerradas (Fukushima--Oshima--Take
 
 \begin{remark}[Compatibilidad con la formulación débil previa]
 En los regímenes donde existe un cálculo diferencial compatible (p.ej. aproximaciones por grafos), $\Delta^{(\varphi)}_A$
-de la Definición \ref{def:laplaciano_covariante} coincide con $\Delta_\varphi$ al tomar $A\equiv 0$ y elegir la energía
+coincide con $\Delta_\varphi$ al tomar $A\equiv 0$ y elegir la energía
 $\mathcal{E}$ inducida por la discretización jerárquica.
 \end{remark}
 
@@ -523,13 +523,13 @@ Para aplicaciones industriales/auditables, la capa matemática debe acompañarse
 
 \begin{definition}[Cómputo certificado]
 Un cálculo CMFO se considera \emph{certificado} si:
-(i) el error de discretización está acotado por una cota a priori (\S\ref{sec:implementacion});
+(i) el error de discretización está acotado por una cota a priori (\S\ref{sec:implementation});
 (ii) la aritmética es controlada (p.ej. intervalar) o validada por pruebas de invariantes (energía, reversibilidad);
 (iii) existe reproducción independiente (cross-platform) con tolerancias fijadas.
 \end{definition}
 
 \begin{proposition}[Invariantes mínimos de auditoría]
-En el esquema de Verlet de \S\ref{sec:conexion_cmfo}, los invariantes auditables mínimos son:
+En el esquema de Verlet de \S\ref{sec:implementation}, los invariantes auditables mínimos son:
 \[
 \Delta H_\varphi = \mathcal{O}(\Delta t^2),\qquad
 \norm{X}_{L^2(\mu_\varphi)}^2 + \norm{P}_{L^2(\mu_\varphi)}^2 \ \text{acotada},\qquad
@@ -537,8 +537,7 @@ En el esquema de Verlet de \S\ref{sec:conexion_cmfo}, los invariantes auditables
 \]
 \end{proposition}
 
-
-
+% =========================================================
 \appendix
 \section{Referencias matemáticas (base)}
 \begin{thebibliography}{99}
@@ -561,8 +560,8 @@ E. Hairer, C. Lubich, G. Wanner, \emph{Geometric Numerical Integration}, Springe
 \bibitem{Hutchinson1981}
 J. E. Hutchinson, Fractals and self-similarity, \emph{Indiana Univ. Math. J.} 30 (1981), 713--747.
 
-
-\bibitem{HinzTeplyaev2013} Hinz, M., Teplyaev, A. (2013). Dirac and magnetic Schrödinger operators on fractals. \emph{J. Funct. Anal.}
+\bibitem{HinzTeplyaev2013}
+Hinz, M., Teplyaev, A. (2013). Dirac and magnetic Schrödinger operators on fractals. \emph{J. Funct. Anal.}
 
 \end{thebibliography}
 

@@ -1,0 +1,131 @@
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=red]{hyperref}
+\usepackage{cleveref}
+
+\geometry{margin=2.4cm}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{proposition}[theorem]{Proposición}
+\newtheorem{corollary}[theorem]{Corolario}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definición}
+\newtheorem{remark}[theorem]{Observación}
+
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\inner}[2]{\left\langle #1,#2\right\rangle}
+\DeclareMathOperator{\Dom}{Dom}
+
+\title{CMFO --- Addendum de Auditoría Formal\\
+Cierre de Objeciones y Puente Matemática--Cómputo}
+\author{Investigación CMFO}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Este addendum complementa la formalización variacional/hamiltoniana en $T^7_\varphi$ con (i) criterios matemáticos verificables de autoadjunción, estabilidad y convergencia de discretizaciones tipo grafo; (ii) un ``mapa de objeciones'' típico de revisión por pares, junto con el teorema o esquema de prueba que las cierra; y (iii) un contrato de verificación computacional reproducible (invariantes, tests y tolerancias) diseñado para repositorios con suites extensas de pruebas.
+\end{abstract}
+
+\tableofcontents
+
+\section{Contrato formal de verificación (auditabilidad)}
+\label{sec:contract}
+
+\subsection{Invariantes matemáticos a testear}
+Sea $(\cE,\cD(\cE))$ una forma de Dirichlet regular sobre $L^2(T^7_\varphi,\mu_\varphi)$ y $\Delta$ su generador (Laplaciano fractal débil).
+Para cualquier aproximación discreta $\Delta_K$ (malla/grafo de profundidad $K$), el contrato mínimo incluye:
+
+\begin{enumerate}[label=\textbf{I\arabic*.}]
+\item \textbf{Simetría} (consistencia energética): $\inner{\Delta_K f}{g} = \inner{f}{\Delta_K g}$ para funciones discretas $f,g$ (tolerancia numérica definida).
+\item \textbf{Positividad} (disipación): $\inner{-\Delta_K f}{f} \ge 0$.
+\item \textbf{Núcleo correcto}: $\Delta_K \mathbf{1}=0$ (constantes).
+\item \textbf{Principio del máximo discreto} (si aplica): para el semigrupo discreto $e^{t\Delta_K}$, preservación de positividad.
+\item \textbf{Convergencia espectral} (check por autovalores): los primeros $m$ autovalores de $-\Delta_K$ convergen monótonamente (o en Hausdorff) hacia los de $-\Delta$ cuando $K\to\infty$.
+\end{enumerate}
+
+\subsection{Pruebas funcionales adicionales}
+\begin{enumerate}[label=\textbf{F\arabic*.}]
+\item \textbf{Conservación simpléctica (Verlet)}: error relativo en energía $\mathcal{O}(\Delta t^2)$ y deriva acotada en horizontes largos.
+\item \textbf{Reversibilidad} para integradores simétricos: ejecutar $N$ pasos y revertir $N$ pasos debe recuperar el estado inicial con error $\mathcal{O}(\Delta t^p)$.
+\item \textbf{Gauge-consistencia} (si hay acoplamiento $A$): invariancia (o covariancia) bajo transformaciones discretas $A\mapsto A+d\chi$, $\psi\mapsto e^{i\chi}\psi$ en la malla.
+\end{enumerate}
+
+\section{Autoadjunción: cierre formal mínimo}
+\label{sec:selfadjoint}
+
+\subsection{De forma de Dirichlet a operador autoadjunto}
+\begin{theorem}[Kigami--Fukushima (esquema)]
+Si $(\cE,\cD(\cE))$ es una forma de Dirichlet cerrada, densamente definida y regular en $L^2(T^7_\varphi,\mu_\varphi)$, entonces existe un único operador autoadjunto no-positivo $\Delta$ tal que
+\[
+\cE(f,g)=\inner{-\Delta f}{g}, \qquad f\in \Dom(\Delta),\; g\in \cD(\cE).
+\]
+\end{theorem}
+\begin{remark}
+En fractales p.c.f. y muchas clases autosimilares, esta construcción es estándar y evita asumir diferenciabilidad clásica.
+\end{remark}
+
+\subsection{Perturbaciones ``magnéticas''}
+Sea $\Delta_A$ una perturbación de tipo gauge (magnética) de $\Delta$ construida vía forma cerrada $\cE_A$.
+Un cierre de referee típico usa:
+
+\begin{theorem}[KLMN/Kato (plantilla)]
+Si $\cE$ es una forma cerrada y $\cB$ es una forma simétrica $\cE$-acotada con cota relativa $<1$, entonces $\cE+\cB$ es cerrada y genera un operador autoadjunto. En particular, si $\cE_A=\cE+\cB_A$ con $\cB_A$ relativamente acotada, entonces $\Delta_A$ es autoadjunto.
+\end{theorem}
+
+\section{Convergencia de discretizaciones (malla/grafo)}
+\label{sec:convergence}
+
+\subsection{Convergencia en el sentido de Mosco}
+El estándar contemporáneo para pasar de aproximaciones discretas a límites continuos es Mosco:
+\begin{definition}[Convergencia de Mosco]
+Una sucesión de formas $\cE_K$ converge a $\cE$ en Mosco si (i) toda sucesión $f_K\rightharpoonup f$ cumple $\liminf \cE_K(f_K,f_K)\ge \cE(f,f)$; y (ii) para todo $f$ existe $f_K\to f$ con $\limsup \cE_K(f_K,f_K)\le \cE(f,f)$.
+\end{definition}
+\begin{proposition}[Consecuencia]
+Mosco implica convergencia fuerte de resolventes y del semigrupo: $(\lambda-\Delta_K)^{-1}\to (\lambda-\Delta)^{-1}$ y $e^{t\Delta_K}\to e^{t\Delta}$ en $L^2$.
+\end{proposition}
+
+\section{Mapa de objeciones típicas y respuesta formal}
+\label{sec:objections}
+
+\begin{enumerate}[leftmargin=*,label=\textbf{O\arabic*.}]
+\item \textbf{``No existe derivada en un fractal''}. Respuesta: se trabaja con forma de Dirichlet y Laplaciano débil (generador). No se usa cálculo diferencial clásico.
+\item \textbf{``Christoffel/curvatura no están definidos''}. Respuesta: la formalización evita símbolos de Christoffel; la geometría entra vía pesos/energía $\cE$ y, si se requiere, vía geometría métrica (Cheeger) o energía medida.
+\item \textbf{``El gauge propuesto es ad hoc''}. Respuesta: se especifica como perturbación de forma; su validez depende de cierre y acotación relativa (teorema KLMN/Kato).
+\item \textbf{``El operador no es autoadjunto''}. Respuesta: Dirichlet $\Rightarrow$ autoadjunción; perturbación relativamente acotada $\Rightarrow$ autoadjunción preservada.
+\item \textbf{``La discretización no converge''}. Respuesta: se exige Mosco o una noción equivalente (Gamma-convergencia) y se testea espectralmente.
+\item \textbf{``No hay reproducibilidad''}. Respuesta: contrato de verificación \cref{sec:contract} con invariantes, tolerancias y pruebas deterministas.
+\end{enumerate}
+
+\section{Cómo usar este addendum en el repositorio}
+\begin{enumerate}[leftmargin=*]
+\item Añadir un directorio \texttt{docs/formal/addenda/} con este documento.
+\item Incluir un archivo \texttt{VERIFICATION\_CONTRACT.md} que enumere los invariantes I1--I5 y F1--F3, con tolerancias y hardware soportado.
+\item Mapear cada invariante a tests existentes (por nombre) y producir un \texttt{coverage report} reproducible.
+\end{enumerate}
+
+\begin{thebibliography}{9}
+\bibitem{Kigami} Kigami, J. \emph{Analysis on Fractals}. Cambridge, 2001.
+\bibitem{Fukushima} Fukushima, Oshima, Takeda. \emph{Dirichlet Forms and Symmetric Markov Processes}. De Gruyter, 2010.
+\bibitem{Kato} Kato, T. \emph{Perturbation Theory for Linear Operators}. Springer, 1995.
+\bibitem{Mosco} Mosco, U. Convergence of convex sets and of solutions of variational inequalities. \emph{Adv. Math.}, 1969.
+\end{thebibliography}
+
+\end{document}

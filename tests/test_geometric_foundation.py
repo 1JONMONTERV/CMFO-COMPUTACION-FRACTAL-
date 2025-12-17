@@ -10,44 +10,15 @@ import numpy as np
 import pytest
 from typing import Tuple
 
-# Golden ratio
-PHI = (1 + np.sqrt(5)) / 2
-
-# Fractal weights λᵢ = φ^(i-1)
-LAMBDA = np.array([PHI**i for i in range(7)])
-
-def wrap_angle(theta: float) -> float:
-    """Wrap angle to (-π, π]"""
-    return ((theta + np.pi) % (2 * np.pi)) - np.pi
-
-def geodesic_distance(theta: np.ndarray, eta: np.ndarray) -> float:
-    """
-    Theorem 1.9: Geodesic distance formula
-    
-    d_φ(θ, η) = √(Σᵢ λᵢ Δᵢ²)
-    where Δᵢ = wrap(θᵢ - ηᵢ)
-    """
-    assert theta.shape == (7,) and eta.shape == (7,)
-    delta = np.array([wrap_angle(theta[i] - eta[i]) for i in range(7)])
-    return np.sqrt(np.sum(LAMBDA * delta**2))
-
-def translation(theta: np.ndarray, a: np.ndarray) -> np.ndarray:
-    """
-    Definition 3.1: Translation operator
-    
-    T_a(θ) = θ + a (mod 2π)
-    """
-    return (theta + a) % (2 * np.pi)
-
-def reflection(theta: np.ndarray, axis: int) -> np.ndarray:
-    """
-    Definition 3.3: Reflection operator
-    
-    R_i(θ)ⱼ = -θⱼ if j=i, else θⱼ (mod 2π)
-    """
-    result = theta.copy()
-    result[axis] = -result[axis]
-    return result % (2 * np.pi)
+# Import from the new CMFO Core Engine
+from cmfo.core.geometry import (
+    PHI, 
+    LAMBDA, 
+    wrap_angle, 
+    geodesic_distance, 
+    translation, 
+    reflection
+)
 
 # ============================================================================
 # GEOMETRIC PROPERTY TESTS

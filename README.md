@@ -229,6 +229,26 @@ CMFO-COMPUTACION-FRACTAL-/
    - Threat model
    - Audit mechanisms
 
+### Research Documentation
+
+6. **[Spanish Algebra Specification](./docs/theory/SPANISH_ALGEBRA_SPEC.md)**
+   - Natural language interface for mathematical operations
+   - Spanish → CMFO operator compilation
+   - Deterministic natural language processing
+   - Demo: `experiments/demo_spanish_algebra.py`
+
+7. **[Boolean Logic Complete](./docs/theory/BOOLEAN_LOGIC_COMPLETE.md)**
+   - Absorption of classical Boolean logic in CMFO
+   - Functional completeness proofs
+   - Continuous extension to fuzzy logic
+   - Tests: `tests/test_boolean_proof.py`
+
+8. **[Deterministic AI Specification](./docs/theory/DETERMINISTIC_AI_SPEC.md)**
+   - Bit-exact reproducibility guarantees
+   - Critical systems applications (aviation, medicine, finance)
+   - Formal verification capabilities
+   - Demo: `experiments/demo_deterministic_ai.py`
+
 ---
 
 ## Applications

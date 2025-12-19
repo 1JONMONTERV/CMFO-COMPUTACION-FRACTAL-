@@ -66,6 +66,79 @@ class TestBooleanAbsorption:
             assert from_cmfo(result) == expected, \
                 f"NAND Error: {a} NAND {b}!={expected}"
 
+    def test_completeness_nor(self):
+        """Verifica la tabla de verdad NOR (también funcionalmente completo)"""
+        truth_table = [(0, 0, 1), (0, 1, 0), (1, 0, 0), (1, 1, 0)]
+        for a, b, expected in truth_table:
+            val_a = to_cmfo(a)
+            val_b = to_cmfo(b)
+            
+            # NOR = NOT(OR(a,b))
+            res_or = cmfo.f_or(val_a, val_b)
+            result = cmfo.f_not(res_or)
+            
+            assert from_cmfo(result) == expected, \
+                f"NOR Error: {a} NOR {b}!={expected}"
+
+    def test_completeness_xnor(self):
+        """Verifica la tabla de verdad XNOR (equivalencia)"""
+        truth_table = [(0, 0, 1), (0, 1, 0), (1, 0, 0), (1, 1, 1)]
+        for a, b, expected in truth_table:
+            val_a = to_cmfo(a)
+            val_b = to_cmfo(b)
+            
+            # XNOR = NOT(XOR(a,b))
+            res_xor = cmfo.f_xor(val_a, val_b)
+            result = cmfo.f_not(res_xor)
+            
+            assert from_cmfo(result) == expected, \
+                f"XNOR Error: {a} XNOR {b}!={expected}"
+
+    def test_de_morgan_law_1(self):
+        """Verifica primera ley de De Morgan: NOT(a AND b) = (NOT a) OR (NOT b)"""
+        test_cases = [(0, 0), (0, 1), (1, 0), (1, 1)]
+        for a, b in test_cases:
+            val_a = to_cmfo(a)
+            val_b = to_cmfo(b)
+            
+            # Lado izquierdo: NOT(a AND b)
+            lhs = cmfo.f_not(cmfo.f_and(val_a, val_b))
+            
+            # Lado derecho: (NOT a) OR (NOT b)
+            rhs = cmfo.f_or(cmfo.f_not(val_a), cmfo.f_not(val_b))
+            
+            assert from_cmfo(lhs) == from_cmfo(rhs), \
+                f"De Morgan 1 Error: a={a}, b={b}"
+
+    def test_de_morgan_law_2(self):
+        """Verifica segunda ley de De Morgan: NOT(a OR b) = (NOT a) AND (NOT b)"""
+        test_cases = [(0, 0), (0, 1), (1, 0), (1, 1)]
+        for a, b in test_cases:
+            val_a = to_cmfo(a)
+            val_b = to_cmfo(b)
+            
+            # Lado izquierdo: NOT(a OR b)
+            lhs = cmfo.f_not(cmfo.f_or(val_a, val_b))
+            
+            # Lado derecho: (NOT a) AND (NOT b)
+            rhs = cmfo.f_and(cmfo.f_not(val_a), cmfo.f_not(val_b))
+            
+            assert from_cmfo(lhs) == from_cmfo(rhs), \
+                f"De Morgan 2 Error: a={a}, b={b}"
+
+    def test_absorption_law(self):
+        """Verifica ley de absorción: a AND (a OR b) = a"""
+        test_cases = [(0, 0), (0, 1), (1, 0), (1, 1)]
+        for a, b in test_cases:
+            val_a = to_cmfo(a)
+            val_b = to_cmfo(b)
+            
+            # a AND (a OR b) debería ser igual a a
+            result = cmfo.f_and(val_a, cmfo.f_or(val_a, val_b))
+            
+            assert from_cmfo(result) == a, \
+                f"Absorption Error: a={a}, b={b}"
+
     def test_continuity_hypothesis(self):
         """
         Verifica que el operador funciona incluso con ruido.

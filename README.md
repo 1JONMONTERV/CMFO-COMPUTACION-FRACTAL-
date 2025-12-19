@@ -44,6 +44,33 @@ Métrica Fractal: g_φ = Σᵢ₌₁⁷ λᵢ dθᵢ²  donde λᵢ = φ^(i-1)
 Distancia:      d_φ(θ, η) = √(Σᵢ₌₁⁷ λᵢ Δᵢ²)
 ```
 
+### 🧠 Diccionario Técnico Fundamental
+
+Para entender CMFO, es vital distinguir sus términos de la computación clásica:
+
+#### 1. Raíz Fractal (Fractal Root `ℛφ`) vs Raíz Cuadrada (`√`)
+- **Clásico**: `√x` solo sirve para áreas cuadradas.
+- **CMFO**: `ℛφ(x)` encuentra la "semilla" geométrica de cualquier estructura jerárquica. Converge asintóticamente a la unidad, lo que permite estabilizar sistemas caóticos.
+
+#### 2. Lógica Phi (`∧φ`) vs Lógica Booleana (`AND`)
+- **Clásico**: `1 AND 0 = 0` (Pérdida de información).
+- **CMFO**: Mantiene grados de coherencia. Es reversible. Un "Falso" (0.0) es distinto de un "Casi Falso" (0.1).
+- **Analogía**: Interruptor ON/OFF vs Regulador de Intensidad (Dimmer).
+
+#### 3. Tensor7 (`T⁷`) vs Tensor Clásico
+- **Clásico**: Matriz pasiva de números.
+- **CMFO**: Objeto geométrico activo en un toro 7D. Al interactuar, "evoluciona" siguiendo reglas de fase, no solo suma algébrica.
+
+#### 4. Computación Reversible (Landauer Zero)
+- **Clásico**: Borrar un bit genera calor (`kT ln(2)`).
+- **CMFO**: Al usar operadores reversibles, no se destruye información, el costo energético teórico es **cero**.
+
+#### 5. Fractal NPU vs CPU/GPU
+- **Clásico**: Procesa bits lineales.
+- **CMFO**: Procesa ondas y geometrías. Una instrucción `F_ROOT` equivale a cientos de operaciones de punto flotante clásicas.
+
+*(Ver el [Diccionario Técnico Completo](docs/manual/CMFO_DICCIONARIO_TECNICO.md) para más detalles)*
+
 ---
 
 ## 🚀 Inicio Rápido

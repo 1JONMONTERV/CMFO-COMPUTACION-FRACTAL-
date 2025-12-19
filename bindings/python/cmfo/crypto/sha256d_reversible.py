@@ -53,13 +53,12 @@ class FractalRAM:
         self.coherent = True  # Indica si los valores están en superposición
     
     def reversible_copy(self, ronda: int, T1: int, T2: int, 
-                       a: int, e: int, Wt: int) -> None:
+                       a: int, e: int, Wt: int, 
+                       carry_charge: int, nl_charge: int) -> None:
         """
-        Copia reversible de observables al log.
-        En implementación clásica, esto es solo append.
-        En implementación cuántica, sería una serie de CNOTs.
+        Copia reversible de observables físicos al log.
         """
-        self.log.append((ronda, T1, T2, a, e, Wt))
+        self.log.append((ronda, T1, T2, a, e, Wt, carry_charge, nl_charge))
     
     def collapse(self) -> List[Tuple]:
         """
@@ -71,17 +70,18 @@ class FractalRAM:
         return collapsed
     
     def uncompute_copy(self, ronda: int, T1: int, T2: int,
-                      a: int, e: int, Wt: int) -> None:
+                      a: int, e: int, Wt: int,
+                      carry_charge: int, nl_charge: int) -> None:
         """
         Reversa la copia reversible (XOR inverso).
-        En implementación clásica, esto es pop() y verificación.
         """
         if not self.log:
             raise ValueError("FractalRAM vacío, no se puede descomputar")
         
         last = self.log.pop()
-        if last != (ronda, T1, T2, a, e, Wt):
-            raise ValueError(f"Descomputación inconsistente: {last} != {(ronda, T1, T2, a, e, Wt)}")
+        target = (ronda, T1, T2, a, e, Wt, carry_charge, nl_charge)
+        if last != target:
+            raise ValueError(f"Descomputación inconsistente: {last} != {target}")
 
 # ============================================================================
 # MACROS REVERSIBLES
@@ -91,9 +91,9 @@ def xor_reversible(x: int, y: int) -> int:
     """XOR reversible: retorna y XOR x, sin modificar x."""
     return y ^ x
 
-def and_reversible(x: int, y: int, target: int) -> int:
-    """AND reversible: target XOR (x & y), sin modificar x, y."""
-    return target ^ (x & y)
+def popcount(n: int) -> int:
+    """Cuenta el número de bits en 1 (Hamming Weight)."""
+    return bin(n).count('1')
 
 def rotr(x: int, n: int) -> int:
     """Rotación derecha reversible (permutación de bits)."""
@@ -106,16 +106,19 @@ class ReversibleAdder:
     def __init__(self):
         self.carry = 0
     
-    def add_inplace(self, x: int, y: int) -> int:
+    def add_inplace(self, x: int, y: int) -> Tuple[int, int]:
         """
         Suma modular reversible: y <- y + x mod 2^32.
-        Implementación clásica para verificación.
-        En implementación reversible, usaría MAJ/UMA con carry.
+        Retorna (resultado, carry_charge).
+        Carry Charge = Número de carries generados (Hamming Weight del vector carry).
         """
         result = (y + x) & 0xFFFFFFFF
-        # En reversible, necesitaríamos mantener trazas, pero para
-        # simulación clásica, simplemente retornamos el resultado.
-        return result
+        # Calculo de carga topológica (carries internos)
+        # S = A + B => A ^ B ^ C_in = S
+        # Carry = (A + B) ^ A ^ B (desplazado, pero el peso es igual)
+        carries = (x + y) ^ x ^ y
+        charge = popcount(carries & 0xFFFFFFFF) # Solo bits válidos
+        return result, charge
     
     def reset_carry(self):
         """Reinicia el carry a 0 (para limpieza)."""
@@ -141,13 +144,26 @@ def Sigma1(x: int) -> int:
     """Σ1(x) = ROTR-6(x) XOR ROTR-11(x) XOR ROTR-25(x)"""
     return rotr(x, 6) ^ rotr(x, 11) ^ rotr(x, 25)
 
-def Ch(x: int, y: int, z: int) -> int:
-    """Función Ch reversible: (x & y) ^ (~x & z)"""
-    return (x & y) ^ (~x & z)
+def Ch_measured(x: int, y: int, z: int) -> Tuple[int, int]:
+    """Ch reversible midiendo no-linealidad (ANDs activos)."""
+    # Ch = (x & y) ^ (~x & z)
+    term1 = x & y
+    term2 = ~x & z
+    res = term1 ^ term2
+    # Carga = bits activos en las compuertas AND
+    charge = popcount(term1) + popcount(term2)
+    return res, charge
 
-def Maj(x: int, y: int, z: int) -> int:
-    """Función Maj reversible: (x & y) ^ (x & z) ^ (y & z)"""
-    return (x & y) ^ (x & z) ^ (y & z)
+def Maj_measured(x: int, y: int, z: int) -> Tuple[int, int]:
+    """Maj reversible midiendo no-linealidad."""
+    # Maj = (x & y) ^ (x & z) ^ (y & z)
+    t1 = x & y
+    t2 = x & z
+    t3 = y & z
+    res = t1 ^ t2 ^ t3
+    # Carga = bits activos en ANDs
+    charge = popcount(t1) + popcount(t2) + popcount(t3)
+    return res, charge
 
 # ============================================================================
 # CLASE PRINCIPAL: SHA256 REVERSIBLE
@@ -211,45 +227,53 @@ class ReversibleSHA256:
     # RONDA REVERSIBLE
     # ------------------------------------------------------------------------
     
-    def round_compute(self, Wt: int, Kt: int):
+    def round_compute(self, Wt: int, Kt: int) -> Tuple[int, int]:
         """
-        Computa T1 y T2 para la ronda actual, limpiando ancillas intermedias.
+        Computa T1 y T2 para la ronda actual.
+        Retorna (carry_charge_total, nl_charge_total).
         """
+        total_carry = 0
+        total_nl = 0
+        
         # 1. S1 <- Σ1(e)
         self.S1 = Sigma1(self.e)
         
-        # 2. CH <- Ch(e, f, g) usando AND reversible
-        # CH comienza en 0
-        self.CH = Ch(self.e, self.f, self.g)
+        # 2. CH <- Ch(e, f, g)
+        self.CH, nl = Ch_measured(self.e, self.f, self.g)
+        total_nl += nl
         
-        # 3. T1 <- h + S1 + CH + Kt + Wt (mód 2^32)
-        self.T1 = self.adder.add_inplace(self.h, 0)
-        self.T1 = self.adder.add_inplace(self.S1, self.T1)
-        self.T1 = self.adder.add_inplace(self.CH, self.T1)
-        self.T1 = self.adder.add_inplace(Kt, self.T1)
-        self.T1 = self.adder.add_inplace(Wt, self.T1)
+        # 3. T1 Sumas
+        # h + S1
+        self.T1, c = self.adder.add_inplace(self.h, 0) # clear T1 effectively
+        self.T1, c = self.adder.add_inplace(self.S1, self.T1); total_carry += c
+        # + CH
+        self.T1, c = self.adder.add_inplace(self.CH, self.T1); total_carry += c
+        # + Kt
+        self.T1, c = self.adder.add_inplace(Kt, self.T1); total_carry += c
+        # + Wt
+        self.T1, c = self.adder.add_inplace(Wt, self.T1); total_carry += c
         
-        # 4. Uncompute parcial: limpiar S1 y CH
-        # Revertir CH: CH XOR Ch(e, f, g) = 0
+        # 4. Uncompute parcial
         self.CH = 0
-        # Revertir S1
         self.S1 = 0
         
         # 5. S0 <- Σ0(a)
         self.S0 = Sigma0(self.a)
         
         # 6. MAJ <- Maj(a, b, c)
-        self.MAJ = Maj(self.a, self.b, self.c)
+        self.MAJ, nl = Maj_measured(self.a, self.b, self.c)
+        total_nl += nl
         
-        # 7. T2 <- S0 + MAJ
-        self.T2 = self.adder.add_inplace(self.S0, 0)
-        self.T2 = self.adder.add_inplace(self.MAJ, self.T2)
+        # 7. T2 Sumas
+        # S0 + MAJ
+        self.T2, c = self.adder.add_inplace(self.S0, 0)
+        self.T2, c = self.adder.add_inplace(self.MAJ, self.T2); total_carry += c
         
-        # 8. Uncompute parcial: limpiar S0 y MAJ
+        # 8. Uncompute parcial
         self.S0 = 0
         self.MAJ = 0
         
-        # Ancillas temporales limpias, solo T1 y T2 no cero
+        return total_carry, total_nl
     
     def round_update(self):
         """
@@ -267,11 +291,11 @@ class ReversibleSHA256:
         new_a = 0  # Inicializar acumulador para T1 + T2
         
         # e' = d + T1 (actual e es el d antiguo después de rotar)
-        new_e = self.adder.add_inplace(self.T1, new_e)
+        new_e, _ = self.adder.add_inplace(self.T1, new_e)
         
         # a' = a + T1 + T2 (donde a es el old a, que está en new_a)
-        new_a = self.adder.add_inplace(self.T1, new_a)
-        new_a = self.adder.add_inplace(self.T2, new_a)
+        new_a, _ = self.adder.add_inplace(self.T1, new_a)
+        new_a, _ = self.adder.add_inplace(self.T2, new_a)
         
         # Actualizar estado
         self.a, self.b, self.c, self.d = new_a, new_b, new_c, new_d
@@ -289,13 +313,14 @@ class ReversibleSHA256:
         """
         Ejecuta una ronda reversible completa con traza opcional.
         """
-        # Computar T1, T2
-        self.round_compute(Wt, Kt)
+        # Computar T1, T2 y Cargas Físicas
+        c_charge, nl_charge = self.round_compute(Wt, Kt)
         
         # Registrar en FractalRAM si está activado
         if self.trace_mode and self.fractal_ram:
             self.fractal_ram.reversible_copy(
-                round_num, self.T1, self.T2, self.a, self.e, Wt
+                round_num, self.T1, self.T2, self.a, self.e, Wt,
+                c_charge, nl_charge
             )
         
         # Actualizar estado
@@ -591,7 +616,7 @@ if __name__ == "__main__":
     print("\nTraza de las primeras 3 rondas:")
     if fractal_ram and fractal_ram.log:
         for i in range(min(3, len(fractal_ram.log))):
-            ronda, T1, T2, a, e, Wt = fractal_ram.log[i]
-            print(f"  Ronda {ronda}: T1={T1:08x}, T2={T2:08x}, a={a:08x}, e={e:08x}, Wt={Wt:08x}")
+            ronda, T1, T2, a, e, Wt, c_charge, nl_charge = fractal_ram.log[i]
+            print(f"  Ronda {ronda}: T1={T1:08x}, T2={T2:08x}, a={a:08x}, e={e:08x} | Charge: Carry={c_charge}, NL={nl_charge}")
     
     print("\nTest completado.")

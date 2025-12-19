@@ -59,13 +59,13 @@ class TestReversibleSHA256d(unittest.TestCase):
         ram = FractalRAM()
         
         # Copiar valores
-        ram.reversible_copy(0, 0x12345678, 0x87654321, 0x11111111, 0x22222222, 0x33333333)
+        ram.reversible_copy(0, 0x12345678, 0x87654321, 0x11111111, 0x22222222, 0x33333333, 5, 10)
         
         # Verificar que están en el log
         self.assertEqual(len(ram.log), 1)
         
         # Descomputar
-        ram.uncompute_copy(0, 0x12345678, 0x87654321, 0x11111111, 0x22222222, 0x33333333)
+        ram.uncompute_copy(0, 0x12345678, 0x87654321, 0x11111111, 0x22222222, 0x33333333, 5, 10)
         
         # Verificar que el log está vacío
         self.assertEqual(len(ram.log), 0)

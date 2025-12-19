@@ -141,6 +141,10 @@ CMFO-COMPUTACION-FRACTAL-/
 │   ├── reproducibility/        # Scripts de verificación
 │   └── benchmarks/             # Benchmarks de rendimiento
 │
+├── 🏆 products/                # 🆕 Catálogo de Productos
+│   ├── CATALOGO_PRODUCTOS.md
+│   └── CERTIFICADO_AUDITORIA_FINAL.md
+│
 ├── ✅ tests/                   # Suite de tests (34 archivos)
 │   ├── test_geometric_foundation.py
 │   ├── test_boolean_proof.py

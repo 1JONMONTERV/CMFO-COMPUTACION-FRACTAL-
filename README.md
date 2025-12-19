@@ -1,418 +1,549 @@
-# CMFO: Computación Fractal Orientada a Objetos
+# CMFO: Computación Multidimensional Fractal Orientada
 
-**Fractal Computation on 7-Dimensional Torus with Golden Ratio Metric**
+**Sistema de Computación Geométrica en Toro de 7 Dimensiones con Métrica Fractal del Ratio Áureo**
 
-[![Tests](https://img.shields.io/badge/tests-18%2F18%20passing-brightgreen)]()
-[![Python](https://img.shields.io/badge/python-3.10%2B-blue)]()
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]()
-[![ISO Compliant](https://img.shields.io/badge/ISO%2025010-compliant-blue)]()
+[![Tests](https://img.shields.io/badge/tests-passing-brightgreen)]() [![Python](https://img.shields.io/badge/python-3.10%2B-blue)]() [![C++](https://img.shields.io/badge/C%2B%2B-17-blue)]() [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]() [![ISO Compliant](https://img.shields.io/badge/ISO%2025010-compliant-blue)]()
 
 ---
 
-## Overview
+## 📋 Tabla de Contenidos
 
-CMFO is a rigorously formalized geometric framework for computation on a 7-dimensional torus (T^7) equipped with a fractal Riemannian metric. Unlike statistical or semantic approaches, CMFO provides:
-
-- **Pure Geometry**: No semantic interpretation, only mathematical structure
-- **Formal Verification**: All theorems proven and tested
-- **Deterministic**: No randomness, fully reproducible
-- **Post-Quantum Secure**: Geometric security, not cryptographic
-- **Internationally Auditable**: Compliant with ISO, IEEE, FAIR standards
-
-**Key Innovation**: Fractal metric with golden ratio (φ) weights enables >100x compression while maintaining exact reconstruction.
-
----
-
-## Mathematical Foundation
-
-### Base Structure
-
-```
-T^7 = (S^1)^7 ≅ ℝ^7/(2πℤ)^7
-```
-
-7-dimensional torus with angular coordinates θ = (θ₁, ..., θ₇) ∈ [0, 2π)^7
-
-### Fractal Metric
-
-```
-g_φ = Σᵢ₌₁⁷ λᵢ dθᵢ²
-```
-
-where λᵢ = φ^(i-1) and φ = (1+√5)/2 (golden ratio)
-
-### Geodesic Distance
-
-```
-d_φ(θ, η) = √(Σᵢ₌₁⁷ λᵢ Δᵢ²)
-```
-
-where Δᵢ = wrap(θᵢ - ηᵢ) ∈ (-π, π]
-
-**Computational Complexity**: O(1) - constant time in dimension
+- [Visión General](#-visión-general)
+- [Inicio Rápido](#-inicio-rápido)
+- [Estructura del Repositorio](#-estructura-del-repositorio)
+- [Documentación](#-documentación)
+- [Componentes Principales](#-componentes-principales)
+- [Aplicaciones](#-aplicaciones)
+- [Desarrollo](#-desarrollo)
+- [Contribuir](#-contribuir)
+- [Licencia](#-licencia)
 
 ---
 
-## Quick Start
+## 🌟 Visión General
 
-### Installation
+CMFO es un framework de computación geométrica rigurosamente formalizado que opera en un toro de 7 dimensiones (T⁷) equipado con una métrica fractal basada en el ratio áureo (φ). A diferencia de enfoques estadísticos o semánticos, CMFO proporciona:
+
+### Características Clave
+
+- **🔬 Geometría Pura**: Sin interpretación semántica, solo estructura matemática
+- **✅ Verificación Formal**: Todos los teoremas probados y testeados
+- **🎯 Determinista**: Sin aleatoriedad, completamente reproducible
+- **🔐 Post-Quantum Secure**: Seguridad geométrica, no criptográfica
+- **🌍 Auditable Internacionalmente**: Cumple con estándares ISO, IEEE, FAIR
+
+### Innovación Principal
+
+Métrica fractal con pesos del ratio áureo (φ) que permite **compresión >100x** manteniendo reconstrucción exacta.
+
+### Fundamento Matemático
+
+```
+Toro 7D:        T⁷ = (S¹)⁷ ≅ ℝ⁷/(2πℤ)⁷
+Métrica Fractal: g_φ = Σᵢ₌₁⁷ λᵢ dθᵢ²  donde λᵢ = φ^(i-1)
+Distancia:      d_φ(θ, η) = √(Σᵢ₌₁⁷ λᵢ Δᵢ²)
+```
+
+---
+
+## 🚀 Inicio Rápido
+
+### Instalación
 
 ```bash
-git clone https://github.com/user/CMFO-COMPUTACION-FRACTAL-.git
+# Clonar repositorio
+git clone https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-.git
 cd CMFO-COMPUTACION-FRACTAL-
+
+# Instalar dependencias Python
 pip install -r requirements.txt
+
+# Compilar componentes nativos (opcional)
+cd src/jit
+cmake . && make
 ```
 
-### Basic Usage
+### Primer Uso
 
 ```python
-import numpy as np
-from tests.test_geometric_foundation import geodesic_distance
+import cmfo
 
-# Create two points on T^7
-theta = np.random.uniform(0, 2*np.pi, 7)
-eta = np.random.uniform(0, 2*np.pi, 7)
+# Crear punto en T⁷
+punto = cmfo.phi_encode(42.0)
 
-# Compute geodesic distance
-d = geodesic_distance(theta, eta)
-print(f"Distance: {d:.4f}")
+# Operación fractal
+resultado = cmfo.phi_add(punto, cmfo.phi_encode(13.0))
+
+# Distancia geométrica
+distancia = cmfo.phi_distance(punto, resultado)
 ```
 
-### Run Tests
+### Ejecutar Tests
 
 ```bash
-# All geometric tests
+# Todos los tests
+python -m pytest tests/ -v
+
+# Tests específicos
 python -m pytest tests/test_geometric_foundation.py -v
 
-# Specific test class
-python -m pytest tests/test_geometric_foundation.py::TestMetricProperties -v
-
-# All tests
-python -m pytest tests/ -v
+# Suite de verificación completa
+python experiments/run_all_proofs.py
 ```
 
 ---
 
-## Project Structure
+## 📁 Estructura del Repositorio
+
+### Directorios Principales
 
 ```
 CMFO-COMPUTACION-FRACTAL-/
-├── cmfo/                          # Core library
-│   ├── semantics/                 # Semantic algebra (legacy)
-│   ├── core/                      # Core metrics
-│   ├── security/                  # Audit Lock, Fractal Cipher
-│   ├── actions/                   # Action governance
-│   ├── cognition/                 # Reasoning engine
-│   ├── decision/                  # Decision engine
-│   ├── grammar/                   # Formal grammar
-│   └── compliance/                # ISO compliance
 │
-├── d26_edu_pilot/                 # Educational pilot
-├── d27_edu_core/                  # Secure tutor core
-├── d28_edu_eval/                  # Pedagogical evaluator
-├── d29_edu_ui/                    # Web interface
-├── d30_desktop_ui/                # Desktop GUI
+├── 📚 docs/                    # Documentación completa
+│   ├── theory/                 # Documentación teórica (10+ archivos)
+│   ├── reports/                # Reportes de investigación
+│   ├── api/                    # Documentación de API
+│   └── guide/                  # Guías de usuario
 │
-├── tests/                         # Test suite
-│   ├── test_geometric_foundation.py  # ✅ 18/18 PASS
-│   ├── test_action_governance.py
-│   ├── test_audit_lock.py
-│   └── ...
+├── 🔬 bindings/                # Bindings de lenguajes
+│   ├── python/                 # Package Python (cmfo)
+│   └── node/                   # Package Node.js
 │
-├── spec/                          # Formal specifications
-│   ├── algebra.md
-│   ├── fractal_compression.md
-│   ├── fractal_encryption.md
-│   └── ...
+├── 🧪 experiments/             # Experimentos de investigación (60+ archivos)
+│   ├── reproducibility/        # Scripts de verificación
+│   └── benchmarks/             # Benchmarks de rendimiento
 │
-└── experiments/                   # Research experiments
+├── ✅ tests/                   # Suite de tests (34 archivos)
+│   ├── test_geometric_foundation.py
+│   ├── test_boolean_proof.py
+│   └── performance/            # Tests de rendimiento
+│
+├── 💻 src/                     # Código fuente C++
+│   └── jit/                    # JIT compiler
+│
+├── 🎯 examples/                # Ejemplos de uso (34 archivos)
+│
+├── 🛠️ cmfo/                    # Core Python package
+│   ├── core/                   # Operadores core
+│   ├── crypto/                 # SHA-256d reversible
+│   ├── topology/               # Generador procedural 2^512
+│   ├── logic/                  # Circuitos lógicos
+│   └── physics/                # Física computacional
+│
+├── 📊 data/                    # Datasets
+│   ├── FRACTAL_OMNIVERSE.csv          # 136 KB
+│   └── FRACTAL_OMNIVERSE_RECURSIVE.csv # 637 KB (20k relaciones)
+│
+└── 🌐 web/                     # Interfaz web
+```
+
+### Archivos de Configuración
+
+| Archivo | Propósito |
+|---------|-----------|
+| `pyproject.toml` | Configuración Python package |
+| `setup.py` | Setup Python |
+| `requirements.txt` | Dependencias Python |
+| `CONTRIBUTING.md` | Guía de contribución |
+| `LICENSE` | Licencia MIT |
+
+---
+
+## 📚 Documentación
+
+### Documentación Teórica (`docs/theory/`)
+
+#### Especificaciones Principales
+
+1. **[CMFO_MASTER.tex](docs/theory/CMFO_MASTER.tex)** - Documento maestro LaTeX
+   - Framework algebraico completo
+   - φ-logic y interpretaciones físicas
+   - Aspectos computacionales
+
+2. **[CMFO_COMPLETE_ALGEBRA.md](docs/theory/CMFO_COMPLETE_ALGEBRA.md)** - Álgebra completa
+   - Definiciones formales
+   - Teoremas y pruebas
+   - Operadores fundamentales
+
+3. **[SPANISH_ALGEBRA_SPEC.md](docs/theory/SPANISH_ALGEBRA_SPEC.md)** - Álgebra de Español
+   - Interfaz de lenguaje natural
+   - Compilación español → operadores CMFO
+   - Procesamiento determinista de lenguaje natural
+
+4. **[BOOLEAN_LOGIC_COMPLETE.md](docs/theory/BOOLEAN_LOGIC_COMPLETE.md)** - Lógica Booleana
+   - Absorción de lógica booleana clásica
+   - Pruebas de completitud funcional
+   - Extensión continua a lógica difusa
+
+5. **[DETERMINISTIC_AI_SPEC.md](docs/theory/DETERMINISTIC_AI_SPEC.md)** - IA Determinista
+   - Garantías de reproducibilidad bit-exacta
+   - Aplicaciones en sistemas críticos
+   - Capacidades de verificación formal
+
+#### Fuentes LaTeX (`docs/theory/latex_source/`)
+
+29 archivos LaTeX organizados por tema:
+- `01-fundamentals/` - Fundamentos (torus, Hopf algebra, teoremas)
+- `02-physics/` - Física (validación, estructura fina, masas hadrónicas)
+- `03-biology/` - Biología (código genético fractal)
+- `04-computation/` - Computación (computación fractal)
+
+### Reportes de Investigación (`docs/reports/`)
+
+- **Mining & Optimization**
+  - `MINING_OPTIMIZATION_REPORT.md` - Optimización de minería
+  - `MINING_TOPOLOGY_REPORT.md` - Topología de minería
+  - `HYPER_RESOLUTION_REPORT.md` - Hiper-resolución
+  - `SYNTHESIS_NON_BRUTE_FORCE.md` - Síntesis no-brute-force
+
+- **System Reports**
+  - `AUTONOMOUS_MINING_SYSTEM.md` - Sistema autónomo
+  - `GPU_MINING_ARCHITECTURE.md` - Arquitectura GPU
+  - `GEOMETRIC_MINING_SCHEDULER.md` - Scheduler geométrico
+
+### Especificaciones Técnicas (`docs/`)
+
+- `SHA256D_FRACTAL_SPEC.md` - Especificación SHA-256d fractal
+- `COMPLETE_SYSTEM_SPECIFICATION.md` - Especificación completa del sistema
+- `FRACTAL_TORUS_REPORT.md` - Reporte del toro fractal
+
+### Guías de Usuario
+
+- `MANUAL_USUARIO.md` - Manual de usuario
+- `FAQ.md` - Preguntas frecuentes
+- `REPRODUCIBILITY.md` - Guía de reproducibilidad
+- `BUILD.md` - Guía de compilación
+
+---
+
+## 🔧 Componentes Principales
+
+### 1. Core CMFO (`cmfo/`)
+
+#### Operadores Fundamentales
+
+```python
+# Operadores φ (phi)
+cmfo.phi_add(a, b)      # Suma con ratio áureo
+cmfo.phi_sub(a, b)      # Resta con ratio áureo
+cmfo.phi_mul(a, b)      # Multiplicación
+cmfo.phi_distance(a, b) # Distancia geométrica
+
+# Operadores tensoriales
+cmfo.tensor_mul(a, b)   # Multiplicación tensorial
+cmfo.tensor_div(a, b)   # División tensorial
+
+# Operadores lógicos
+cmfo.f_and(a, b)        # AND continuo
+cmfo.f_or(a, b)         # OR continuo
+cmfo.f_not(a)           # NOT continuo
+cmfo.f_xor(a, b)        # XOR continuo
+```
+
+### 2. GPU Bridge (`bindings/python/cmfo/bridge.py`)
+
+Interfaz Python ↔ C++ GPU para aceleración:
+
+```python
+from cmfo import bridge
+
+# Operación acelerada por GPU
+resultado = bridge.gpu_compute(data)
+```
+
+### 3. Procedural Space Generator (`bindings/python/cmfo/topology/procedural_512.py`)
+
+Generador procedural para espacio 2^512:
+
+```python
+from cmfo.topology import ProceduralSpace512
+
+space = ProceduralSpace512()
+
+# Generar bloque desde coordenadas
+block = space.coords_to_block(x=1000, y=2000)
+
+# Mapeo inverso
+x, y = space.block_to_coords(block)
+
+# Muestrear región
+blocks = space.sample_region(center_x=500, center_y=500, radius=10, count=100)
+```
+
+### 4. SHA-256d Reversible (`bindings/python/cmfo/crypto/sha256d_reversible.py`)
+
+Implementación reversible de SHA-256d:
+
+```python
+from cmfo.crypto import sha256d_reversible
+
+# Hash reversible
+hash_result = sha256d_reversible.hash(data)
+
+# Verificación
+is_valid = sha256d_reversible.verify(data, hash_result)
+```
+
+### 5. Circuit Physics (`bindings/python/cmfo/logic/circuits.py`)
+
+Análisis de propiedades físicas de circuitos:
+
+```python
+from cmfo.logic import circuits
+
+# Crear circuito
+circuit = circuits.LogicCircuit()
+
+# Analizar métricas
+metrics = circuit.analyze_physics()
 ```
 
 ---
 
-## Key Features
+## 🎯 Aplicaciones
 
-### 1. Geometric Computation
+### 1. Mining Intelligence System
 
-- **7D Torus**: Rich topological structure (Betti numbers: 1,7,21,35,35,21,7,1)
-- **Fractal Metric**: Golden ratio weights provide natural scaling
-- **Isometry Group**: T^7 ⋊ (ℤ₂)^7 (translations + reflections)
-- **Flat Curvature**: Locally Euclidean, globally toroidal
+Sistema de IA para optimización de minería:
 
-### 2. Spectral Theory
-
-- **Laplace-Beltrami Operator**: Δ_φ f = Σᵢ (1/λᵢ) ∂²f/∂θᵢ²
-- **Eigenfunctions**: ψₙ(θ) = exp(i n·θ), n ∈ ℤ^7
-- **Eigenvalues**: μₙ = Σᵢ nᵢ²/λᵢ
-- **Spectral Gap**: φ^(-6) ≈ 0.056
-
-### 3. Compression Theory
-
-- **Generator Functions**: Polynomial or analytic functions on T^7
-- **Orbit Representation**: Store generator instead of all points
-- **Compression Ratio**: >100x for degree-2 polynomials
-- **Exact Reconstruction**: Lossless via translation operators
-
-### 4. Security
-
-- **Audit Lock**: Structurally bound encryption
-- **Post-Quantum**: Geometric, not cryptographic
-- **Tamper-Evident**: Immutable audit trails
-- **Verifiable**: Third-party auditable
-
----
-
-## Verification
-
-### Geometric Properties (18/18 PASS)
-
-✅ **Metric Properties**
-- Positive definite: d(θ,η) ≥ 0
-- Symmetric: d(θ,η) = d(η,θ)
-- Triangle inequality: d(θ,ζ) ≤ d(θ,η) + d(η,ζ)
-
-✅ **Isometries**
-- Translation preserves distance
-- Reflection preserves distance
-- Composition closure
-
-✅ **Spectral Theory**
-- Eigenfunction orthogonality
-- Eigenvalue formula verified
-- Spectral gap confirmed
-
-✅ **Compression**
-- Generator reconstruction exact
-- Compression ratio >100x
-
-✅ **Numerical Stability**
-- Angle wrapping consistent
-- Distance bounds verified
-
-✅ **Mathematical Compliance**
-- Dimension = 7
-- Weights = φ^(i-1)
-- det(g_φ) = φ^21
-- Vol(T^7) = (2π)^7 · φ^(21/2)
-
----
-
-## Documentation
-
-### Core Documents
-
-1. **[MATHEMATICAL_FOUNDATION.md](./MATHEMATICAL_FOUNDATION.md)**
-   - Complete formal specification
-   - Definitions, theorems, proofs
-   - Suitable for peer review
-
-2. **[INTERNATIONAL_STANDARDS_COMPLIANCE.md](./INTERNATIONAL_STANDARDS_COMPLIANCE.md)**
-   - ISO/IEC 25010 compliance
-   - IEEE 1012 verification
-   - FAIR principles
-   - Open Science standards
-
-3. **[PHASE_3A_AUDIT_REPORT.md](./PHASE_3A_AUDIT_REPORT.md)**
-   - System-wide testing results
-   - Security audit
-   - Deployment readiness
-
-### Application Documents
-
-4. **[CMFO_ENTERPRISE_WHITEPAPER.md](./CMFO_ENTERPRISE_WHITEPAPER.md)**
-   - Enterprise use cases
-   - ROI analysis
-   - Implementation guide
-
-5. **[CMFO_SECURITY_MODEL.md](./CMFO_SECURITY_MODEL.md)**
-   - Security architecture
-   - Threat model
-   - Audit mechanisms
-
-### Research Documentation
-
-6. **[Spanish Algebra Specification](./docs/theory/SPANISH_ALGEBRA_SPEC.md)**
-   - Natural language interface for mathematical operations
-   - Spanish → CMFO operator compilation
-   - Deterministic natural language processing
-   - Demo: `experiments/demo_spanish_algebra.py`
-
-7. **[Boolean Logic Complete](./docs/theory/BOOLEAN_LOGIC_COMPLETE.md)**
-   - Absorption of classical Boolean logic in CMFO
-   - Functional completeness proofs
-   - Continuous extension to fuzzy logic
-   - Tests: `tests/test_boolean_proof.py`
-
-8. **[Deterministic AI Specification](./docs/theory/DETERMINISTIC_AI_SPEC.md)**
-   - Bit-exact reproducibility guarantees
-   - Critical systems applications (aviation, medicine, finance)
-   - Formal verification capabilities
-   - Demo: `experiments/demo_deterministic_ai.py`
-
----
-
-## Applications
-
-### Current Implementations
-
-1. **Educational System (D26-D30)**
-   - Sovereign tutor with curriculum governance
-   - Structural answer evaluation
-   - Web and desktop interfaces
-   - Audit-locked interactions
-
-2. **Enterprise Governance (D27)**
-   - Role-based access control
-   - Cross-department workflows
-   - Immutable audit trails
-   - Compliance reporting
-
-3. **Compression (Experiments)**
-   - Polynomial generators
-   - 1600:1 compression ratio demonstrated
-   - Exact reconstruction verified
-
-### Potential Applications
-
-- **AI Governance**: Verifiable decision-making
-- **Knowledge Representation**: Geometric semantic spaces
-- **Data Compression**: Fractal encoding
-- **Cryptography**: Post-quantum secure protocols
-- **Scientific Computing**: Spectral methods on manifolds
-
----
-
-## Standards Compliance
-
-### Software Quality (ISO/IEC 25010)
-
-✅ Functional Suitability  
-✅ Performance Efficiency  
-✅ Compatibility  
-✅ Usability  
-✅ Reliability  
-✅ Security  
-✅ Maintainability  
-✅ Portability  
-
-### Verification & Validation (IEEE 1012)
-
-✅ Requirements Verification  
-✅ Design Verification  
-✅ Implementation Verification  
-✅ Test Verification  
-✅ Validation Activities  
-✅ Traceability  
-
-### FAIR Principles
-
-✅ Findable (GitHub, DOI planned)  
-✅ Accessible (Open source)  
-✅ Interoperable (Standard formats)  
-✅ Reusable (MIT license)  
-
----
-
-## Peer Review
-
-### Target Journals
-
-- Journal of Geometric Physics
-- Advances in Computational Mathematics
-- SIAM Journal on Applied Mathematics
-- arXiv (preprint)
-
-### Submission Status
-
-- [x] Mathematical rigor
-- [x] Computational validation
-- [x] Reproducibility
-- [x] Documentation
-- [x] References
-- [x] Novelty
-- [ ] Submitted (planned Q1 2026)
-
----
-
-## Contributing
-
-We welcome contributions from mathematicians, physicists, and computer scientists.
-
-### Areas for Contribution
-
-1. **Mathematical Extensions**
-   - Higher-dimensional tori
-   - Alternative metrics
-   - Curvature variations
-
-2. **Applications**
-   - New use cases
-   - Domain-specific implementations
-   - Performance optimizations
-
-3. **Verification**
-   - Additional tests
-   - Formal proofs (Coq, Lean)
-   - Benchmarks
-
-### Process
-
-1. Fork the repository
-2. Create a feature branch
-3. Add tests for new functionality
-4. Ensure all tests pass
-5. Submit pull request with clear description
-
----
-
-## Citation
-
-If you use CMFO in your research, please cite:
-
-```bibtex
-@software{cmfo2025,
-  title={CMFO: Fractal Computation on 7-Dimensional Torus},
-  author={CMFO Development Team},
-  year={2025},
-  url={https://github.com/user/CMFO-COMPUTACION-FRACTAL-},
-  note={Version 1.0}
-}
+```bash
+python cmfo_mining_ai.py
 ```
 
+**Características**:
+- Optimización geométrica de búsqueda
+- Scheduler inteligente
+- Reducción de espacio de búsqueda
+
+### 2. Álgebra de Español
+
+Interfaz de lenguaje natural en español:
+
+```bash
+python experiments/demo_spanish_algebra.py
+```
+
+**Ejemplos**:
+- "suma cinco más tres" → 8.0
+- "el doble de diez" → 20.0
+- "raíz cuadrada de dieciséis" → 4.0
+
+### 3. IA Determinista
+
+Sistema de IA con reproducibilidad bit-exacta:
+
+```bash
+python experiments/demo_deterministic_ai.py
+```
+
+**Aplicaciones**:
+- Aviación (DO-178C)
+- Medicina (FDA Class III)
+- Finanzas (regulación)
+
+### 4. Knowledge Library
+
+Biblioteca de 20,000 relaciones semánticas recursivas:
+
+```python
+import pandas as pd
+
+# Cargar biblioteca
+df = pd.read_csv('FRACTAL_OMNIVERSE_RECURSIVE.csv')
+
+# Explorar relaciones
+print(df.head())
+```
+
+Ver: `THE_LIBRARY_REPORT.md`
+
 ---
 
-## License
+## 🛠️ Desarrollo
 
-- **Code**: MIT License
-- **Documentation**: CC BY 4.0
+### Estructura de Desarrollo
 
-See [LICENSE](./LICENSE) for details.
+```
+Development Workflow:
+1. Fork & Clone
+2. Create feature branch
+3. Implement changes
+4. Run tests
+5. Submit PR
+```
+
+### Ejecutar Tests
+
+```bash
+# Tests unitarios
+python -m pytest tests/ -v
+
+# Tests de integración
+python -m pytest tests/test_integration.py -v
+
+# Tests de rendimiento
+python -m pytest tests/performance/ -v
+
+# Suite completa de verificación
+python experiments/run_all_proofs.py
+```
+
+### Verificación Triple
+
+Sistema de verificación triple para máxima confiabilidad:
+
+```bash
+# Verificación Python
+python experiments/reproducibility/verify_fractal_memory.py
+
+# Verificación JavaScript
+node bindings/node/tests/verify_memory.js
+
+# Verificación completa
+python experiments/reproducibility/verify_full_logic_suite.py
+```
+
+### Compilar Componentes Nativos
+
+```bash
+cd src/jit
+cmake .
+make
+```
+
+Genera: `cmfo_jit.dll` (Windows) o `cmfo_jit.so` (Linux)
 
 ---
 
-## Contact
+## 👥 Contribuir
 
-- **Issues**: [GitHub Issues](https://github.com/user/CMFO-COMPUTACION-FRACTAL-/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/user/CMFO-COMPUTACION-FRACTAL-/discussions)
-- **Email**: [Contact form](https://github.com/user/CMFO-COMPUTACION-FRACTAL-)
+### Proceso de Contribución
+
+1. **Leer** [`CONTRIBUTING.md`](CONTRIBUTING.md)
+2. **Fork** el repositorio
+3. **Crear** branch: `git checkout -b feature/mi-feature`
+4. **Implementar** cambios con tests
+5. **Verificar**: `python -m pytest tests/ -v`
+6. **Commit**: `git commit -m "feat: descripción"`
+7. **Push**: `git push origin feature/mi-feature`
+8. **Crear** Pull Request
+
+### Estándares
+
+- ✅ **Commits firmados** (GPG)
+- ✅ **Tests passing** (100%)
+- ✅ **Documentación** actualizada
+- ✅ **Código formateado** (black, isort)
+- ✅ **Sin randomness** en core
+
+### Áreas de Contribución
+
+- 🔬 **Matemáticas**: Extensiones teóricas
+- 💻 **Código**: Optimizaciones, nuevas features
+- 📚 **Documentación**: Guías, tutoriales
+- 🧪 **Tests**: Cobertura, casos edge
+- 🌍 **Traducciones**: Internacionalización
 
 ---
 
-## Acknowledgments
+## 📊 Estadísticas del Repositorio
 
-### Mathematical Foundations
+| Métrica | Valor |
+|---------|-------|
+| **Archivos de código** | ~200+ |
+| **Documentación** | 134 archivos .md |
+| **Tests** | 34 archivos |
+| **Experimentos** | 60+ scripts |
+| **Líneas de código** | ~50,000+ |
+| **Idiomas** | Python, C++, JavaScript, LaTeX |
+
+---
+
+## 🔗 Enlaces Importantes
+
+### Documentación
+
+- [Visión del Proyecto](VISION.md)
+- [Roadmap](ROADMAP.md)
+- [Changelog](CHANGELOG.md)
+- [Limitaciones Conocidas](KNOWN_LIMITATIONS.md)
+
+### Reportes
+
+- [Reporte de Auditoría](AUDIT_REPORT.md)
+- [Certificado de Verificación](VERIFICATION_CERTIFICATE.md)
+- [Reporte de Reproducibilidad](REPRODUCIBILITY.md)
+
+### Guías
+
+- [Manual de Usuario](MANUAL_USUARIO.md)
+- [Guía de Compilación](BUILD.md)
+- [FAQ](FAQ.md)
+
+---
+
+## 📜 Licencia
+
+Este proyecto está licenciado bajo la **Licencia MIT**.
+
+```
+Copyright (c) 2025 Jonathan Montero Viques
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction...
+```
+
+Ver [LICENSE](LICENSE) para el texto completo.
+
+---
+
+## 🙏 Agradecimientos
+
+### Fundamentos Matemáticos
 
 - M. Spivak: *Comprehensive Introduction to Differential Geometry*
 - M. P. do Carmo: *Riemannian Geometry*
 - J. M. Lee: *Introduction to Riemannian Manifolds*
 
-### Inspiration
+### Inspiración
 
 - B. B. Mandelbrot: *The Fractal Geometry of Nature*
 - K. Falconer: *Fractal Geometry*
 
 ---
 
-**Status**: Production Ready | Tests: 18/18 PASS | Standards: ISO/IEEE Compliant
+## 📞 Contacto
 
-**Last Updated**: 2025-12-16
+- **Issues**: [GitHub Issues](https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-/discussions)
+- **Website**: [GitHub Pages](https://1jonmonterv.github.io/CMFO-COMPUTACION-FRACTAL-/)
+
+---
+
+## 🎓 Citación
+
+Si usas CMFO en tu investigación, por favor cita:
+
+```bibtex
+@software{cmfo2025,
+  title={CMFO: Computación Multidimensional Fractal Orientada},
+  author={Montero Viques, Jonathan},
+  year={2025},
+  url={https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-},
+  note={Sistema de computación geométrica en toro 7D con métrica fractal}
+}
+```
+
+---
+
+<div align="center">
+
+**Estado**: Production Ready | **Tests**: Passing | **Standards**: ISO/IEEE Compliant
+
+**Última Actualización**: 2025-12-18
+
+Made with ❤️ and φ (golden ratio)
+
+</div>

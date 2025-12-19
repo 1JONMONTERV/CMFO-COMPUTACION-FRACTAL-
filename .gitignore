@@ -1,18 +1,32 @@
-# Binaries and Object Files
-*.dll
-*.exp
-*.lib
-*.obj
-*.exe
-
-# Logs and Traces
-*.txt
-!requirements.txt
-*.log
-
 # Python Cache
 __pycache__/
 *.pyc
+.pytest_cache/
 
-# Local Config
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# IDE
 .vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Specific large/temporary files
+test_big_data.txt
+debug_*.txt
+trace_*.txt
+error*.txt
+*_temp.txt
+
+# Build artifacts (keep DLLs for distribution)
+*.obj
+*.o
+
+# Logs (keep specific logs, ignore generic)
+*.log
+!tests.log

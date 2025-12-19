@@ -50,15 +50,16 @@ class FractalRAM:
     
     def __init__(self):
         self.log = []  # Lista de tuplas (ronda, T1, T2, a, e, Wt)
-        self.coherent = True  # Indica si los valores están en superposición
-    
-    def reversible_copy(self, ronda: int, T1: int, T2: int, 
-                       a: int, e: int, Wt: int, 
-                       carry_charge: int, nl_charge: int) -> None:
+    def reversible_copy(self, ronda: int, 
+                       k_t1: float, k_t2: float, 
+                       psi_a: float, psi_e: float, 
+                       omega_w: float, 
+                       q_topo: float, q_nl: float) -> None:
         """
-        Copia reversible de observables físicos al log.
+        Copia reversible de observables físicos NORMALIZADOS al log.
+        Valores en rango [0.0, 1.0].
         """
-        self.log.append((ronda, T1, T2, a, e, Wt, carry_charge, nl_charge))
+        self.log.append((ronda, k_t1, k_t2, psi_a, psi_e, omega_w, q_topo, q_nl))
     
     def collapse(self) -> List[Tuple]:
         """
@@ -69,17 +70,21 @@ class FractalRAM:
         self.log.clear()
         return collapsed
     
-    def uncompute_copy(self, ronda: int, T1: int, T2: int,
-                      a: int, e: int, Wt: int,
-                      carry_charge: int, nl_charge: int) -> None:
+    def uncompute_copy(self, ronda: int, 
+                      k_t1: float, k_t2: float,
+                      psi_a: float, psi_e: float, 
+                      omega_w: float,
+                      q_topo: float, q_nl: float) -> None:
         """
-        Reversa la copia reversible (XOR inverso).
+        Reversa la copia reversible.
         """
         if not self.log:
             raise ValueError("FractalRAM vacío, no se puede descomputar")
         
         last = self.log.pop()
-        target = (ronda, T1, T2, a, e, Wt, carry_charge, nl_charge)
+        target = (ronda, k_t1, k_t2, psi_a, psi_e, omega_w, q_topo, q_nl)
+        # Comparación con tolerancia para floats si fuera necesario, 
+        # pero siendo determinista deberían ser idénticos.
         if last != target:
             raise ValueError(f"Descomputación inconsistente: {last} != {target}")
 
@@ -318,9 +323,38 @@ class ReversibleSHA256:
         
         # Registrar en FractalRAM si está activado
         if self.trace_mode and self.fractal_ram:
+            # Normalización de Observables Canónicos [0, 1]
+            
+            # 1. & 2. Cargas (Topo & NL)
+            # Max carries aprox: 5 sumas * 32 bits = 160 (conservador) o por ronda. 
+            # Normalizamos por 32 * num_adds para tener densidad.
+            # T1 tiene 5 sumas, T2 tiene 2 sumas. Total 7 sumas. 
+            # Max carry charge = 32 * 7 = 224.
+            norm_q_topo = c_charge / 224.0
+            
+            # NL charge: Ch (2 ops) + Maj (3 ops) = 5 ops de gating por bit?
+            # Ch=(x&y)^(~x&z) -> 2 ANDs de 32 bits = 64
+            # Maj=(x&y)^(x&z)^(y&z) -> 3 ANDs de 32 bits = 96
+            # Max NL = 160 bits activados.
+            norm_q_nl = nl_charge / 160.0
+            
+            # 3. & 4. Cinética (T1, T2) -> HW/32
+            norm_k_t1 = popcount(self.T1) / 32.0
+            norm_k_t2 = popcount(self.T2) / 32.0
+            
+            # 5. & 6. Potenciales (a, e) -> HW/32 (Inicialmente, escalar base para Walsh)
+            norm_psi_a = popcount(self.a) / 32.0
+            norm_psi_e = popcount(self.e) / 32.0
+            
+            # 7. Forzante (Wt) -> HW/32
+            norm_omega_w = popcount(Wt) / 32.0
+            
             self.fractal_ram.reversible_copy(
-                round_num, self.T1, self.T2, self.a, self.e, Wt,
-                c_charge, nl_charge
+                round_num, 
+                norm_k_t1, norm_k_t2, 
+                norm_psi_a, norm_psi_e, 
+                norm_omega_w,
+                norm_q_topo, norm_q_nl
             )
         
         # Actualizar estado
@@ -615,8 +649,8 @@ if __name__ == "__main__":
     # 5. Mostrar traza de algunas rondas
     print("\nTraza de las primeras 3 rondas:")
     if fractal_ram and fractal_ram.log:
-        for i in range(min(3, len(fractal_ram.log))):
-            ronda, T1, T2, a, e, Wt, c_charge, nl_charge = fractal_ram.log[i]
-            print(f"  Ronda {ronda}: T1={T1:08x}, T2={T2:08x}, a={a:08x}, e={e:08x} | Charge: Carry={c_charge}, NL={nl_charge}")
+        for i in range(min(5, len(fractal_ram.log))):
+            ronda, k_t1, k_t2, psi_a, psi_e, omega_w, q_topo, q_nl = fractal_ram.log[i]
+            print(f"  R{ronda:02d}: PsyA={psi_a:.2f} PsyE={psi_e:.2f} | K=({k_t1:.2f},{k_t2:.2f}) | Q_topo={q_topo:.2f} Q_nl={q_nl:.2f}")
     
     print("\nTest completado.")

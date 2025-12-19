@@ -58,14 +58,14 @@ class TestReversibleSHA256d(unittest.TestCase):
         """Verifica que FractalRAM mantenga coherencia reversible."""
         ram = FractalRAM()
         
-        # Copiar valores
-        ram.reversible_copy(0, 0x12345678, 0x87654321, 0x11111111, 0x22222222, 0x33333333, 5, 10)
+        # Copiar valores (ahora floats normalizados)
+        ram.reversible_copy(0, 0.5, 0.5, 0.1, 0.9, 0.0, 0.2, 0.8)
         
         # Verificar que están en el log
         self.assertEqual(len(ram.log), 1)
         
         # Descomputar
-        ram.uncompute_copy(0, 0x12345678, 0x87654321, 0x11111111, 0x22222222, 0x33333333, 5, 10)
+        ram.uncompute_copy(0, 0.5, 0.5, 0.1, 0.9, 0.0, 0.2, 0.8)
         
         # Verificar que el log está vacío
         self.assertEqual(len(ram.log), 0)

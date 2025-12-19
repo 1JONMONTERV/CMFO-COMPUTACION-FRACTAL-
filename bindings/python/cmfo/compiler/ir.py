@@ -102,3 +102,8 @@ def fractal_sqrt(a):
 
 def fractal_sin(a):
     return GeometricOp(op_type='sin', input_node=a)
+
+def fractal_pow(a, b):
+    """Operación de potencia genérica: a^b"""
+    return AlgebraicOp(op_type='pow', left=a, right=b)
+

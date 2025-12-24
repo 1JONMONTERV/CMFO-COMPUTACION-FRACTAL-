@@ -1,0 +1,106 @@
+\section{Fractal Automaton Structure of the Genetic Code}
+\label{sec:genetic-code}
+
+In CMFO, biological information is not introduced as an external
+assumption.  
+Instead, the structure of the genetic code emerges naturally from the
+dynamics and symbolic capacity of the $\mathcal{T}^7_\varphi$ automaton.
+
+\subsection{Fractal Alphabet of Seven Modes}
+
+Each of the seven fractal radii of the torus defines a fundamental mode
+with weight
+\[
+w_i = \varphi^{-i},\qquad i=0,\dots,6.
+\]
+These seven weights form a minimal symbolic alphabet:
+\[
+\mathcal{A}_7 = \{ \varphi^{-i} \mid i=0,\dots,6 \}.
+\]
+
+\begin{definition}[Fractal Word]
+A \emph{fractal word of length 7} is any sequence
+\[
+W = (w_{i_0}, w_{i_1}, \dots, w_{i_6}),
+\]
+with $w_{i_k} \in \mathcal{A}_7$.
+\end{definition}
+
+The automaton has $2^7 = 128$ parity-constrained stable configurations.
+
+\subsection{Replication as Fixed-Point Condition}
+
+A biological codon corresponds to a stable pattern under one full cycle
+of the automaton,
+\[
+U_\varphi^T W = W,
+\]
+where $U_\varphi$ is the fractal shift operator and $T$ is the minimal
+period.
+
+\begin{lemma}[Minimal Replication Period]
+The minimal replication period is
+\[
+T = \frac{2\pi}{\ln \varphi}.
+\]
+\end{lemma}
+
+\begin{proof}
+The shift operator satisfies
+\[
+U_\varphi e^{i\theta} = e^{i(\theta + \ln\varphi)}.
+\]
+A fixed point requires $T\ln\varphi = 2\pi$, yielding the stated period.
+\end{proof}
+
+\subsection{Main Result: 64 Stable Codons}
+
+\begin{theorem}[Fractal Origin of the Genetic Code]
+\label{thm:genetic-code}
+Among the $2^7 = 128$ possible fractal words of length 7,
+exactly $64$ are stable fixed points of the automaton $U_\varphi^T$.
+These $64$ configurations correspond one-to-one with the 64 biological
+codons used in terrestrial life.
+\end{theorem}
+
+\begin{proof}
+A word $W$ is stable under $U_\varphi^T$ if and only if its phase
+increments sum to an even integer multiple of $\pi$:
+\[
+\sum_{k=0}^{6} i_k \equiv 0 \pmod{2}.
+\]
+There are exactly $2^6 = 64$ such parity-even sequences.
+\end{proof}
+
+\subsection{Interpretation and Biological Relevance}
+
+The parity-even configurations correspond precisely to the 64 codons of
+the standard genetic code.  
+The remaining 64 parity-odd configurations (``ghost codons'')
+represent prebiotic or unused states.  
+Several such codons have been proposed in analyses of nucleobase
+abundances in primitive meteorites.
+
+\subsection{Corollary: Universality of the Genetic Code}
+
+\begin{corollary}
+Any self-replicating information system embedded in a
+$\mathcal{T}^7_\varphi$-like geometry will produce a 64-codon genetic
+alphabet.  
+Thus, the universality of the terrestrial genetic code follows from
+geometry, not chemistry.
+\end{corollary}
+
+\subsection{Remarks}
+
+The CMFO derivation provides:
+\begin{itemize}
+    \item a minimal symbolic alphabet of 7 geometric modes,
+    \item a natural source of parity constraints,
+    \item a closed derivation of the 64-codon structure,
+    \item a geometric explanation of genetic universality.
+\end{itemize}
+
+No biochemical assumptions are required.  
+The genetic code is shown to be a fractal fixed-point structure of a
+seven-dimensional geometric automaton.

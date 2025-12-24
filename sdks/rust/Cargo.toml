@@ -1,0 +1,16 @@
+[package]
+name = "cmfo"
+version = "1.0.0"
+edition = "2021"
+description = "CMFO Rust SDK - Safe bindings to CMFO core"
+license = "See CMFO_LICENSING_POLICY.md"
+
+[dependencies]
+libc = "0.2"
+
+[build-dependencies]
+bindgen = "0.69"
+
+[lib]
+name = "cmfo"
+path = "src/lib.rs"

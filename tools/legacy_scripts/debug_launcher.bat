@@ -1,0 +1,3 @@
+@echo off
+echo Attempting to launch setup script in persistent mode...
+start cmd /k "setup_repo.bat"

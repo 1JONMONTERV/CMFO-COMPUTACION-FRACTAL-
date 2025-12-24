@@ -1,0 +1,19 @@
+{
+    "domain": "OPERATIONS",
+    "description": "Logistics and Procurement",
+    "roles": {
+        "requestor": {
+            "authorities": [
+                "initiate_purchase"
+            ],
+            "constraints": {
+                "valid_vendors": [
+                    "DELL",
+                    "HP",
+                    "LENOVO",
+                    "AWS"
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMFO Fractal Omniverse</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #050505;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+        }
+
+        #info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.2em;
+            color: #d4af37;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .stat {
+            font-size: 0.8em;
+            color: #888;
+        }
+
+        canvas {
+            display: block;
+        }
+    </style>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+    <div id="info">
+        <h1>OMNIVERSO FRACTAL EN TIEMPO REAL</h1>
+        <div class="stat" id="status">Conectando...</div>
+        <div class="stat" id="node-count">Nodos: 0</div>
+        <div class="stat" id="link-count">Enlaces: 0</div>
+    </div>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+
+        canvas.width = width;
+        canvas.height = height;
+
+        window.addEventListener('resize', () => {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            simulation.force("center", d3.forceCenter(width / 2, height / 2));
+            simulation.restart();
+        });
+
+        let nodes = [];
+        let links = [];
+
+        const simulation = d3.forceSimulation(nodes)
+            .force("charge", d3.forceManyBody().strength(-100))
+            .force("link", d3.forceLink(links).id(d => d.id).distance(100))
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .force("collide", d3.forceCollide(15))
+            .on("tick", ticked);
+
+        function ticked() {
+            ctx.clearRect(0, 0, width, height); // Clear, keeping black bg (via CSS)
+
+            // Draw Links
+            ctx.strokeStyle = "rgba(100, 200, 255, 0.2)";
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            links.forEach(link => {
+                ctx.moveTo(link.source.x, link.source.y);
+                ctx.lineTo(link.target.x, link.target.y);
+            });
+            ctx.stroke();
+
+            // Draw Nodes
+            nodes.forEach(node => {
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, 3, 0, 2 * Math.PI);
+                ctx.fillStyle = "#d4af37"; // Gold
+                ctx.fill();
+
+                // Text
+                if (node.group === 1) { // Logic to show labels?
+                    // ctx.fillStyle = "#888";
+                    // ctx.fillText(node.id, node.x + 5, node.y + 3);
+                }
+            });
+
+            // Draw Labels for prominent nodes (optional optimization)
+            ctx.font = "10px monospace";
+            ctx.fillStyle = "rgba(255,255,255,0.7)";
+            nodes.forEach(node => {
+                // Show label if it has many links or randomly
+                if (Math.random() < 0.1)
+                    ctx.fillText(node.id, node.x + 5, node.y + 3);
+            });
+        }
+
+        async function fetchData() {
+            try {
+                const response = await fetch('/data');
+                const data = await response.json();
+
+                const oldNodes = new Map(nodes.map(d => [d.id, d]));
+
+                // Merge Nodes
+                const newNodes = data.nodes.map(d => {
+                    const existing = oldNodes.get(d.id);
+                    return existing ? existing : { ...d, x: width / 2 + Math.random(), y: height / 2 + Math.random() };
+                });
+
+                // Links need reference to actual node objects
+                const nodeMap = new Map(newNodes.map(d => [d.id, d]));
+                const newLinks = data.links.map(d => ({
+                    source: nodeMap.get(d.source),
+                    target: nodeMap.get(d.target),
+                    value: d.value
+                })).filter(l => l.source && l.target);
+
+                nodes = newNodes;
+                links = newLinks;
+
+                document.getElementById('node-count').innerText = `Nodos: ${nodes.length}`;
+                document.getElementById('link-count').innerText = `Enlaces: ${links.length}`;
+                document.getElementById('status').innerText = `En Vivo | Última Act: ${new Date().toLocaleTimeString()}`;
+
+                simulation.nodes(nodes);
+                simulation.force("link").links(links);
+                simulation.alpha(0.3).restart();
+
+            } catch (e) {
+                console.error("Fetch error:", e);
+                document.getElementById('status').innerText = `Error: ${e.message}`;
+            }
+        }
+
+        // Poll every 2 seconds
+        setInterval(fetchData, 2000);
+        fetchData(); // Initial
+
+    </script>
+</body>
+
+</html>

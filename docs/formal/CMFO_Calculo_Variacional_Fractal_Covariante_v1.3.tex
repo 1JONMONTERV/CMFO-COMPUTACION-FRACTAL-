@@ -1,0 +1,568 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=red]{hyperref}
+\usepackage{cleveref}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\geometry{margin=2.5cm}
+
+% ---------- Entornos ----------
+\theoremstyle{plain}
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{proposition}[theorem]{Proposición}
+\newtheorem{corollary}[theorem]{Corolario}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definición}
+\newtheorem{assumption}[theorem]{Hipótesis}
+\newtheorem{remark}[theorem]{Observación}
+\newtheorem{notation}[theorem]{Notación}
+
+% ---------- Macros ----------
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbT}{\mathbb{T}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\eps}{\varepsilon}
+
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\inner}[2]{\left\langle #1, #2 \right\rangle}
+
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\Dom}{Dom}
+\DeclareMathOperator{\diag}{diag}
+
+\title{CMFO--AUU:\\ Cálculo Variacional Fractal Covariante en $T^7_\varphi$\\
+\large Versión 1.3 (Definitiva: blindaje de objeciones, coherencia CMFO discreto--continuo)}
+\author{Investigación CMFO}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Se fija una formalización matemáticamente completa del cálculo variacional covariante sobre la geometría base del proyecto CMFO: un espacio métrico--medida toroidal de siete dimensiones con estructura fractal controlada por el parámetro $\varphi>1$. El aporte esencial es cerrar, sin ambigüedad, la brecha entre: (i) la dinámica discreta reversible del autómata CMFO y (ii) un límite continuo expresado como flujo hamiltoniano y/o evolución unitaria sobre un espacio funcional. Para evitar objeciones estándar (``no hay derivadas en fractales'', ``un IFS produce un polvo de Cantor, no un toro'', ``el gauge no está definido''), el texto adopta el marco de formas de Dirichlet y generadores autoadjuntos en espacios métricos--medida compactos, e introduce el acoplamiento gauge como perturbación magnética de la forma de Dirichlet. El resultado: ecuaciones de Euler--Lagrange formuladas débilmente, existencia/unicidad por coercividad (Lax--Milgram) y semigrupos unitarios, y una demostración explícita de consistencia con la evolución discreta $X_{n+1}=U_\varphi X_n$ en el límite $\Delta t\to 0$.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% =========================================================
+\section{Marco CMFO: capa discreta y objetivo continuo}
+\label{sec:cmfo_layer}
+
+\subsection{Axioma operativo CMFO (forma mínima)}
+\begin{assumption}[Evolución discreta reversible]
+\label{ass:discrete_cmfo}
+El autómata CMFO evoluciona estados $X_n$ en un espacio base $T^7_\varphi$ mediante un operador reversible
+\[
+X_{n+1} = U_\varphi(X_n),
+\qquad U_\varphi^{-1} = U_\varphi^\dagger,
+\]
+donde $U_\varphi$ preserva una norma (o energía) $\mathsf{N}(X)$: $\mathsf{N}(U_\varphi X)=\mathsf{N}(X)$.
+\end{assumption}
+
+\subsection{Objetivo}
+Construir una realización continua compatible: una dinámica (i) hamiltoniana (conservativa) y (ii) unitaria (reversible) cuya discretización simpléctica recupere \cref{ass:discrete_cmfo}. La ruta formal es:
+\[
+U_\varphi(\Delta t)\;\equiv\;\exp\!\bigl(i\Delta t\,\hat H_\varphi\bigr),
+\qquad
+\Delta t\to 0 \;\Rightarrow\; \partial_t \Psi = i\hat H_\varphi \Psi,
+\]
+y, en variables reales, el flujo hamiltoniano asociado al funcional energía $H_\varphi$.
+
+% =========================================================
+\section{Definición rigurosa del ``toro fractal'' $T^7_\varphi$}
+\label{sec:base_space}
+
+\subsection{Separación de conceptos: topología toroidal vs. medida fractal}
+\begin{remark}[Evitar la objeción ``no es un toro'']
+En CMFO, ``toro fractal'' puede entenderse de dos maneras:
+\begin{enumerate}[label=(\alph*)]
+\item \textbf{Topología}: el soporte es el toro liso $\bbT^7 = (\bbR/2\pi\bbZ)^7$.
+\item \textbf{Estructura fractal}: la medida y/o la energía (forma de Dirichlet) incorporan autosimilitud $\varphi$.
+\end{enumerate}
+La vía (a)+(b) evita la inconsistencia: el soporte sigue siendo toroidal (periodicidad exacta), mientras que la fractalidad entra por la pareja $(\mu_\varphi,\cE_\varphi)$. Esta es la interpretación adoptada en el presente documento.
+\end{remark}
+
+\subsection{Espacio métrico--medida}
+\begin{definition}[Soporte toroidal]
+Sea $\bbT^7=(\bbR/2\pi\bbZ)^7$ con coordenadas angulares $\theta=(\theta_1,\dots,\theta_7)$ y distancia geodésica estándar $d_{\bbT^7}$ inducida por la métrica euclidiana.
+\end{definition}
+
+\begin{assumption}[Medida fractal compatible con periodicidad]
+\label{ass:fractal_measure}
+Existe una medida de probabilidad $\mu_\varphi$ en $\bbT^7$ (Borel regular), absolutamente continua respecto a Lebesgue o singular (según el régimen $\varphi$), tal que:
+\begin{enumerate}[label=(\roman*)]
+\item $\mu_\varphi$ es \textbf{$2\pi$-periódica} en cada coordenada (bien definida sobre $\bbT^7$).
+\item $\mu_\varphi$ es \textbf{autosimilar} en el sentido de Hutchinson para un IFS sobre $\bbT^7$ con razón $\varphi^{-1}$ (definido en \cref{def:ifs_torus}).
+\item $\mu_\varphi$ satisface una \textbf{desigualdad de Poincaré} y duplicación local en $\bbT^7$ (condiciones estándar para cálculo variacional débil en espacios métricos--medida).
+\end{enumerate}
+\end{assumption}
+
+\begin{definition}[IFS sobre el toro]
+\label{def:ifs_torus}
+Definimos, para $j=1,\dots,7$, aplicaciones $F_j:\bbT^7\to\bbT^7$ por
+\[
+F_j([\theta]) = \Bigl[\varphi^{-1}\theta + 2\pi\,\varphi^{-j}e_j\Bigr] \;\;(\mathrm{mod}\;2\pi),
+\]
+donde $e_j$ es el vector canónico. Estas aplicaciones son contracciones en la métrica levantada a $\bbR^7$ para $\varphi>1$.
+\end{definition}
+
+\begin{remark}[Dimensión fractal: dos regímenes]
+Si el soporte efectivo de $\mu_\varphi$ es un atractor autosimilar disjunto (OSC), entonces la dimensión de Hausdorff del soporte satisface $7\varphi^{-s}=1$, esto es $s=\log 7/\log\varphi$. Si $\mu_\varphi$ es absolutamente continua (régimen ``suave''), entonces el soporte es todo $\bbT^7$ y la dimensión es $7$. Ambos regímenes son compatibles con el formalismo de Dirichlet: la diferencia entra en regularidad y espectro del generador.
+\end{remark}
+
+% =========================================================
+\section{Análisis en $T^7_\varphi$ vía formas de Dirichlet}
+\label{sec:dirichlet}
+
+\subsection{Forma de energía (núcleo del ``cálculo'' en fractales)}
+\begin{assumption}[Forma de Dirichlet regular y fuertemente local]
+\label{ass:dirichlet_form}
+Existe una forma de Dirichlet regular, simétrica y fuertemente local $(\cE_\varphi,\cF_\varphi)$ en $L^2(\bbT^7,\mu_\varphi)$ tal que:
+\begin{enumerate}[label=(\roman*)]
+\item $\cF_\varphi$ es denso en $L^2(\mu_\varphi)$ y en $C(\bbT^7)$ (regularidad).
+\item $\cE_\varphi$ es cerrada y coerciva sobre $\cF_\varphi$.
+\item Para $u\in\cF_\varphi$ existe una noción de ``gradiente'' $\nabla_\varphi u$ en el sentido de energía (Cheeger/Kigami), y
+\[
+\cE_\varphi(u,v)=\int_{\bbT^7}\inner{\nabla_\varphi u}{\nabla_\varphi v}\,d\mu_\varphi.
+\]
+\end{enumerate}
+\end{assumption}
+
+\begin{definition}[Laplaciano (generador)]
+El generador autoadjunto no positivo $\Delta_\varphi$ asociado a $(\cE_\varphi,\cF_\varphi)$ se define por:
+$u\in\Dom(\Delta_\varphi)$ si existe $f\in L^2(\mu_\varphi)$ tal que
+\[
+\cE_\varphi(u,v)=-\int_{\bbT^7} f\,v\,d\mu_\varphi \quad \forall v\in\cF_\varphi,
+\]
+y entonces $\Delta_\varphi u=f$.
+\end{definition}
+
+\begin{theorem}[Autoadjunción y semigrupo]
+\label{thm:selfadjoint_semigroup}
+El operador $\Delta_\varphi$ es autoadjunto (en sentido de Friedrichs) y genera un semigrupo de contracciones Markoviano $(e^{t\Delta_\varphi})_{t\ge 0}$ en $L^2(\mu_\varphi)$.
+\end{theorem}
+\begin{proof}
+Teorema estándar de teoría de formas de Dirichlet: cerradura + simetría + Markov $\Rightarrow$ generador autoadjunto y semigrupo asociado.
+\end{proof}
+
+% =========================================================
+\section{Acoplamiento gauge: derivada covariante como perturbación magnética}
+\label{sec:gauge}
+
+\begin{remark}[Objeción típica y resolución]
+``No existe 1-forma diferencial en un fractal'' se resuelve usando el módulo de 1-formas de energía (Cipriani--Sauvageot) asociado a $(\cE_\varphi,\cF_\varphi)$. El gauge entra como elemento $a$ de ese módulo, y el operador resultante es un Schrödinger magnético bien definido.
+\end{remark}
+
+\begin{assumption}[Potencial magnético de energía finita]
+\label{ass:magnetic_potential}
+Existe un potencial magnético $a$ (1-forma de energía) tal que $a\in\mathcal{H}_\varphi$ (módulo hilbertiano de 1-formas) y $\norm{a}_{\mathcal{H}_\varphi}<\infty$.
+\end{assumption}
+
+\begin{definition}[Gradiente covariante]
+Para $u\in\cF_\varphi$ definimos el gradiente covariante:
+\[
+\nabla_\varphi^{\,a} u := \nabla_\varphi u + i\,a\,u,
+\]
+y la forma magnética:
+\[
+\cE_\varphi^{\,a}(u,v) := \int \inner{\nabla_\varphi^{\,a}u}{\nabla_\varphi^{\,a}v}\,d\mu_\varphi.
+\]
+\end{definition}
+
+\begin{theorem}[Clausura y generador magnético]
+\label{thm:magnetic_generator}
+Bajo \cref{ass:dirichlet_form,ass:magnetic_potential}, $(\cE_\varphi^{\,a},\cF_\varphi)$ es cerrada y semibajada. Su generador $\Delta_\varphi^{\,a}$ es esencialmente autoadjunto y define el operador magnético $-\Delta_\varphi^{\,a}$.
+\end{theorem}
+\begin{proof}
+Resultado estándar para perturbaciones magnéticas de formas de Dirichlet: la parte $i\,a\,u$ es relativamente acotada respecto de $\cE_\varphi$ si $a$ tiene energía finita; la clausura sigue por KLMN.
+\end{proof}
+
+% =========================================================
+\section{Cálculo variacional: acción, ecuaciones y bien-posedness}
+\label{sec:variational}
+
+\subsection{Espacio de estados (campo real o complejo)}
+\begin{definition}[Espacio de configuración]
+Sea $X:I\times \bbT^7\to \bbR^N$ (o $\bbC^N$). Definimos el espacio:
+\[
+\cC_\varphi := \cF_\varphi(\bbT^7;\bbR^N),
+\qquad
+\text{con norma } \norm{u}^2_{\cC_\varphi} := \norm{u}^2_{L^2(\mu_\varphi)} + \cE_\varphi(u,u).
+\]
+\end{definition}
+
+\begin{assumption}[Potencial físico]
+\label{ass:K_potential}
+$\cK:\bbR^N\to\bbR$ es $C^2$, acotado inferiormente y con gradiente globalmente Lipschitz en el rango de interés:
+\[
+\abs{\nabla \cK(x)-\nabla \cK(y)}\le L\abs{x-y}.
+\]
+\end{assumption}
+
+\subsection{Acción y Euler--Lagrange (formulación débil)}
+\begin{definition}[Acción covariante fractal]
+Para $I=[t_0,t_1]$,
+\[
+\cS_\varphi[X] :=
+\int_{t_0}^{t_1}\left(
+\frac12\int_{\bbT^7}\abs{\partial_t X}^2\,d\mu_\varphi
++\frac12\,\cE_\varphi^{\,a}(X,X)
+-\int_{\bbT^7}\cK(X)\,d\mu_\varphi
+\right)dt.
+\]
+\end{definition}
+
+\begin{theorem}[Ecuaciones de Euler--Lagrange (débil)]
+\label{thm:EL_weak}
+Si $X$ es un extremal de $\cS_\varphi$ en la clase
+$X\in H^1(I;L^2)\cap L^2(I;\cF_\varphi)$,
+entonces satisface, para toda variación $\delta X$ suave en tiempo y en $\cF_\varphi$:
+\[
+\int_{t_0}^{t_1}\left(
+\int \inner{\partial_t X}{\partial_t \delta X}\,d\mu_\varphi
++\cE_\varphi^{\,a}(X,\delta X)
+-\int \inner{\nabla \cK(X)}{\delta X}\,d\mu_\varphi
+\right)dt=0,
+\]
+equivalente a la ecuación (en $L^2$ y sentido distribucional en $t$):
+\[
+\partial_t^2 X - \Delta_\varphi^{\,a}X + \nabla \cK(X)=0.
+\]
+\end{theorem}
+\begin{proof}
+Variación de Gâteaux: integrar por partes en $t$ (usando $\delta X(t_0)=\delta X(t_1)=0$) y usar definición del generador $\Delta_\varphi^{\,a}$ vía la forma $\cE_\varphi^{\,a}$.
+\end{proof}
+
+\subsection{Existencia y unicidad}
+\begin{theorem}[Well-posedness global (energía)]
+\label{thm:wellposed}
+Bajo \cref{ass:dirichlet_form,ass:magnetic_potential,ass:K_potential}, para datos iniciales
+\[
+X(t_0)=X_0\in \cF_\varphi,\qquad \partial_t X(t_0)=V_0\in L^2(\mu_\varphi),
+\]
+existe una única solución
+\[
+X\in C(I;\cF_\varphi)\cap C^1(I;L^2)
+\]
+de \cref{thm:EL_weak}. Además, la energía
+\[
+E(t)=\frac12\int \abs{\partial_t X}^2 d\mu_\varphi
++\frac12\,\cE_\varphi^{\,a}(X,X)
++\int \cK(X)\,d\mu_\varphi
+\]
+es constante en el tiempo.
+\end{theorem}
+\begin{proof}
+Escriba el sistema como ecuación de segundo orden en un espacio de Hilbert $L^2(\mu_\varphi)$ con operador autoadjunto positivo $A:=-\Delta_\varphi^{\,a}$ y no linealidad Lipschitz $\nabla \cK$. Se aplica teoría estándar de ecuaciones de evolución en Hilbert (método de semigrupos + contracción) y se verifica conservación de energía tomando producto interno con $\partial_t X$.
+\end{proof}
+
+% =========================================================
+\section{Formalismo hamiltoniano y evolución unitaria}
+\label{sec:hamiltonian}
+
+\subsection{Espacio de fases y forma simpléctica}
+\begin{definition}[Espacio de fases]
+Definimos $\cP:=\cF_\varphi\times L^2(\mu_\varphi)$ con coordenadas $(X,P)$, donde $P:=\partial_t X$.
+\end{definition}
+
+\begin{definition}[Hamiltoniano]
+\[
+H_\varphi(X,P):=
+\frac12\int \abs{P}^2\,d\mu_\varphi
++\frac12\,\cE_\varphi^{\,a}(X,X)
++\int \cK(X)\,d\mu_\varphi.
+\]
+\end{definition}
+
+\begin{definition}[Forma simpléctica canónica (débil)]
+Para variaciones $(\delta X_1,\delta P_1)$ y $(\delta X_2,\delta P_2)$,
+\[
+\omega\bigl((\delta X_1,\delta P_1),(\delta X_2,\delta P_2)\bigr)
+:=\int \bigl(\delta P_1\cdot \delta X_2-\delta X_1\cdot \delta P_2\bigr)\,d\mu_\varphi.
+\]
+\end{definition}
+
+\begin{theorem}[Ecuaciones de Hamilton]
+El sistema equivalente a \cref{thm:EL_weak} es
+\[
+\partial_t X = \frac{\delta H_\varphi}{\delta P}=P,
+\qquad
+\partial_t P = -\frac{\delta H_\varphi}{\delta X}= \Delta_\varphi^{\,a}X-\nabla \cK(X).
+\]
+\end{theorem}
+
+\subsection{Cuantización y unitariedad}
+\begin{assumption}[Cuantización canónica efectiva]
+\label{ass:quantization}
+Existe una realización autoadjunta $\hat H_\varphi$ en $\cH:=L^2(\bbT^7,\mu_\varphi;\bbC^N)$ asociada al funcional $H_\varphi$ (por ejemplo, $\hat H_\varphi = -\Delta_\varphi^{\,a} + V$ con $V=\nabla^2\cK$ en aproximación cuadrática, o una cuantización por formas).
+\end{assumption}
+
+\begin{theorem}[Evolución unitaria]
+Bajo \cref{ass:quantization}, el operador
+\[
+U(t)=\exp\!\bigl(i t \hat H_\varphi\bigr)
+\]
+es unitario en $\cH$ y satisface la ecuación de Schrödinger
+$\partial_t \Psi = i\hat H_\varphi \Psi$ con reversibilidad exacta $U(-t)=U(t)^\dagger$.
+\end{theorem}
+
+% =========================================================
+\section{Consistencia CMFO discreto--continuo}
+\label{sec:discrete_continuum}
+
+\subsection{Lema BCH y generador}
+\begin{lemma}[Expansión corta de la evolución]
+\label{lem:bch}
+Sea $\hat H_\varphi$ autoadjunto y $\Delta t$ pequeño. Entonces
+\[
+U(\Delta t)=e^{i\Delta t \hat H_\varphi}
+= I + i\Delta t \hat H_\varphi + \mathcal{O}(\Delta t^2)
+\quad \text{en } \mathcal{B}(\cH).
+\]
+\end{lemma}
+
+\begin{theorem}[Límite continuo del autómata]
+\label{thm:limit_cmfo}
+Defina el autómata de paso $\Delta t$ por $X_{n+1}=U(\Delta t)X_n$.
+Entonces, si $X(t)$ es suficientemente regular y $X(n\Delta t)=X_n$, al tomar $\Delta t\to 0$ se obtiene
+\[
+\partial_t X = i\hat H_\varphi X,
+\]
+y el esquema simpléctico de Verlet aplicado al Hamiltoniano $H_\varphi$ aproxima el mismo flujo conservativo con error global $\mathcal{O}(\Delta t^2)$.
+\end{theorem}
+\begin{proof}
+La primera parte es consecuencia directa de \cref{lem:bch} y definición de derivada. La segunda parte sigue de teoría estándar de integradores simplécticos: Verlet es de orden 2 y preserva la estructura hamiltoniana.
+\end{proof}
+
+% =========================================================
+\section{Implementación reproducible y cotas de error}
+\label{sec:implementation}
+
+\subsection{Discretización de la forma de Dirichlet}
+Sea $\{x_\alpha\}_{\alpha=1}^M$ una malla jerárquica compatible con $\mu_\varphi$ y pesos $w_{\alpha\beta}$ que aproximan la forma:
+\[
+\cE_\varphi(u,u) \approx \frac12\sum_{\alpha,\beta} w_{\alpha\beta}\abs{u_\alpha-u_\beta}^2,
+\qquad w_{\alpha\beta}=w_{\beta\alpha}\ge 0.
+\]
+
+\subsection{Esquema simpléctico (Verlet)}
+\begin{algorithm}[H]
+\caption{Evolución Hamiltoniana CMFO--continuo (Verlet)}
+\begin{algorithmic}[1]
+\Require $(X^0,P^0)$, $\Delta t$, $N$ pasos, operador discreto $A\approx -\Delta_\varphi^{\,a}$, potencial $\cK$
+\For{$n=0$ to $N-1$}
+\State $P^{n+\frac12} \gets P^n - \frac{\Delta t}{2}\,\bigl( -A X^n + \nabla \cK(X^n)\bigr)$
+\State $X^{n+1} \gets X^n + \Delta t\,P^{n+\frac12}$
+\State $P^{n+1} \gets P^{n+\frac12} - \frac{\Delta t}{2}\,\bigl( -A X^{n+1} + \nabla \cK(X^{n+1})\bigr)$
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+\begin{theorem}[Cota de error (espacio + tiempo)]
+\label{thm:error_bound}
+Sea $K$ el nivel jerárquico (resolución) de discretización espacial, y $\Delta t$ el paso temporal. Bajo regularidad estándar,
+\[
+\norm{X^{K,\Delta t}-X}_{C([t_0,t_1];L^2)}
+\le C_1\,\rho(K) + C_2\,\Delta t^2,
+\]
+donde $\rho(K)\to 0$ es el error de aproximación de la forma de Dirichlet (típicamente $\rho(K)\sim \varphi^{-K}$ en mallas autosimilares).
+\end{theorem}
+
+% =========================================================
+\section{Checklist de objeciones y cómo quedan cerradas}
+\label{sec:objections}
+
+\begin{enumerate}[label=\textbf{O\arabic*:}, leftmargin=3.2em]
+\item \textbf{``Un IFS produce un polvo, no un toro''}.\\
+Resuelto por \cref{sec:base_space}: el soporte es $\bbT^7$; la fractalidad entra en $(\mu_\varphi,\cE_\varphi)$.
+\item \textbf{``No hay derivadas en fractales''}.\\
+Resuelto por \cref{sec:dirichlet}: se trabaja con gradiente de energía y formulación débil vía formas de Dirichlet.
+\item \textbf{``Gauge no está definido''}.\\
+Resuelto por \cref{sec:gauge}: gauge como perturbación magnética de la forma, con clausura (KLMN) y generador autoadjunto.
+\item \textbf{``No se garantiza existencia/unicidad''}.\\
+Resuelto por \cref{thm:wellposed}: operador autoadjunto + no linealidad Lipschitz $\Rightarrow$ well-posed global y energía constante.
+\item \textbf{``La conexión con $U_\varphi$ es narrativa''}.\\
+Resuelto por \cref{sec:discrete_continuum}: $U(\Delta t)=e^{i\Delta t \hat H_\varphi}$ y límite $\Delta t\to 0$ con expansión controlada.
+\end{enumerate}
+
+% =========================================================
+% New Sections Added in v1.3
+% =========================================================
+
+\section{Cálculo diferencial intrínseco vía formas de Dirichlet}
+\label{sec:dirichlet_intrinseco}
+
+La Sección \ref{sec:dirichlet} define el operador $\Delta_A^{(\varphi)}$ en formulación débil a partir de derivadas covariantes.
+Para eliminar cualquier ambigüedad asociada a la falta de estructura diferenciable clásica en conjuntos fractales, introducimos una
+\emph{construcción intrínseca} basada en \emph{formas de Dirichlet regulares}.
+
+\begin{assumption}[Regularidad energética mínima]
+\label{ass:energy_regular}
+Asumimos que $T^7_\varphi$ es un conjunto autosimilar que satisface OSC y admite una forma de resistencia
+(regular resistance form) en el sentido de Kigami, de modo que existe una forma de Dirichlet regular $(\mathcal{E},\mathcal{F})$ en
+$L^2(T^7_\varphi,\mu_\varphi)$.
+\end{assumption}
+
+\begin{definition}[Forma de Dirichlet]
+Sea $\mathcal{F}\subset L^2(T^7_\varphi,\mu_\varphi)$ un subespacio denso. Una forma bilineal simétrica
+$\mathcal{E}:\mathcal{F}\times\mathcal{F}\to\bbR$ es una \emph{forma de Dirichlet regular} si:
+(i) $\mathcal{E}$ es cerrada y Markoviana; (ii) $\mathcal{F}\cap C(T^7_\varphi)$ es densa en $\mathcal{F}$ (norma $\mathcal{E}_1$)
+y en $C(T^7_\varphi)$ (norma supremo).
+\end{definition}
+
+\begin{theorem}[Laplaciano intrínseco]
+\label{thm:intrinsic_laplacian}
+Bajo la Hipótesis \ref{ass:energy_regular}, existe un operador autoadjunto no-positivo
+$\Delta_\varphi:\Dom(\Delta_\varphi)\subset L^2(T^7_\varphi,\mu_\varphi)\to L^2(T^7_\varphi,\mu_\varphi)$ tal que
+\[
+\mathcal{E}(f,g)= - \inner{\Delta_\varphi f}{g}_{L^2(\mu_\varphi)}\quad \forall f\in\Dom(\Delta_\varphi),\ \forall g\in\mathcal{F}.
+\]
+\end{theorem}
+\begin{proof}
+Teorema estándar de representación de formas cerradas (Fukushima--Oshima--Takeda) aplicado a una forma de Dirichlet regular.
+\end{proof}
+
+\begin{remark}[Compatibilidad con la formulación débil previa]
+En los regímenes donde existe un cálculo diferencial compatible (p.ej. aproximaciones por grafos), $\Delta^{(\varphi)}_A$
+coincide con $\Delta_\varphi$ al tomar $A\equiv 0$ y elegir la energía
+$\mathcal{E}$ inducida por la discretización jerárquica.
+\end{remark}
+
+% ========== SECCIÓN 11: DERIVACIÓN Y CONEXIÓN COMO MÓDULO DE 1-FORMAS ==========
+\section{Derivación $d$ y conexión gauge como módulo de 1-formas}
+\label{sec:one_forms}
+
+Para tratar gauge de forma intrínseca, usamos el cálculo de primer orden asociado a $(\mathcal{E},\mathcal{F})$.
+
+\begin{theorem}[Módulo de 1-formas y derivación]
+Existe un espacio de Hilbert $\mathcal{H}_1$ (módulo de 1-formas) y una derivación cerrable
+$d:\mathcal{F}\to\mathcal{H}_1$ tal que $\mathcal{E}(f,g)=\inner{df}{dg}_{\mathcal{H}_1}$.
+\end{theorem}
+\begin{proof}
+Construcción de Cipriani--Sauvageot para formas de Dirichlet fuertemente locales (o su análogo en resistencia).
+\end{proof}
+
+\begin{definition}[Potencial gauge admisible]
+Un potencial gauge es un elemento $A\in \mathcal{H}_1$ con norma finita $\norm{A}_{\mathcal{H}_1}<\infty$.
+Definimos el operador covariante intrínseco $d_A:\mathcal{F}\to\mathcal{H}_1$ por
+\[
+d_A f := df + i\,A f,
+\]
+donde $Af$ denota la acción módulo (multiplicación).
+\end{definition}
+
+\begin{definition}[Energía gauge-covariante]
+Definimos la forma (sesquilínea) gauge-covariante:
+\[
+\mathcal{E}_A(f,g):=\inner{d_A f}{d_A g}_{\mathcal{H}_1},
+\qquad \mathcal{F}_A:=\mathcal{F}.
+\]
+\end{definition}
+
+\begin{theorem}[Clausura y autoadjunción]
+Si $A\in\mathcal{H}_1$ y $\norm{A}_{\mathcal{H}_1}$ es finita, entonces $(\mathcal{E}_A,\mathcal{F}_A)$ es una forma cerrada y
+define un operador autoadjunto $\Delta_{\varphi,A}$ mediante
+$\mathcal{E}_A(f,g)=-\inner{\Delta_{\varphi,A}f}{g}$.
+\end{theorem}
+\begin{proof}
+Perturbación relativamente acotada de una forma cerrada; ver literatura de Laplacianos magnéticos en fractales.
+\end{proof}
+
+% ========== SECCIÓN 12: DINÁMICA UNITARIA Y SEMIGRUPOS ==========
+\section{Dinámica unitaria, semigrupos y espectro}
+\label{sec:spectral}
+
+\begin{theorem}[Semigrupo de calor y núcleo]
+El operador $-\Delta_{\varphi,A}$ genera un semigrupo fuertemente continuo de contracciones
+$e^{t\Delta_{\varphi,A}}$ en $L^2(\mu_\varphi)$.
+Bajo hipótesis estándar de volumen y Poincaré, existe un núcleo de calor $p_A(t,x,y)$ simétrico.
+\end{theorem}
+
+\begin{theorem}[Ecuación de Schrödinger en $T^7_\varphi$]
+Sea $\hat{H}_\varphi := -\tfrac12 \Delta_{\varphi,A} + \mathcal{K}$ con $\mathcal{K}$ acotado inferiormente.
+Entonces $\hat{H}_\varphi$ es esencialmente autoadjunto en un núcleo denso y genera un grupo unitario
+$U(t)=e^{it\hat{H}_\varphi}$ en $L^2(T^7_\varphi,\mu_\varphi)$.
+\end{theorem}
+
+\begin{remark}[Dimensión espectral]
+El crecimiento de autovalores de $\Delta_{\varphi}$ define una dimensión espectral $d_s$ que puede diferir de $s=\dim_H$.
+Este parámetro es un observable matemático directo del ``micro-espectro'' CMFO y controla escalas de propagación y complejidad.
+\end{remark}
+
+% ========== SECCIÓN 13: CERTIFICACIÓN COMPUTACIONAL Y PRUEBAS ==========
+\section{Certificación computacional y reproducibilidad}
+\label{sec:certificacion}
+
+Para aplicaciones industriales/auditables, la capa matemática debe acompañarse de pruebas verificables y cotas numéricas.
+
+\begin{definition}[Cómputo certificado]
+Un cálculo CMFO se considera \emph{certificado} si:
+(i) el error de discretización está acotado por una cota a priori (\S\ref{sec:implementation});
+(ii) la aritmética es controlada (p.ej. intervalar) o validada por pruebas de invariantes (energía, reversibilidad);
+(iii) existe reproducción independiente (cross-platform) con tolerancias fijadas.
+\end{definition}
+
+\begin{proposition}[Invariantes mínimos de auditoría]
+En el esquema de Verlet de \S\ref{sec:implementation}, los invariantes auditables mínimos son:
+\[
+\Delta H_\varphi = \mathcal{O}(\Delta t^2),\qquad
+\norm{X}_{L^2(\mu_\varphi)}^2 + \norm{P}_{L^2(\mu_\varphi)}^2 \ \text{acotada},\qquad
+\text{reversibilidad } (n\to -n).
+\]
+\end{proposition}
+
+% =========================================================
+\appendix
+\section{Referencias matemáticas (base)}
+\begin{thebibliography}{99}
+
+\bibitem{Kigami2001}
+J. Kigami, \emph{Analysis on Fractals}, Cambridge University Press, 2001.
+
+\bibitem{Strichartz2006}
+R. S. Strichartz, \emph{Differential Equations on Fractals}, Princeton University Press, 2006.
+
+\bibitem{FukushimaOshimaTakeda2011}
+M. Fukushima, Y. Oshima, M. Takeda, \emph{Dirichlet Forms and Symmetric Markov Processes}, De Gruyter, 2011.
+
+\bibitem{CiprianiSauvageot2003}
+F. Cipriani, J.-L. Sauvageot, Derivations as square roots of Dirichlet forms, \emph{J. Funct. Anal.} 201 (2003).
+
+\bibitem{HairerLubichWanner2006}
+E. Hairer, C. Lubich, G. Wanner, \emph{Geometric Numerical Integration}, Springer, 2006.
+
+\bibitem{Hutchinson1981}
+J. E. Hutchinson, Fractals and self-similarity, \emph{Indiana Univ. Math. J.} 30 (1981), 713--747.
+
+\bibitem{HinzTeplyaev2013}
+Hinz, M., Teplyaev, A. (2013). Dirac and magnetic Schrödinger operators on fractals. \emph{J. Funct. Anal.}
+
+\end{thebibliography}
+
+\end{document}

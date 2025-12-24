@@ -1,0 +1,15 @@
+{
+    "domain": "FINANCE",
+    "description": "Financial Control and Auditing",
+    "roles": {
+        "analyst": {
+            "authorities": [
+                "approve_funds"
+            ],
+            "constraints": {
+                "max_budget_per_transaction": 20000,
+                "currency": "USD"
+            }
+        }
+    }
+}

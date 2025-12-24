@@ -1,0 +1,47 @@
+{
+    "name": "@cmfo/core",
+    "version": "0.1.4",
+    "description": "Node.js bindings for CMFO Fractal Universal Computation Engine",
+    "main": "index.js",
+    "types": "index.d.ts",
+    "scripts": {
+        "test": "node test.js",
+        "prepublishOnly": "node -e \"console.log('Ensure native libraries are built before publishing')\""
+    },
+    "keywords": [
+        "cmfo",
+        "fractal",
+        "compute",
+        "tensor7",
+        "phi-manifold",
+        "deterministic",
+        "geometry",
+        "quantum",
+        "ffi"
+    ],
+    "author": {
+        "name": "Jonnathan Montero Viques",
+        "email": "jmvlavacar@hotmail.com"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-.git"
+    },
+    "homepage": "https://1jonmonterv.github.io/CMFO-COMPUTACION-FRACTAL-/",
+    "dependencies": {
+        "ffi-napi": "^4.0.3",
+        "ref-napi": "^3.0.3",
+        "ref-array-napi": "^1.2.2"
+    },
+    "engines": {
+        "node": ">=14.0.0"
+    },
+    "files": [
+        "index.js",
+        "index.d.ts",
+        "README.md",
+        "LICENSE",
+        "lib"
+    ]
+}

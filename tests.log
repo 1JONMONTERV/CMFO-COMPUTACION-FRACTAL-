@@ -1,0 +1,139 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.0.2, pluggy-1.6.0
+rootdir: C:\Users\solmo\Desktop\CMFO_GPU_CLEAN\CMFO_GPU_FINAL
+collected 75 items
+
+tests\cross\test_tensor7_equivalence.py .                                [  1%]
+tests\test_algebra.py ..F................                                [ 26%]
+tests\test_api.py F                                                      [ 28%]
+tests\test_basic.py ....                                                 [ 33%]
+tests\test_boolean_proof.py FF..F                                        [ 40%]
+tests\test_constants.py ..........                                       [ 53%]
+tests\test_logic.py .......................                              [ 84%]
+tests\test_native_correctness.py .                                       [ 85%]
+tests\test_physics.py .F....F....                                        [100%]
+
+================================== FAILURES ===================================
+_____________ TestFractalProduct.test_fractal_product_phi_squared _____________
+
+self = <test_algebra.TestFractalProduct object at 0x000001F67F8813D0>
+
+    def test_fractal_product_phi_squared(self):
+        """Test fractal_product(PHI, PHI) = PHI^2."""
+        result = fractal_product(PHI, PHI)
+        expected = PHI ** 2
+>       assert abs(result - expected) < 1e-12
+E       assert 1.0 < 1e-12
+E        +  where 1.0 = abs((1.618033988749895 - 2.618033988749895))
+
+tests\test_algebra.py:33: AssertionError
+_________________________________ test_logic __________________________________
+
+    def test_logic():
+>       assert cmfo.phi_and(1, -1) == -1
+E       assert np.float64(nan) == -1
+E        +  where np.float64(nan) = <function phi_and at 0x000001F67F847EC0>(1, -1)
+E        +    where <function phi_and at 0x000001F67F847EC0> = cmfo.phi_and
+
+tests\test_api.py:5: AssertionError
+_________________ TestBooleanAbsorption.test_completeness_and _________________
+
+self = <test_boolean_proof.TestBooleanAbsorption object at 0x000001F67F895390>
+
+    def test_completeness_and(self):
+        """Verifica la tabla de verdad AND"""
+        truth_table = [(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)]
+        for a, b, expected in truth_table:
+            val_a = to_cmfo(a)
+            val_b = to_cmfo(b)
+            result = cmfo.phi_and(val_a, val_b)
+>           assert from_cmfo(result) == expected, \
+                f"AND Error: {a}&{b}!={expected}"
+E           AssertionError: AND Error: 0&0!=0
+E           assert np.True_ == 0
+E            +  where np.True_ = from_cmfo(np.float64(1.0))
+
+tests\test_boolean_proof.py:26: AssertionError
+_________________ TestBooleanAbsorption.test_completeness_or __________________
+
+self = <test_boolean_proof.TestBooleanAbsorption object at 0x000001F67F894090>
+
+    def test_completeness_or(self):
+        """Verifica la tabla de verdad OR"""
+        truth_table = [(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 1)]
+        for a, b, expected in truth_table:
+            val_a = to_cmfo(a)
+            val_b = to_cmfo(b)
+            result = cmfo.phi_or(val_a, val_b)
+>           assert from_cmfo(result) == expected, \
+                f"OR Error: {a}|{b}!={expected}"
+E           AssertionError: OR Error: 0|1!=1
+E           assert np.False_ == 1
+E            +  where np.False_ = from_cmfo(np.float64(0.0))
+
+tests\test_boolean_proof.py:36: AssertionError
+______________ TestBooleanAbsorption.test_continuity_hypothesis _______________
+
+self = <test_boolean_proof.TestBooleanAbsorption object at 0x000001F67F896490>
+
+    def test_continuity_hypothesis(self):
+        """
+        Verifica que el operador funciona incluso con ruido.
+        Esto demuestra la robustez del axioma de continuidad.
+        """
+        # 0.8 es "Casi Verdad" (True)
+>       assert cmfo.phi_and(0.8, -0.9) < 0  # True & False -> False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert np.float64(nan) < 0
+E        +  where np.float64(nan) = <function phi_and at 0x000001F67F847EC0>(0.8, -0.9)
+E        +    where <function phi_and at 0x000001F67F847EC0> = cmfo.phi_and
+
+tests\test_boolean_proof.py:65: AssertionError
+____________ TestGeometricMass.test_geometric_mass_electron_scale _____________
+
+self = <test_physics.TestGeometricMass object at 0x000001F67F8C4E50>
+
+    def test_geometric_mass_electron_scale(self):
+        """Test geometric mass at electron Compton wavelength scale."""
+        # Electron Compton wavelength
+        L_e = 2.4263102367e-12  # meters
+        m_e = geometric_mass(L_e)
+        # Electron mass
+        m_e_expected = 9.1093837015e-31  # kg
+        # Should be within 1% (exact in natural units)
+        relative_error = abs(m_e - m_e_expected) / m_e_expected
+>       assert relative_error < 0.01
+E       assert 0.8408450568755401 < 0.01
+
+tests\test_physics.py:30: AssertionError
+___________ TestComptonWavelength.test_compton_wavelength_electron ____________
+
+self = <test_physics.TestComptonWavelength object at 0x000001F67F8C5CD0>
+
+    def test_compton_wavelength_electron(self):
+        """Test Compton wavelength for electron mass."""
+        m_e = 9.1093837015e-31  # kg
+        lambda_e = compton_wavelength(m_e)
+        lambda_e_expected = 2.4263102367e-12  # meters
+        relative_error = abs(lambda_e - lambda_e_expected) / lambda_e_expected
+>       assert relative_error < 0.01
+E       assert 0.8408450568755401 < 0.01
+
+tests\test_physics.py:67: AssertionError
+============================== warnings summary ===============================
+tests/test_api.py::test_logic
+tests/test_boolean_proof.py::TestBooleanAbsorption::test_completeness_or
+tests/test_boolean_proof.py::TestBooleanAbsorption::test_continuity_hypothesis
+  C:\Users\solmo\Desktop\CMFO_GPU_CLEAN\CMFO_GPU_FINAL\bindings\python\cmfo\core\fractal.py:42: RuntimeWarning: invalid value encountered in power
+    return np.power(x, PHI_INV)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_algebra.py::TestFractalProduct::test_fractal_product_phi_squared
+FAILED tests/test_api.py::test_logic - assert np.float64(nan) == -1
+FAILED tests/test_boolean_proof.py::TestBooleanAbsorption::test_completeness_and
+FAILED tests/test_boolean_proof.py::TestBooleanAbsorption::test_completeness_or
+FAILED tests/test_boolean_proof.py::TestBooleanAbsorption::test_continuity_hypothesis
+FAILED tests/test_physics.py::TestGeometricMass::test_geometric_mass_electron_scale
+FAILED tests/test_physics.py::TestComptonWavelength::test_compton_wavelength_electron
+================== 7 failed, 68 passed, 3 warnings in 0.25s ===================

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal API v1.1 | CMFO</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container nav-content">
+            <div class="logo">CMFO API <span class="version">v1.1</span></div>
+            <div class="nav-links">
+                <a href="../index.html">Back to Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Universal API Reference</h2>
+                <p>The Standard Interface for Fractal Computation.</p>
+            </div>
+
+            <div class="tabs-container" style="background: #0a0a0a; padding: 40px;">
+                <h3>1. Core Principles</h3>
+                <ul>
+                    <li><strong>Immutability:</strong> All functions are pure.</li>
+                    <li><strong>Determinism:</strong> Bit-exact output mandated (IEEE 754).</li>
+                    <li><strong>No Exceptions:</strong> Return Null Tensors on failure.</li>
+                </ul>
+
+                <div class="divider"></div>
+
+                <h3>2. The Golden Functions</h3>
+
+                <div class="theory-card" style="margin-bottom: 20px;">
+                    <h4>tensor7_reduce</h4>
+                    <p>Projects high-dimensional vector into 7D manifold.</p>
+                    <div class="code-block">R(v)_i = sum(v_{7k+i})</div>
+                </div>
+
+                <div class="theory-card" style="margin-bottom: 20px;">
+                    <h4>cmfo_forward</h4>
+                    <p>The primary inference step used by the engine.</p>
+                    <div class="math-block">
+                        $$ S_{t+1} = \frac{S_t \otimes_7 I_t + \varphi}{1 + \varphi} $$
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

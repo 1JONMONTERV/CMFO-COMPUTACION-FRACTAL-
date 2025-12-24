@@ -1,0 +1,374 @@
+# CMFO-COMPUTE
+
+Motor oficial de cómputo fractal basado en el toro 7D T⁷_φ.  
+Incluye tensores fractales T7, operadores φ-modales, dinámica gamma-step
+y el núcleo computacional público del modelo CMFO.
+
+---
+
+## 🚀 Características principales
+
+- Tensor fractal T7Tensor
+- Operadores φ-modales (phi_sign, phi_and, phi_or, etc.)
+- Evolución dinámica gamma-step
+- API limpia, flake8=0, 100% tests OK
+- Código industrial listo para producción y validación científica
+- Arquitectura compatible con CUDA, GPU y futuros módulos CMFO Enterprise
+
+---
+
+# 📜 Licencia y Uso Comercial
+
+Este repositorio se distribuye bajo licencia abierta **Apache 2.0**, válida para:
+
+- Uso personal  
+- Uso académico  
+- Investigación  
+- Evaluación técnica y científica  
+
+Sin embargo:
+
+### 🔥 El **uso comercial** del sistema CMFO requiere **licencia comercial obligatoria**, incluyendo:
+
+- Memoria fractal infinita CMFO-FRACMEM  
+- Minería fractal predictiva CMFO  
+- Módulos cuántico-fractales  
+- Versiones GPU/FPGA/ASIC  
+- Integración empresarial en productos o servicios  
+- Infraestructura comercial o gubernamental  
+
+### ✔ Contacto oficial para licencias comerciales  
+**Jonnathan Montero – San José, Costa Rica**  
+**Correo:** **jmvlavacar@hotmail.com**
+
+---
+
+## ⚙ Instalación (modo desarrollo)
+
+```bash
+pip install -e .
+```
+
+---
+
+## 🧪 Pruebas
+
+```bash
+pytest -q
+flake8 cmfo_compute tests --max-line-length=120
+```
+
+---
+
+## 🏢 CMFO Enterprise (versión comercial)
+
+Incluye:
+
+* Memoria fractal infinita φ-resonante
+* Cómputo determinista predictivo
+* Minería cuántico-fractal exacta
+* Optimizaciones para GPU/FPGA/ASIC
+* Servidores CMFO-Cloud
+* Auditorías científicas y criptográficas
+* Soporte técnico en producción
+
+**Disponible únicamente mediante contrato comercial.**
+
+---
+
+© CMFO – Todos los derechos reservados.  
+Contacto comercial: **jmvlavacar@hotmail.com**  
+Representante: **Jonnathan Montero, San José, Costa Rica**
+
+
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cmfo-compute"
+version = "1.0.2"
+description = "CMFO Compute: Librería base de cálculo fractal T7 para CMFO"
+authors = [
+    { name = "Jonnathan Montero", email = "jesuslocopor@gmail.com" }
+]
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+
+dependencies = [
+    "numpy>=1.20"
+]
+
+[project.urls]
+Homepage = "https://github.com/1JONMONTERV/cmfo-compute"
+Repository = "https://github.com/1JONMONTERV/cmfo-compute"
+
+[tool.setuptools.packages.find]
+include = ["cmfo_compute*"]
+
+from setuptools import setup, find_packages
+
+setup(
+    name="cmfo-compute",
+    version="1.0.2",
+    author="Jonnathan Montero",
+    author_email="jesuslocopor@gmail.com",
+    description="CMFO Compute: Librería base de cálculo fractal T7 del sistema CMFO.",
+    long_description=open("README.md", encoding="utf-8").read(),
+    long_description_content_type="text/markdown",
+    url="https://github.com/1JONMONTERV/cmfo-compute",
+    packages=find_packages(),
+    python_requires=">=3.9",
+    install_requires=[
+        "numpy>=1.20",
+    ],
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
+)
+# =====================================================================
+# CMFO-COMPUTE - AVISO DE LICENCIA
+# Uso académico y personal permitido bajo Apache 2.0.
+# El uso comercial, corporativo o gubernamental requiere licencia CMFO.
+# Contacto comercial:
+#   Jonnathan Montero – San José, Costa Rica
+#   jmvlavacar@hotmail.com
+# =====================================================================
+from .core.t7_tensor import T7Tensor
+from .core.gamma_phi import gamma_step
+from .logic.phi_logic import (
+    phi_sign,
+    phi_and,
+    phi_or,
+    phi_not,
+    phi_xor,
+    phi_nand,
+)
+
+
+def tensor(v):
+    return T7Tensor(v)
+
+
+__all__ = [
+    "T7Tensor",
+    "tensor",
+    "gamma_step",
+    "phi_sign",
+    "phi_and",
+    "phi_or",
+    "phi_not",
+    "phi_xor",
+    "phi_nand",
+]
+# =====================================================================
+# CMFO-COMPUTE - AVISO DE LICENCIA
+# Uso académico y personal permitido bajo Apache 2.0.
+# El uso comercial, corporativo o gubernamental requiere licencia CMFO.
+# Contacto comercial:
+#   Jonnathan Montero – San José, Costa Rica
+#   jmvlavacar@hotmail.com
+# =====================================================================
+import numpy as np
+
+
+def gamma_step(v):
+    v = np.array(v, dtype=float)
+    return np.sin(v)
+import numpy as np
+
+PHI = (1 + 5 ** 0.5) / 2
+
+
+def phi_pow(x):
+    return PHI ** x
+
+
+def phi_norm(v):
+    v = np.array(v, dtype=float)
+    return np.linalg.norm(v)
+# =====================================================================
+# CMFO-COMPUTE - AVISO DE LICENCIA
+# Uso académico y personal permitido bajo Apache 2.0.
+# El uso comercial, corporativo o gubernamental requiere licencia CMFO.
+# Contacto comercial:
+#   Jonnathan Montero – San José, Costa Rica
+#   jmvlavacar@hotmail.com
+# =====================================================================
+import numpy as np
+from .gamma_phi import gamma_step
+
+
+class T7Tensor:
+    def __init__(self, v):
+        self.v = np.array(v, dtype=float)
+
+    def evolve(self, steps=1):
+        v = self.v
+        for _ in range(steps):
+            v = gamma_step(v)
+        return T7Tensor(v)
+
+    def norm(self):
+        return float(np.linalg.norm(self.v))
+
+    def __repr__(self):
+        return f"T7Tensor({self.v})"
+from .t7_tensor import T7Tensor
+from .gamma_phi import gamma_step
+
+__all__ = ["T7Tensor", "gamma_step"]
+import numpy as np
+
+# =====================================================================
+# CMFO-COMPUTE - AVISO DE LICENCIA
+# Uso académico y personal permitido bajo Apache 2.0.
+# El uso comercial, corporativo o gubernamental requiere licencia CMFO.
+# Contacto comercial:
+#   Jonnathan Montero – San José, Costa Rica
+#   jmvlavacar@hotmail.com
+# =====================================================================
+
+def phi_sign(x):
+    x = float(np.array(x).mean())
+    return 1.0 if x >= 0 else -1.0
+
+
+def phi_and(a, b):
+    return phi_sign(a) * phi_sign(b)
+
+
+def phi_or(a, b):
+    return phi_sign(a) if phi_sign(a) == 1 else phi_sign(b)
+
+
+def phi_not(a):
+    return -phi_sign(a)
+
+
+def phi_xor(a, b):
+    return 1.0 if phi_sign(a) != phi_sign(b) else -1.0
+
+
+def phi_nand(a, b):
+    return -phi_and(a, b)
+"""
+Lógica fractal φ-modal para CMFO Compute
+"""
+
+from .phi_logic import (
+    phi_sign,
+    phi_and,
+    phi_or,
+    phi_not,
+    phi_xor,
+    phi_nand,
+)
+
+__all__ = [
+    "phi_sign",
+    "phi_and",
+    "phi_or",
+    "phi_not",
+    "phi_xor",
+    "phi_nand",
+]
+import cmfo_compute as cmfo
+
+
+def test_logic():
+    assert cmfo.phi_and(1, -1) == -1
+    assert cmfo.phi_or(-1, 1) == 1
+    assert cmfo.phi_nand(1, 1) == -1
+import cmfo_compute as cmfo
+
+
+def test_tensor_creation():
+    t = cmfo.tensor([1, 2, 3])
+    assert t.v[0] == 1
+
+
+def test_tensor_evolve():
+    t = cmfo.tensor([1, 2, 3])
+    y = t.evolve(1)
+    assert isinstance(y, cmfo.T7Tensor)
+name: CI CMFO-COMPUTE
+
+on:
+  push:
+    branches: ["main"]
+    tags: ["v*"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  test:
+    name: test-${{ matrix.os }}-py${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package and dev deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+          pip install pytest pytest-cov flake8 mypy
+
+      - name: Run tests with coverage
+        run: |
+          pytest -q --maxfail=1 --disable-warnings --cov=cmfo_compute --cov-report=term-missing
+
+      - name: Lint with flake8
+        run: |
+          flake8 cmfo_compute tests
+
+      - name: Type check with mypy
+        run: |
+          mypy cmfo_compute
+
+  build-pypi:
+    name: build-and-publish-pypi
+    runs-on: windows-latest
+    needs: test
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+
+      - name: Build package
+        run: |
+          python -m build
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_TOKEN }}
+
+

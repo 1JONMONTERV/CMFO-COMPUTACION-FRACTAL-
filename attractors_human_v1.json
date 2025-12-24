@@ -1,0 +1,169 @@
+{
+  "version": "1.0-human",
+  "calibration_method": "human_language_examples",
+  "description": "Attractors calibrated from real human language, not synthetic data",
+  "postures": {
+    "coherent_affirmation": {
+      "label": "Afirmación coherente",
+      "description": "Confirmar algo que es correcto y consistente",
+      "examples": [
+        "Sí, París es la capital de Francia",
+        "Correcto, 2+2 es 4",
+        "Exacto, el agua hierve a 100°C",
+        "Así es, la Tierra gira alrededor del Sol",
+        "Cierto, Python es un lenguaje de programación"
+      ],
+      "intent": "confirm"
+    },
+    "factual_error": {
+      "label": "Error factual común",
+      "description": "Corregir un error objetivo y claro",
+      "examples": [
+        "No, Madrid es la capital de España, no Barcelona",
+        "Incorrecto, 2+2 es 4, no 5",
+        "Error: el agua hierve a 100°C, no a 50°C",
+        "Falso, la Tierra gira alrededor del Sol, no al revés",
+        "No es así, Python no es un sistema operativo"
+      ],
+      "intent": "correct"
+    },
+    "direct_contradiction": {
+      "label": "Contradicción directa",
+      "description": "Señalar inconsistencia con lo dicho antes",
+      "examples": [
+        "Antes dijiste que era azul, ahora dices rojo",
+        "Esto contradice lo que mencionaste hace un momento",
+        "Eso es opuesto a tu afirmación anterior",
+        "Cambiaste de postura sin explicar por qué",
+        "Esto no coincide con lo que establecimos antes"
+      ],
+      "intent": "conflict"
+    },
+    "honest_ambiguity": {
+      "label": "Ambigüedad honesta",
+      "description": "Pedir aclaración cuando algo no está claro",
+      "examples": [
+        "¿Te refieres a la ciudad o al país?",
+        "No está claro si hablas de temperatura o presión",
+        "¿Cuál de los dos significados?",
+        "Eso puede interpretarse de dos formas distintas",
+        "Necesito que especifiques a qué te refieres"
+      ],
+      "intent": "question"
+    },
+    "reference_request": {
+      "label": "Petición de referencia",
+      "description": "Remitir a algo ya mencionado",
+      "examples": [
+        "Como dijimos antes sobre este tema",
+        "Volviendo a lo que mencionaste",
+        "Esto se relaciona con lo anterior",
+        "Ya hablamos de esto previamente",
+        "Retomando el punto que tocaste"
+      ],
+      "intent": "reference"
+    }
+  },
+  "attractors": {
+    "confirm": {
+      "intent": "confirm",
+      "posture": "Afirmación coherente",
+      "centroid": [
+        0.2790355313453896,
+        -0.3733437370602646,
+        0.21457739695400954,
+        -0.23828952060374076,
+        0.07712542916655522,
+        0.1659490663013472,
+        -0.01718237996338321
+      ],
+      "radius": 2.06649427650767,
+      "samples": 5,
+      "example_texts": [
+        "Sí, París es la capital de Francia",
+        "Correcto, 2+2 es 4",
+        "Exacto, el agua hierve a 100°C"
+      ]
+    },
+    "correct": {
+      "intent": "correct",
+      "posture": "Error factual común",
+      "centroid": [
+        0.3219669327103979,
+        -0.4450607361074206,
+        -0.16212230333648917,
+        -0.10703912715745711,
+        0.28699325117987995,
+        -0.03710239825632482,
+        0.08764892976638161
+      ],
+      "radius": 2.4809817392932447,
+      "samples": 5,
+      "example_texts": [
+        "No, Madrid es la capital de España, no Barcelona",
+        "Incorrecto, 2+2 es 4, no 5",
+        "Error: el agua hierve a 100°C, no a 50°C"
+      ]
+    },
+    "conflict": {
+      "intent": "conflict",
+      "posture": "Contradicción directa",
+      "centroid": [
+        0.1782622511432113,
+        0.03206688589437523,
+        -0.06719236677054007,
+        -0.35767356265487804,
+        -0.06178906693532567,
+        0.09975809639108349,
+        -0.0013700825931491245
+      ],
+      "radius": 2.6128731820304445,
+      "samples": 5,
+      "example_texts": [
+        "Antes dijiste que era azul, ahora dices rojo",
+        "Esto contradice lo que mencionaste hace un momento",
+        "Eso es opuesto a tu afirmación anterior"
+      ]
+    },
+    "question": {
+      "intent": "question",
+      "posture": "Ambigüedad honesta",
+      "centroid": [
+        0.403001468580688,
+        0.008874045213794212,
+        0.1407645997608856,
+        -0.02771149048653223,
+        0.057679127593709315,
+        -0.20222779024982498,
+        -0.03311756254536862
+      ],
+      "radius": 2.5240059117269853,
+      "samples": 5,
+      "example_texts": [
+        "¿Te refieres a la ciudad o al país?",
+        "No está claro si hablas de temperatura o presión",
+        "¿Cuál de los dos significados?"
+      ]
+    },
+    "reference": {
+      "intent": "reference",
+      "posture": "Petición de referencia",
+      "centroid": [
+        0.21659320046289626,
+        0.040565889525643065,
+        -0.0609770424409208,
+        -0.03733668809001014,
+        0.3848949280225934,
+        -0.15252346231437133,
+        -0.12410170396058003
+      ],
+      "radius": 2.912823289344266,
+      "samples": 5,
+      "example_texts": [
+        "Como dijimos antes sobre este tema",
+        "Volviendo a lo que mencionaste",
+        "Esto se relaciona con lo anterior"
+      ]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software in your research, please cite it as below."
+authors:
+- family-names: "Montero Viquez"
+  given-names: "Jonathan"
+title: "CMFO: Continuous Modal Fractal Oscillation Engine"
+version: 0.1.4
+date-released: 2025-12-13
+url: "https://github.com/1JONMONTERV/CMFO-COMPUTACION-FRACTAL-"
+preferred-citation:
+  type: software
+  authors:
+  - family-names: "Montero Viquez"
+    given-names: "Jonathan"
+  title: "CMFO: The Axiomatic Fractal Compute Engine"
+  year: 2025
+  publisher: "GitHub"
+  version: 0.1.4
+

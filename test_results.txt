@@ -1,0 +1,166 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.0.2, pluggy-1.6.0 -- C:\Users\solmo\AppData\Local\Programs\Python\Python311\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\solmo\Desktop\CMFO_GPU_CLEAN\CMFO_GPU_FINAL
+collecting ... collected 75 items
+
+tests/cross/test_tensor7_equivalence.py::test_tensor7_equivalence PASSED [  1%]
+tests/test_algebra.py::TestFractalProduct::test_fractal_product_basic PASSED [  2%]
+tests/test_algebra.py::TestFractalProduct::test_fractal_product_identity PASSED [  4%]
+tests/test_algebra.py::TestFractalProduct::test_fractal_product_phi_squared PASSED [  5%]
+tests/test_algebra.py::TestFractalProduct::test_fractal_product_negative_raises PASSED [  6%]
+tests/test_algebra.py::TestFractalProduct::test_fractal_product_zero_raises PASSED [  8%]
+tests/test_algebra.py::TestFractalRoot::test_fractal_root_basic PASSED   [  9%]
+tests/test_algebra.py::TestFractalRoot::test_fractal_root_identity PASSED [ 10%]
+tests/test_algebra.py::TestFractalRoot::test_fractal_root_phi PASSED     [ 12%]
+tests/test_algebra.py::TestFractalRoot::test_fractal_root_convergence PASSED [ 13%]
+tests/test_algebra.py::TestFractalRoot::test_fractal_root_negative_raises PASSED [ 14%]
+tests/test_algebra.py::TestFractalRoot::test_fractal_root_zero_raises PASSED [ 16%]
+tests/test_algebra.py::TestIteratedFractalRoot::test_iterated_zero_iterations PASSED [ 17%]
+tests/test_algebra.py::TestIteratedFractalRoot::test_iterated_one_iteration PASSED [ 18%]
+tests/test_algebra.py::TestIteratedFractalRoot::test_iterated_convergence_large_x PASSED [ 20%]
+tests/test_algebra.py::TestIteratedFractalRoot::test_iterated_convergence_small_x PASSED [ 21%]
+tests/test_algebra.py::TestIteratedFractalRoot::test_iterated_negative_iterations_raises PASSED [ 22%]
+tests/test_algebra.py::TestFractalAdd::test_fractal_add_basic PASSED     [ 24%]
+tests/test_algebra.py::TestFractalAdd::test_fractal_add_commutative PASSED [ 25%]
+tests/test_algebra.py::TestFractalAdd::test_fractal_add_identity PASSED  [ 26%]
+tests/test_api.py::test_logic PASSED                                     [ 28%]
+tests/test_basic.py::test_import_cmfo PASSED                             [ 29%]
+tests/test_basic.py::test_cmfo_info PASSED                               [ 30%]
+tests/test_basic.py::test_tensor_creation PASSED                         [ 32%]
+tests/test_basic.py::test_phi_logic_functions PASSED                     [ 33%]
+tests/test_boolean_proof.py::TestBooleanAbsorption::test_completeness_and FAILED [ 34%]
+tests/test_boolean_proof.py::TestBooleanAbsorption::test_completeness_or PASSED [ 36%]
+tests/test_boolean_proof.py::TestBooleanAbsorption::test_completeness_xor FAILED [ 37%]
+tests/test_boolean_proof.py::TestBooleanAbsorption::test_completeness_nand FAILED [ 38%]
+tests/test_boolean_proof.py::TestBooleanAbsorption::test_continuity_hypothesis FAILED [ 40%]
+tests/test_constants.py::TestMathematicalConstants::test_phi_value PASSED [ 41%]
+tests/test_constants.py::TestMathematicalConstants::test_phi_inv_value PASSED [ 42%]
+tests/test_constants.py::TestMathematicalConstants::test_phi_property PASSED [ 44%]
+tests/test_constants.py::TestMathematicalConstants::test_phi_inv_property PASSED [ 45%]
+tests/test_constants.py::TestPhysicalConstants::test_hbar_value PASSED   [ 46%]
+tests/test_constants.py::TestPhysicalConstants::test_c_value PASSED      [ 48%]
+tests/test_constants.py::TestPhysicalConstants::test_g_value PASSED      [ 49%]
+tests/test_constants.py::TestPhysicalConstants::test_alpha_value PASSED  [ 50%]
+tests/test_constants.py::TestDerivedConstants::test_planck_mass_value PASSED [ 52%]
+tests/test_constants.py::TestDerivedConstants::test_planck_mass_order_of_magnitude PASSED [ 53%]
+tests/test_logic.py::TestLogicConstants::test_true_value PASSED          [ 54%]
+tests/test_logic.py::TestLogicConstants::test_false_value PASSED         [ 56%]
+tests/test_logic.py::TestLogicConstants::test_neutral_value PASSED       [ 57%]
+tests/test_logic.py::TestFractalNot::test_not_true PASSED                [ 58%]
+tests/test_logic.py::TestFractalNot::test_not_false PASSED               [ 60%]
+tests/test_logic.py::TestFractalNot::test_not_neutral PASSED             [ 61%]
+tests/test_logic.py::TestFractalNot::test_double_negation PASSED         [ 62%]
+tests/test_logic.py::TestFractalAnd::test_and_true_true PASSED           [ 64%]
+tests/test_logic.py::TestFractalAnd::test_and_true_false PASSED          [ 65%]
+tests/test_logic.py::TestFractalAnd::test_and_false_true PASSED          [ 66%]
+tests/test_logic.py::TestFractalAnd::test_and_false_false PASSED         [ 68%]
+tests/test_logic.py::TestFractalAnd::test_and_commutative PASSED         [ 69%]
+tests/test_logic.py::TestFractalAnd::test_and_neutral PASSED             [ 70%]
+tests/test_logic.py::TestFractalOr::test_or_true_true PASSED             [ 72%]
+tests/test_logic.py::TestFractalOr::test_or_true_false PASSED            [ 73%]
+tests/test_logic.py::TestFractalOr::test_or_false_true PASSED            [ 74%]
+tests/test_logic.py::TestFractalOr::test_or_false_false PASSED           [ 76%]
+tests/test_logic.py::TestFractalOr::test_or_commutative PASSED           [ 77%]
+tests/test_logic.py::TestFractalXor::test_xor_same_values PASSED         [ 78%]
+tests/test_logic.py::TestFractalXor::test_xor_different_values PASSED    [ 80%]
+tests/test_logic.py::TestFractalXor::test_xor_commutative PASSED         [ 81%]
+tests/test_logic.py::TestDeMorganLaws::test_demorgan_not_and PASSED      [ 82%]
+tests/test_logic.py::TestDeMorganLaws::test_demorgan_not_or PASSED       [ 84%]
+tests/test_native_correctness.py::TestNativeCorrectness::test_evolve_accuracy PASSED [ 85%]
+tests/test_physics.py::TestGeometricMass::test_geometric_mass_basic PASSED [ 86%]
+tests/test_physics.py::TestGeometricMass::test_geometric_mass_electron_scale PASSED [ 88%]
+tests/test_physics.py::TestGeometricMass::test_geometric_mass_negative_raises PASSED [ 89%]
+tests/test_physics.py::TestGeometricMass::test_geometric_mass_zero_raises PASSED [ 90%]
+tests/test_physics.py::TestGeometricMass::test_geometric_mass_dimensional_analysis PASSED [ 92%]
+tests/test_physics.py::TestComptonWavelength::test_compton_wavelength_basic PASSED [ 93%]
+tests/test_physics.py::TestComptonWavelength::test_compton_wavelength_electron PASSED [ 94%]
+tests/test_physics.py::TestComptonWavelength::test_compton_wavelength_negative_raises PASSED [ 96%]
+tests/test_physics.py::TestComptonWavelength::test_compton_wavelength_zero_raises PASSED [ 97%]
+tests/test_physics.py::TestInverseRelations::test_mass_wavelength_inverse PASSED [ 98%]
+tests/test_physics.py::TestInverseRelations::test_wavelength_mass_inverse PASSED [100%]
+
+================================== FAILURES ===================================
+_________________ TestBooleanAbsorption.test_completeness_and _________________
+
+self = <test_boolean_proof.TestBooleanAbsorption object at 0x0000025BB716C590>
+
+    def test_completeness_and(self):
+        """Verifica la tabla de verdad AND"""
+        truth_table = [(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)]
+        for a, b, expected in truth_table:
+            val_a = to_cmfo(a)
+            val_b = to_cmfo(b)
+            result = cmfo.phi_and(val_a, val_b)
+>           assert from_cmfo(result) == expected, \
+                f"AND Error: {a}&{b}!={expected}"
+E           AssertionError: AND Error: 0&0!=0
+E           assert True == 0
+E            +  where True = from_cmfo(1.0)
+
+tests\test_boolean_proof.py:26: AssertionError
+_________________ TestBooleanAbsorption.test_completeness_xor _________________
+
+self = <test_boolean_proof.TestBooleanAbsorption object at 0x0000025BB714F490>
+
+    def test_completeness_xor(self):
+        """Verifica la tabla de verdad XOR"""
+        truth_table = [(0, 0, 0), (0, 1, 1), (1, 0, 1), (1, 1, 0)]
+        for a, b, expected in truth_table:
+            val_a = to_cmfo(a)
+            val_b = to_cmfo(b)
+            result = cmfo.phi_xor(val_a, val_b)
+>           assert from_cmfo(result) == expected, \
+                   ^^^^^^^^^^^^^^^^^
+                f"XOR Error: {a}^{b}!={expected}"
+
+tests\test_boolean_proof.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+val = (1.270440548363387-0.49394821714831577j)
+
+    def from_cmfo(val):
+>       return val > 0
+               ^^^^^^^
+E       TypeError: '>' not supported between instances of 'complex' and 'int'
+
+tests\test_boolean_proof.py:10: TypeError
+________________ TestBooleanAbsorption.test_completeness_nand _________________
+
+self = <test_boolean_proof.TestBooleanAbsorption object at 0x0000025BB716C890>
+
+    def test_completeness_nand(self):
+        """Verifica la tabla de verdad NAND (Funcionalmente Completo)"""
+        truth_table = [(0, 0, 1), (0, 1, 1), (1, 0, 1), (1, 1, 0)]
+        for a, b, expected in truth_table:
+            val_a = to_cmfo(a)
+            val_b = to_cmfo(b)
+            result = cmfo.phi_nand(val_a, val_b)
+>           assert from_cmfo(result) == expected, \
+                f"NAND Error: {a} NAND {b}!={expected}"
+E           AssertionError: NAND Error: 0 NAND 0!=1
+E           assert False == 1
+E            +  where False = from_cmfo(0.0)
+
+tests\test_boolean_proof.py:56: AssertionError
+______________ TestBooleanAbsorption.test_continuity_hypothesis _______________
+
+self = <test_boolean_proof.TestBooleanAbsorption object at 0x0000025BB716C950>
+
+    def test_continuity_hypothesis(self):
+        """
+        Verifica que el operador funciona incluso con ruido.
+        Esto demuestra la robustez del axioma de continuidad.
+        """
+        # 0.8 es "Casi Verdad" (True)
+>       assert cmfo.phi_and(0.8, -0.9) < 0  # True & False -> False
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: '<' not supported between instances of 'complex' and 'int'
+
+tests\test_boolean_proof.py:65: TypeError
+=========================== short test summary info ===========================
+FAILED tests/test_boolean_proof.py::TestBooleanAbsorption::test_completeness_and
+FAILED tests/test_boolean_proof.py::TestBooleanAbsorption::test_completeness_xor
+FAILED tests/test_boolean_proof.py::TestBooleanAbsorption::test_completeness_nand
+FAILED tests/test_boolean_proof.py::TestBooleanAbsorption::test_continuity_hypothesis
+======================== 4 failed, 71 passed in 0.29s =========================

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMFO Tutor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">CMFO</div>
+            </div>
+
+            <div class="sidebar-content">
+                <div class="section-title">Constitución Activa</div>
+                <div class="axiom-item">✓ Aritmética</div>
+                <div class="axiom-item">✓ Álgebra Lineal</div>
+                <div class="axiom-item">✓ Geometría</div>
+
+                <div class="section-title">Bloqueado</div>
+                <div class="axiom-item blocked">✗ Cálculo</div>
+                <div class="axiom-item blocked">✗ Física Cuántica</div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="status">● Sistema Activo</div>
+            </div>
+        </aside>
+
+        <!-- Main Chat -->
+        <main class="main">
+            <div class="chat-container">
+                <div id="messages" class="messages">
+                    <!-- Welcome -->
+                    <div class="welcome" id="welcome">
+                        <h1>¿En qué puedo ayudarte?</h1>
+                        <div class="examples">
+                            <button onclick="sendQuick('Explícame ecuaciones lineales')">
+                                <span class="icon">📐</span>
+                                <div>
+                                    <div class="ex-title">Ecuaciones lineales</div>
+                                    <div class="ex-desc">Conceptos básicos</div>
+                                </div>
+                            </button>
+                            <button onclick="sendQuick('¿Es correcto que (a+b)² = a² + b²?')">
+                                <span class="icon">🔍</span>
+                                <div>
+                                    <div class="ex-title">Verificar axioma</div>
+                                    <div class="ex-desc">Prueba de validación</div>
+                                </div>
+                            </button>
+                            <button onclick="sendQuick('Explica derivadas')">
+                                <span class="icon">🚫</span>
+                                <div>
+                                    <div class="ex-title">Tema bloqueado</div>
+                                    <div class="ex-desc">Ver restricciones</div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input -->
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <textarea id="userInput" rows="1" placeholder="Envía un mensaje..."
+                        onkeydown="handleKeyDown(event)"></textarea>
+                    <button id="sendBtn" onclick="sendMessage()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M7 11L12 6L17 11M12 18V7" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="disclaimer">
+                    CMFO no alucina. Cada respuesta está verificada estructuralmente.
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function sendQuick(text) {
+            document.getElementById('userInput').value = text;
+            sendMessage();
+        }
+
+        function handleKeyDown(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const query = input.value.trim();
+            if (!query) return;
+
+            // Hide welcome
+            const welcome = document.getElementById('welcome');
+            if (welcome) welcome.style.display = 'none';
+
+            addMessage('user', query);
+            input.value = '';
+            input.style.height = 'auto';
+
+            const loadingId = addLoading();
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query })
+                });
+
+                const data = await response.json();
+                removeLoading(loadingId);
+                addMessage('assistant', data.tutor_text, data.status);
+
+            } catch (error) {
+                removeLoading(loadingId);
+                addMessage('assistant', 'Error de conexión. Verifica que el servidor esté activo.', 'ERROR');
+            }
+        }
+
+        function addLoading() {
+            const id = 'loading-' + Date.now();
+            const container = document.getElementById('messages');
+            const div = document.createElement('div');
+            div.id = id;
+            div.className = 'message assistant';
+            div.innerHTML = '<div class="avatar">C</div><div class="content"><div class="typing"><span></span><span></span><span></span></div></div>';
+            container.appendChild(div);
+            scrollToBottom();
+            return id;
+        }
+
+        function removeLoading(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+
+        function addMessage(role, text, status = null) {
+            const container = document.getElementById('messages');
+            const div = document.createElement('div');
+            div.className = `message ${role}`;
+
+            let statusBadge = '';
+            if (role === 'assistant' && status) {
+                let badgeClass = 'verified';
+                let badgeText = '✓ Verificado';
+
+                if (status === 'BLOCKED' || status === 'ERROR') {
+                    badgeClass = 'blocked';
+                    badgeText = '⚠ Bloqueado';
+                } else if (status === 'AXIOM_VIOLATION') {
+                    badgeClass = 'violation';
+                    badgeText = '✗ Violación Axiomática';
+                }
+
+                statusBadge = `<div class="status-badge ${badgeClass}">${badgeText}</div>`;
+            }
+
+            if (role === 'user') {
+                div.innerHTML = `
+                    <div class="avatar">Tú</div>
+                    <div class="content">${text}</div>
+                `;
+            } else {
+                div.innerHTML = `
+                    <div class="avatar">C</div>
+                    <div class="content">
+                        ${text}
+                        ${statusBadge}
+                    </div>
+                `;
+            }
+
+            container.appendChild(div);
+            scrollToBottom();
+        }
+
+        function scrollToBottom() {
+            const messages = document.getElementById('messages');
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        // Auto-resize textarea
+        const textarea = document.getElementById('userInput');
+        textarea.addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 200) + 'px';
+        });
+    </script>
+</body>
+
+</html>

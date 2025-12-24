@@ -1,0 +1,23 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.0.2, pluggy-1.6.0
+rootdir: C:\Users\solmo\Desktop\CMFO_GPU_CLEAN\CMFO_GPU_FINAL
+collected 4 items
+
+tests\test_basic.py F...                                                 [100%]
+
+================================== FAILURES ===================================
+______________________________ test_import_cmfo _______________________________
+
+    def test_import_cmfo():
+        """Test that cmfo package can be imported"""
+        import cmfo
+>       assert cmfo.__version__ == "0.1.4"
+E       AssertionError: assert '1.0.0' == '0.1.4'
+E         
+E         - 0.1.4
+E         + 1.0.0
+
+tests\test_basic.py:8: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_basic.py::test_import_cmfo - AssertionError: assert '1.0.0'...
+========================= 1 failed, 3 passed in 0.14s =========================

@@ -1,0 +1,20 @@
+{
+    "domain": "MANAGEMENT",
+    "description": "Executive Decision Making",
+    "roles": {
+        "executive": {
+            "authorities": [
+                "sign_purchase_order"
+            ],
+            "structural_prerequisites": {
+                "sign_purchase_order": [
+                    "FINANCE:approve_funds",
+                    "LEGAL:validate_contract"
+                ]
+            },
+            "constraints": {
+                "max_sign_limit": 50000
+            }
+        }
+    }
+}

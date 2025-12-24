@@ -37,6 +37,10 @@ from cmfo.universal.octonion_algebra import (
 from cmfo.universal.teleportation_real import (
     TeleportacionRealOctonionica,
 )
+from cmfo.bitcoin import (
+    NonceRestrictor,
+    build_header
+)
 
 
 def print_header(title):
@@ -175,6 +179,54 @@ def demo_teleportation():
     return resultado['fidelidad'] > 0
 
 
+def demo_mining_inversion():
+    """Demuestra la inversión estructural del nonce (Minería)."""
+    print_section("Minería: Inversión Estructural del Nonce")
+    
+    # Datos del Bloque Genesis
+    block_genesis = {
+        'version': 1,
+        'prev_block': bytes(32),  # All zeros
+        'merkle_root': bytes.fromhex('4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b'),
+        'timestamp': 1231006505,
+        'bits': 0x1d00ffff,
+        'nonce': 2083236893  # 0x7c2bac1d
+    }
+    
+    # Construir header (asume inputs en Big-Endian para hashes)
+    header = build_header(
+        block_genesis['version'],
+        block_genesis['prev_block'],
+        block_genesis['merkle_root'],
+        block_genesis['timestamp'],
+        block_genesis['bits'],
+        block_genesis['nonce']
+    )
+    
+    print(f"  Bloque Genesis: {block_genesis['hash'] if 'hash' in block_genesis else '...0019d6689c...'}")
+    print(f"  Nonce Real:     {block_genesis['nonce']} (0x{block_genesis['nonce']:08x})")
+    
+    # Aplicar restricción
+    restrictor = NonceRestrictor(header, empirical_mode='conservative')
+    
+    # Ejecutar reducción
+    t0 = time.time()
+    success, reduced_space, reduction_factor = restrictor.reduce_space()
+    dt = time.time() - t0
+    
+    print(f"  Espacio Original: 2^32 (4.29e9)")
+    print(f"  Espacio Reducido: {reduced_space} ({reduced_space/1e6:.2f}M)")
+    print(f"  Factor Reducción: {reduction_factor:.2f}x")
+    print(f"  Tiempo Análisis:  {dt*1000:.2f} ms")
+    
+    # Verificar si el nonce real está en el espacio
+    in_space = restrictor.is_nonce_in_space(block_genesis['nonce'])
+    print(f"  ¿Nonce en espacio?: {'SI' if in_space else 'NO'}")
+    
+    is_valid = success and (reduction_factor >= 5.0) and in_space
+    return is_valid
+
+
 def demo_gpu_capability():
     """Verifica capacidad GPU."""
     print_section("Capacidad GPU (CUDA)")
@@ -206,6 +258,7 @@ def run_full_demo():
         ("28 Estructuras de Milnor", demo_milnor_structures),
         ("Grupo G₂", demo_g2_group),
         ("Teleportación", demo_teleportation),
+        ("Minería Inversa", demo_mining_inversion),
         ("Capacidad GPU", demo_gpu_capability),
     ]
     

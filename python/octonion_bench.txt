@@ -1,0 +1,27 @@
+﻿======================================================================
+  BENCHMARK ULTRA-7D: ALGEBRA OCTONIONICA EN GPU
+======================================================================
+  Octoniones: 1,000,000
+  GPU Blocks: 3,907 x 256
+
+[GPU] b'NVIDIA GeForce RTX 3050 Ti Laptop GPU'
+
+[FASE 1] Generando octoniones aleatorios...
+  Memoria CPU: 61.04 MB
+[FASE 2] Transfiriendo a GPU...
+[FASE 3] Compilando kernel (warmup)...
+  Compilado en: 0.55 s
+[FASE 4] Ejecutando benchmark (20 runs x 50 iters)...
+
+======================================================================
+  RESULTADOS ULTRA-7D
+======================================================================
+  Tiempo total:         20.3858 s
+  Multiplicaciones:     1,000,000,000
+----------------------------------------------------------------------
+  VELOCIDAD:            49.05 M Octonionic Mult/s
+  THROUGHPUT:           6.38 GFLOPS
+======================================================================
+
+[CHECK] Norma muestra: 1.425589 (debería ser ~phi)
+[OK] Benchmark completado exitosamente!

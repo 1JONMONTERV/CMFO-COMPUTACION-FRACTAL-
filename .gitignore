@@ -41,3 +41,7 @@ Makefile
 *.out
 *.o
 
+
+# --- New Logs ---
+*_result.txt
+*_output.txt

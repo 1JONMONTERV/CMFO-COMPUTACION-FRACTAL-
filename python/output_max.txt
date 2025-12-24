@@ -1,0 +1,191 @@
+﻿python : Traceback 
+(most recent call 
+last):
+En línea: 1 
+Carácter: 13
++ chcp 65001; python 
+verify_maximum_level.
+py 2>&1 | Out-File 
+-Encoding  ...
++             ~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~
+    + CategoryInfo   
+           : NotSpe  
+  cified: (Traceba   
+ ck (most recent     
+call last)::Stri    
+ng) [], RemoteEx    
+ception
+    + FullyQualified 
+   ErrorId : Native  
+  CommandError
+ 
+  File "C:\Users\solm
+o\.gemini\antigravity
+\scratch\cmfo-univers
+e\python\verify_maxim
+um_level.py", line 
+220, in run_all_tests
+    result = 
+test_func()
+             
+^^^^^^^^^^^
+  File "C:\Users\solm
+o\.gemini\antigravity
+\scratch\cmfo-univers
+e\python\verify_maxim
+um_level.py", line 
+85, in 
+test_alternativity
+    assert resultado[
+'left_holds'] and res
+ultado['right_holds']
+, "Deberia ser 
+alternativo"
+           ^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 
+Deberia ser 
+alternativo
+
+
+######################################################################
+#  VERIFICACION DE MAXIMO NIVEL - CMFO ULTRA-7D
+#  Pruebas matematicamente rigurosas
+######################################################################
+
+======================================================================
+TEST 1: MULTIPLICACION OCTONIONICA
+======================================================================
+e1 x e2 = [0. 0. 0. 1. 0. 0. 0. 0.]
+Esperado: e3 = [0,0,0,1,0,0,0,0]
+Error: 0.00e+00
+[OK] PASO: Multiplicacion de Cayley-Dickson correcta
+
+======================================================================
+TEST 2: NO-ASOCIATIVIDAD DE O
+======================================================================
+(e1*e2)*e4 = [0. 0. 0. 0. 0. 0. 0. 1.]
+e1*(e2*e4) = [ 0.  0.  0.  0.  0.  0.  0. -1.]
+Diferencia: 2.000000
+Es no asociativo?: True
+[OK] PASO: O es NO ASOCIATIVO (demostrado)
+
+======================================================================
+TEST 3: ALTERNATIVIDAD DE O
+======================================================================
+Error left-alternative: 4.40e-01
+Error right-alternative: 4.48e-01
+Left holds?: False
+Right holds?: False
+
+[FAIL] FALLO: Alternatividad
+  Error: Deberia ser alternativo
+
+======================================================================
+TEST 4: PRODUCTO PHI-CRUZ REAL
+======================================================================
+a = [ 0.34281572 -0.16806123 -0.46277697  0.0729753   0.38227375 -0.22934222
+ -0.61710261 -0.23494291]
+b = [ 0.03128319 -0.09843699  0.26728031  0.3026302  -0.54902093 -0.68529751
+  0.11244305  0.20641615]
+a x_phi b = [ 0.27963717 -0.78552486  0.05396984  0.67012688 -0.75710702  0.08094072
+  0.15197966 -0.63286995]
+Norma resultado: 1.466497
+
+x_phi no asociativo: diferencia = 2.767498
+Es no asociativo?: True
+[OK] PASO: Producto phi-cruz implementado
+
+======================================================================
+TEST 5: 28 ESTRUCTURAS DE MILNOR EN S7
+======================================================================
+Estructura optima: 0
+Distancia optima: 1.421490
+Estructura peor: 27
+Distancia peor: 1.557820
+Diferencia: 0.136331
+Distancias unicas: 28/28
+[OK] PASO: 28 estructuras de Milnor diferenciadas
+
+======================================================================
+TEST 6: TELEPORTACION OCTONIONICA REAL
+======================================================================
+Fidelidades: ['0.0447', '0.0980', '0.0029', '0.4629', '0.0431', '0.0788', '0.0562', '0.0539', '0.0384', '0.1103']
+Media: 0.098912
+Desv. Est.: 0.124809
+Minima: 0.002903
+Maxima: 0.462852
+[OK] PASO: Teleportacion con fidelidades REALES (variabilidad demostrada)
+
+======================================================================
+TEST 7: DIMENSION DE G2
+======================================================================
+Numero de generadores: 14
+Dimension de cada generador: (7, 7)
+[OK] PASO: G2 tiene exactamente 14 generadores
+
+######################################################################
+#  RESULTADOS: 6/7 PASARON
+#  FALLARON: 1
+######################################################################
+
+======================================================================
+DEMOSTRACION ADICIONAL: TELEPORTACION COMPLETA
+======================================================================
+======================================================================
+TELEPORTACIËN OCTONIËNICA REAL
+Protocolo de mßximo nivel matemßtico
+======================================================================
+
+[1] Estado desconocido creado:
+    Estructura de Milnor: 5
+    Norma: 1.0000000000
+
+[2] Par EPR octoni¾nico:
+Traceback (most 
+recent call last):
+  File "C:\Users\solm
+o\.gemini\antigravity
+\scratch\cmfo-univers
+e\python\verify_maxim
+um_level.py", line 
+249, in <module>
+    demostrar_telepor
+tacion_real()
+  File "C:\Users\solm
+o\.gemini\antigravity
+\scratch\cmfo-univers
+e\python\cmfo\univers
+al\teleportation_real
+.py", line 240, in de
+mostrar_teleportacion
+_real
+    print(f"    
+Estructuras: {par['es
+tructura_A']} \u2194 
+{par['estructura_B']}
+")
+  File "C:\Users\solm
+o\AppData\Local\Progr
+ams\Python\Python311\
+Lib\encodings\cp1252.
+py", line 19, in 
+encode
+    return codecs.cha
+rmap_encode(input,sel
+f.errors,encoding_tab
+le)[0]
+           ^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+^^^
+UnicodeEncodeError: 
+'charmap' codec 
+can't encode 
+character '\u2194' 
+in position 19: 
+character maps to 
+<undefined>

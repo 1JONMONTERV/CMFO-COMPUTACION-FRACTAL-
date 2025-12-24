@@ -1,0 +1,12 @@
+CMFO SPECTRAL ANALYSIS REPORT
+=============================
+D1_Entropy: Real=0.8949, Noise=0.8946, Sep=0.03 sigma
+D2_Fractal: Real=0.7896, Noise=0.7888, Sep=0.05 sigma
+D3_Chirality: Real=0.5756, Noise=0.5755, Sep=0.01 sigma
+D4_Coherence: Real=0.0436, Noise=0.0426, Sep=0.30 sigma
+D5_Topology: Real=0.9655, Noise=0.9659, Sep=0.04 sigma
+D6_Phase: Real=0.9134, Noise=0.9137, Sep=0.01 sigma
+D7_Potential: Real=0.3740, Noise=0.3743, Sep=0.03 sigma
+D6_Resonance: Real=0.8354, Noise=0.8368, Sep=0.01 sigma
+
+CONCLUSION: Deterministic Key is D4_Coherence.

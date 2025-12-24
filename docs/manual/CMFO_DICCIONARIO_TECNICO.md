@@ -44,6 +44,19 @@ Este manual explica cada término del sistema, comparándolo con lo que ya conoc
 - **Mejora CMFO**: Permite razonamiento fluido. `1.0 AND 1.0 = 1.0`, pero `0.9 AND 0.8` da un valor preciso de coherencia, no solo "falso". Es reversible (no pierde información).
 - **Analogía**: Lógica booleana es un interruptor de luz (ON/OFF). Lógica Phi es un regulador de intensidad (dimmer) inteligente.
 
+### 4.1. Lógica Ternaria Fractal Balanceada (BTFL)
+- **¿Qué es?**: La evolución formal de la Lógica Phi. Introduce un sistema cerrado de tres estados base `{-1, 0, +1}` operados por funciones fractales continuas.
+- **Estructura Arquitectónica**:
+  1.  **Nivel 1 (Símbolos)**: Ternario balanceado `{-1, 0, +1}` donde 0 es superposición/neutral, +1 verdad, -1 falsedad.
+  2.  **Nivel 2 (Operadores)**: Adaptaciones fractales (ver fórmulas abajo) que permiten interpolación suave.
+  3.  **Nivel 3 (Métrica)**: Uso de φ para ponderación posicional `V(s) = Σ s_i·φ^(-i)`.
+  4.  **Nivel 4 (Colapso)**: Umbralización continua para decisiones discretas final.
+- **Operadores Clave**:
+  - `XOR_fractal(x,y) = clamp(x + y - xy·|x+y|/2)`
+  - `AND_fractal(x,y) = (x·y)·(1 - |x-y|/2)`
+  - `OR_fractal(x,y) = (x+y-xy)·(1 - |x+y-xy|/2)`
+- **Ventaja**: Reduce exactamente a lógica booleana en los extremos, pero permite "caminos descubiertos" de cálculo en el intervalo continuo.
+
 ### 5. Fractal NPU (Neuronal Processing Unit)
 - **¿Qué es?**: El diseño del hardware (o simulador) que ejecuta CMFO. Tiene registros `R0-R7` y ejecuta instrucciones nativas como `F_ADD` o `F_ROOT`.
 - **Versión Clásica**: CPU/GPU (ALU de enteros/flotantes).
@@ -114,4 +127,4 @@ Este manual explica cada término del sistema, comparándolo con lo que ya conoc
 | **Verificar** | Tests Matemáticos | `verify_equations_math.py` |
 
 ---
-*Este documento es parte de la documentación oficial de CMFO. Generado por Antigravity.*
+*Este documento es parte de la documentación oficial de CMFO. 
